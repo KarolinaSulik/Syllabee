@@ -1,0 +1,88 @@
+:root {
+  font-family: Arial, Helvetica, sans-serif;
+  color: #000;
+  background: #fff;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: #fff;
+}
+
+.game {
+  min-height: 100vh;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: 1.5rem;
+  padding: 2rem;
+  text-align: center;
+}
+
+h1,
+.progress,
+.message,
+.keyboard-note {
+  margin: 0;
+}
+
+h1 {
+  font-size: clamp(1.25rem, 3vw, 2rem);
+  font-weight: 400;
+}
+
+.progress,
+.keyboard-note {
+  font-size: clamp(1rem, 2vw, 1.25rem);
+}
+
+.task {
+  min-width: min(90vw, 36rem);
+}
+
+.letters {
+  display: flex;
+  justify-content: center;
+  gap: 0.15em;
+  font-size: clamp(7rem, 25vw, 15rem);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0.02em;
+}
+
+.letter {
+  display: inline-block;
+  padding: 0.05em 0.08em;
+  border: 0.04em solid transparent;
+}
+
+.letter.is-correct {
+  border-bottom-color: #000;
+}
+
+.letter.is-current {
+  border-color: #000;
+}
+
+.message {
+  min-height: 2em;
+  margin-top: 1.5rem;
+  font-size: clamp(1.25rem, 3vw, 2rem);
+}
+
+.message.is-success {
+  font-size: clamp(3rem, 8vw, 5rem);
+  font-weight: 700;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .letter,
+  .message {
+    transition: border-color 120ms ease, opacity 120ms ease;
+  }
+}

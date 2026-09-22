@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="pl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Syllabee — nauka czytania</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main class="game" aria-labelledby="game-title">
+      <h1 id="game-title">Wpisz sylabę</h1>
+      <p id="progress" class="progress" aria-live="polite"></p>
+
+      <section class="task" aria-label="Aktualne zadanie">
+        <div id="letters" class="letters" aria-label="Sylaba do wpisania"></div>
+        <p id="message" class="message" aria-live="assertive">Naciśnij litery po kolei.</p>
+      </section>
+
+      <p class="keyboard-note">Użyj klawiatury</p>
+    </main>
+
+    <script src="app.js"></script>
+  </body>
+</html>
