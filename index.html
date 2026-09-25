@@ -15,43 +15,50 @@
           <span class="menu-brand-bee" aria-hidden="true">🐝</span>
           <span>Syllabee</span>
         </div>
+        <div class="language-selector">
+          <select id="language-select" aria-label="Język">
+            <option value="pl">🇵🇱 Polski</option>
+            <option value="en">🇬🇧 English</option>
+            <option value="de">🇩🇪 Deutsch</option>
+          </select>
+        </div>
         <h1 id="menu-title">Wybierz poziom</h1>
         <div class="level-menu">
           <button class="level-card" type="button" data-start-level="1">
             <span class="level-card-icon" aria-hidden="true">🅰️</span>
-            <strong>Level 1</strong>
-            <span class="level-card-label">Literki</span>
+            <strong id="level-one-title">Poziom 1</strong>
+            <span id="level-one-label" class="level-card-label">Literki</span>
           </button>
           <button class="level-card" type="button" data-start-level="2">
             <span class="level-card-icon" aria-hidden="true">🔤</span>
-            <strong>Level 2</strong>
-            <span class="level-card-label">Wyrazy</span>
+            <strong id="level-two-title">Poziom 2</strong>
+            <span id="level-two-label" class="level-card-label">Wyrazy</span>
           </button>
           <button class="level-card" type="button" data-start-level="3">
             <span class="level-card-icon" aria-hidden="true">🧩</span>
-            <strong>Level 3</strong>
-            <span class="level-card-label">Sylaby</span>
+            <strong id="level-three-title">Poziom 3</strong>
+            <span id="level-three-label" class="level-card-label">Sylaby</span>
           </button>
           <button class="level-card" type="button" data-start-level="4">
             <span class="level-card-icon" aria-hidden="true">✍️</span>
-            <strong>Level 4</strong>
-            <span class="level-card-label">Litery pisane</span>
+            <strong id="level-four-title">Poziom 4</strong>
+            <span id="level-four-label" class="level-card-label">Litery pisane</span>
           </button>
           <button class="level-card" type="button" data-start-level="5">
             <span class="level-card-icon" aria-hidden="true">💬</span>
-            <strong>Level 5</strong>
-            <span class="level-card-label">Zdania</span>
+            <strong id="level-five-title">Poziom 5</strong>
+            <span id="level-five-label" class="level-card-label">Zdania</span>
           </button>
         </div>
       </section>
 
       <section id="level-two-setup-screen" class="screen is-hidden" aria-labelledby="level-two-setup-title">
-        <button class="back-button setup-back-button" type="button" data-go-menu>← Menu</button>
+        <button class="back-button setup-back-button" type="button" data-go-menu>← <span class="menu-button-text">Menu</span></button>
         <div class="level-two-setup">
           <span class="level-card-icon level-two-setup-icon" aria-hidden="true">⌨️</span>
           <h1 id="level-two-setup-title">Ile słów?</h1>
-          <p>Wybierz liczbę słów do przećwiczenia.</p>
-          <div class="word-count-options" aria-label="Liczba słów w Level 2">
+          <p id="level-two-setup-description">Wybierz liczbę słów do przećwiczenia.</p>
+          <div id="level-two-count-options" class="word-count-options" aria-label="Liczba słów w Level 2">
             <button class="word-count-button" type="button" data-level-two-count="5">5</button>
             <button class="word-count-button" type="button" data-level-two-count="10">10</button>
             <button class="word-count-button" type="button" data-level-two-count="15">15</button>
@@ -61,12 +68,12 @@
       </section>
 
       <section id="level-three-setup-screen" class="screen is-hidden" aria-labelledby="level-three-setup-title">
-        <button class="back-button setup-back-button" type="button" data-go-menu>← Menu</button>
+        <button class="back-button setup-back-button" type="button" data-go-menu>← <span class="menu-button-text">Menu</span></button>
         <div class="level-two-setup">
           <span class="level-card-icon level-three-setup-icon" aria-hidden="true">🧩</span>
           <h1 id="level-three-setup-title">Ile wyrazów chcesz trenować?</h1>
-          <p>Wybierz liczbę wyrazów do ułożenia z sylab.</p>
-          <div class="word-count-options" aria-label="Liczba wyrazów w Level 3">
+          <p id="level-three-setup-description">Wybierz liczbę wyrazów do ułożenia z sylab.</p>
+          <div id="level-three-count-options" class="word-count-options" aria-label="Liczba wyrazów w Level 3">
             <button class="word-count-button level-three-count-button" type="button" data-level-three-count="5">5</button>
             <button class="word-count-button level-three-count-button" type="button" data-level-three-count="10">10</button>
             <button class="word-count-button level-three-count-button" type="button" data-level-three-count="15">15</button>
@@ -75,13 +82,28 @@
         </div>
       </section>
 
+      <section id="level-five-setup-screen" class="screen is-hidden" aria-labelledby="level-five-setup-title">
+        <button class="back-button setup-back-button" type="button" data-go-menu>← <span class="menu-button-text">Menu</span></button>
+        <div class="level-two-setup">
+          <span class="level-card-icon level-five-setup-icon" aria-hidden="true">💬</span>
+          <h1 id="level-five-setup-title">Ile zdań chcesz trenować?</h1>
+          <p id="level-five-setup-description">Wybierz liczbę zdań do ułożenia.</p>
+          <div id="level-five-count-options" class="word-count-options" aria-label="Liczba zdań w Level 5">
+            <button class="word-count-button level-five-count-button" type="button" data-level-five-count="5">5</button>
+            <button class="word-count-button level-five-count-button" type="button" data-level-five-count="10">10</button>
+            <button class="word-count-button level-five-count-button" type="button" data-level-five-count="15">15</button>
+            <button class="word-count-button level-five-count-button" type="button" data-level-five-count="20">20</button>
+          </div>
+        </div>
+      </section>
+
       <section id="letter-setup-screen" class="screen is-hidden" aria-labelledby="letter-setup-title">
-        <button class="back-button setup-back-button" type="button" data-go-menu>← Menu</button>
+        <button class="back-button setup-back-button" type="button" data-go-menu>← <span class="menu-button-text">Menu</span></button>
         <div class="level-two-setup">
           <span id="letter-setup-icon" class="level-card-icon level-two-setup-icon" aria-hidden="true">🅰️</span>
           <h1 id="letter-setup-title">Ile liter?</h1>
           <p id="letter-setup-description">Wybierz liczbę liter do przećwiczenia.</p>
-          <div class="word-count-options" aria-label="Liczba liter do przećwiczenia">
+          <div id="letter-count-options" class="word-count-options" aria-label="Liczba liter do przećwiczenia">
             <button class="word-count-button letter-count-button" type="button" data-letter-count="5">5</button>
             <button class="word-count-button letter-count-button" type="button" data-letter-count="10">10</button>
             <button class="word-count-button letter-count-button" type="button" data-letter-count="15">15</button>
@@ -93,7 +115,7 @@
       <!-- Level 1: pojedyncze litery -->
       <section id="level-one-screen" class="screen is-hidden" aria-label="Level 1">
         <div class="game-topbar">
-          <button class="back-button" type="button" data-go-menu>← Menu</button>
+          <button class="back-button" type="button" data-go-menu>← <span class="menu-button-text">Menu</span></button>
           <div id="level-one-progress" class="progress-bar" role="progressbar" aria-label="Postęp w Level 1"></div>
         </div>
         <div id="single-letter" class="single-letter" aria-label="Litera do wpisania"></div>
@@ -102,7 +124,7 @@
       <!-- Level 2: wpisywanie słów -->
       <section id="level-two-screen" class="screen is-hidden" aria-label="Level 2">
         <div class="game-topbar">
-          <button class="back-button" type="button" data-go-menu>← Menu</button>
+          <button class="back-button" type="button" data-go-menu>← <span class="menu-button-text">Menu</span></button>
           <div id="level-two-progress" class="progress-bar" role="progressbar" aria-label="Postęp w Level 2"></div>
         </div>
         <div class="word-layout">
@@ -114,7 +136,7 @@
       <!-- Level 3: układanie słów z sylab -->
       <section id="level-three-screen" class="screen is-hidden" aria-label="Level 3">
         <div class="game-topbar">
-          <button class="back-button" type="button" data-go-menu>← Menu</button>
+          <button class="back-button" type="button" data-go-menu>← <span class="menu-button-text">Menu</span></button>
           <div id="level-three-progress" class="progress-bar" role="progressbar" aria-label="Postęp w Level 3"></div>
         </div>
         <div id="level-three-image" class="picture" role="img"></div>
@@ -126,7 +148,7 @@
       <!-- Level 4: rozpoznawanie liter pisanych. -->
       <section id="level-four-screen" class="screen is-hidden" aria-label="Level 4: litery pisane">
         <div class="game-topbar">
-          <button class="back-button" type="button" data-go-menu>← Menu</button>
+          <button class="back-button" type="button" data-go-menu>← <span class="menu-button-text">Menu</span></button>
           <div id="level-four-progress" class="progress-bar" role="progressbar" aria-label="Postęp w Level 4"></div>
         </div>
         <div id="written-letter" class="written-letter" aria-label="Litera pisana do wpisania"></div>
@@ -135,7 +157,7 @@
       <!-- Level 5: układanie krótkich zdań z wyrazów. -->
       <section id="level-five-screen" class="screen is-hidden" aria-label="Level 5: układanie zdań">
         <div class="game-topbar">
-          <button class="back-button" type="button" data-go-menu>← Menu</button>
+          <button class="back-button" type="button" data-go-menu>← <span class="menu-button-text">Menu</span></button>
           <div id="level-five-progress" class="progress-bar" role="progressbar" aria-label="Postęp w Level 5"></div>
         </div>
         <div id="level-five-image" class="picture" role="img"></div>
@@ -145,7 +167,7 @@
 
       <section id="complete-screen" class="screen is-hidden" aria-labelledby="complete-title">
         <h1 id="complete-title">Brawo! 🥳👍</h1>
-        <button class="primary-button" type="button" data-go-menu>Wróć do menu</button>
+        <button id="complete-menu-button" class="primary-button" type="button" data-go-menu>Wróć do menu</button>
       </section>
     </main>
   </body>

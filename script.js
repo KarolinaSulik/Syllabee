@@ -1,5 +1,5 @@
 // Dane Level 1. Aby dodać ćwiczenie, dopisz kolejną literę.
-const letters = [
+const polishLetters = [
   { letter: "M", sound: "em" }, { letter: "A", sound: "a" },
   { letter: "T", sound: "te" }, { letter: "O", sound: "o" },
   { letter: "S", sound: "es" }, { letter: "K", sound: "ka" },
@@ -13,7 +13,7 @@ const letters = [
 ];
 
 // Dane słów dla Level 2 i Level 3. Łatwo dodawać kolejne obiekty.
-const words = [
+const polishWords = [
   { word: "MAMA", syllables: ["MA", "MA"], image: "👱🏻‍♀️", imageAlt: "blond mama z prostymi, rozpuszczonymi włosami", choices: ["MA", "TA", "SA"] },
   { word: "TATA", syllables: ["TA", "TA"], image: "🧔🏻‍♂️", imageAlt: "tata z brodą", choices: ["TA", "MA", "LA"] },
   { word: "OSA", syllables: ["O", "SA"], image: "🐝", imageAlt: "osa", choices: ["O", "SA", "MA"] },
@@ -65,22 +65,143 @@ const words = [
   { word: "WILK", syllables: ["WILK"], image: "🐺", imageAlt: "wilk", choices: [] },
 ];
 
-const syllableWords = words.filter((word) => word.syllables.length >= 2);
-
 // Krótkie zdania do Level 5. Każde ma maksymalnie trzy wyrazy.
-const sentences = [
-  { words: ["KOT", "SPI"], image: "🐱💤", imageAlt: "kot spi" },
-  { words: ["WILK", "SPI"], image: "🐺💤", imageAlt: "wilk spi" },
-  { words: ["MAMA", "MA", "LODY"], image: "👱🏻‍♀️🍦", imageAlt: "mama ma lody" },
-  { words: ["TATA", "MA", "AUTO"], image: "🧔🏻‍♂️🚗", imageAlt: "tata ma auto" },
-  { words: ["ROBOT", "MA", "KASK"], image: "🤖⛑️", imageAlt: "robot ma kask" },
-  { words: ["PIRAT", "MA", "SKARB"], image: "🏴‍☠️💰", imageAlt: "pirat ma skarb" },
+const polishSentences = [
+  { words: ["KOT", "MA", "OGON"], image: ["🐱", "➰"], imageAlt: "kot ma ogon" },
+  { words: ["WILK", "MA", "OGON"], image: ["🐺", "➰"], imageAlt: "wilk ma ogon" },
+  { words: ["MAMA", "MA", "LODY"], image: ["👱🏻‍♀️", "🍦"], imageAlt: "mama ma lody" },
+  { words: ["TATA", "MA", "AUTO"], image: ["🧔🏻‍♂️", "🚗"], imageAlt: "tata ma auto" },
+  { words: ["ROBOT", "MA", "KASK"], image: ["🤖", "⛑️"], imageAlt: "robot ma kask" },
+  { words: ["PIRAT", "MA", "SKARB"], image: ["🏴‍☠️", "💰"], imageAlt: "pirat ma skarb" },
+  { words: ["RYBA", "MA", "OGON"], image: ["🐟", "➰"], imageAlt: "ryba ma ogon" },
+  { words: ["ZEBRA", "MA", "NOGI"], image: ["🦓", "🦵"], imageAlt: "zebra ma nogi" },
+  { words: ["PTAK", "MA", "NOGI"], image: ["🐦", "🦵"], imageAlt: "ptak ma nogi" },
+  { words: ["SMOK", "MA", "OGON"], image: ["🐉", "➰"], imageAlt: "smok ma ogon" },
+  { words: ["KOT", "MA", "USZY"], image: ["🐱", "👂"], imageAlt: "kot ma uszy" },
+  { words: ["PIES", "MA", "OGON"], image: ["🐶", "➰"], imageAlt: "pies ma ogon" },
+  { words: ["LAS", "MA", "DRZEWA"], image: ["🌲", "🌲🌲"], imageAlt: "las ma drzewa" },
+  { words: ["DOM", "MA", "DACH"], image: ["🏠", "🔺"], imageAlt: "dom ma dach" },
+  { words: ["RAKIETA", "MA", "SILNIK"], image: ["🚀", "🔥"], imageAlt: "rakieta ma silnik" },
+  { words: ["ROBOT", "MA", "NOGI"], image: ["🤖", "🦵"], imageAlt: "robot ma nogi" },
+  { words: ["STATEK", "MA", "MASZT"], image: ["🚢", "⬆️"], imageAlt: "statek ma maszt" },
+  { words: ["KURA", "MA", "JAJKO"], image: ["🐔", "🥚"], imageAlt: "kura ma jajko" },
+  { words: ["FOKA", "MA", "NOS"], image: ["🦭", "👃"], imageAlt: "foka ma nos" },
 ];
+
+const createWords = (entries) => entries.map(([word, syllables, image, imageAlt, distractor]) => ({
+  word,
+  syllables,
+  image,
+  imageAlt,
+  choices: [...new Set([...syllables, distractor])],
+}));
+
+const englishLetters = [
+  ["A", "ay"], ["B", "bee"], ["C", "see"], ["D", "dee"], ["E", "ee"],
+  ["F", "ef"], ["G", "gee"], ["H", "aitch"], ["I", "eye"], ["J", "jay"],
+  ["K", "kay"], ["L", "el"], ["M", "em"], ["N", "en"], ["O", "oh"],
+  ["P", "pee"], ["Q", "cue"], ["R", "ar"], ["S", "ess"], ["T", "tee"],
+].map(([letter, sound]) => ({ letter, sound }));
+
+const englishWords = createWords([
+  ["MUMMY", ["MUM", "MY"], "👩", "mummy", "PA"],
+  ["DADDY", ["DAD", "DY"], "👨", "daddy", "MA"],
+  ["ROBOT", ["RO", "BOT"], "🤖", "robot", "TA"],
+  ["TIGER", ["TI", "GER"], "🐯", "tiger", "RO"],
+  ["RABBIT", ["RAB", "BIT"], "🐰", "rabbit", "MA"],
+  ["BANANA", ["BA", "NA", "NA"], "🍌", "banana", "TO"],
+  ["TOMATO", ["TO", "MA", "TO"], "🍅", "tomato", "RA"],
+  ["ELEPHANT", ["EL", "E", "PHANT"], "🐘", "elephant", "BA"],
+  ["BUTTERFLY", ["BUT", "TER", "FLY"], "🦋", "butterfly", "MA"],
+  ["MONKEY", ["MON", "KEY"], "🐒", "monkey", "TA"],
+  ["PENGUIN", ["PEN", "GUIN"], "🐧", "penguin", "MA"],
+  ["DOLPHIN", ["DOL", "PHIN"], "🐬", "dolphin", "RA"],
+  ["CARROT", ["CAR", "ROT"], "🥕", "carrot", "MA"],
+  ["WINDOW", ["WIN", "DOW"], "🪟", "window", "TA"],
+  ["FLOWER", ["FLOW", "ER"], "🌸", "flower", "MA"],
+  ["PIZZA", ["PIZ", "ZA"], "🍕", "pizza", "TO"],
+  ["ROCKET", ["ROCK", "ET"], "🚀", "rocket", "MA"],
+  ["PLANET", ["PLAN", "ET"], "🪐", "planet", "RO"],
+  ["PIRATE", ["PI", "RATE"], "🏴‍☠️", "pirate", "MA"],
+  ["TRACTOR", ["TRAC", "TOR"], "🚜", "tractor", "BA"],
+  ["SCOOTER", ["SCOOT", "ER"], "🛴", "scooter", "MA"],
+  ["RAINBOW", ["RAIN", "BOW"], "🌈", "rainbow", "TA"],
+  ["TURTLE", ["TUR", "TLE"], "🐢", "turtle", "MA"],
+  ["LADYBUG", ["LA", "DY", "BUG"], "🐞", "ladybug", "TO"],
+]);
+
+const englishSentences = [
+  { words: ["CAT", "SLEEPS"], image: "🐱💤", imageAlt: "a sleeping cat" },
+  { words: ["DOG", "SLEEPS"], image: "🐶💤", imageAlt: "a sleeping dog" },
+  { words: ["MUMMY", "HAS", "CAKE"], image: "👩🍰", imageAlt: "mummy with cake" },
+  { words: ["DADDY", "HAS", "CAR"], image: "👨🚗", imageAlt: "daddy with a car" },
+  { words: ["ROBOT", "HAS", "HELMET"], image: "🤖⛑️", imageAlt: "robot with a helmet" },
+  { words: ["PIRATE", "HAS", "TREASURE"], image: "🏴‍☠️💰", imageAlt: "pirate with treasure" },
+];
+
+const germanLetters = [
+  ["A", "a"], ["B", "be"], ["C", "tse"], ["D", "de"], ["E", "e"],
+  ["F", "ef"], ["G", "ge"], ["H", "ha"], ["I", "i"], ["J", "jot"],
+  ["K", "ka"], ["L", "el"], ["M", "em"], ["N", "en"], ["O", "o"],
+  ["P", "pe"], ["Q", "ku"], ["R", "er"], ["S", "es"], ["T", "te"],
+].map(([letter, sound]) => ({ letter, sound }));
+
+const germanWords = createWords([
+  ["MAMA", ["MA", "MA"], "👩", "Mama", "PA"],
+  ["PAPA", ["PA", "PA"], "👨", "Papa", "MA"],
+  ["OMA", ["O", "MA"], "👵", "Oma", "PA"],
+  ["AUTO", ["AU", "TO"], "🚗", "Auto", "MA"],
+  ["ROBOT", ["RO", "BOT"], "🤖", "Roboter", "MA"],
+  ["TIGER", ["TI", "GER"], "🐯", "Tiger", "RO"],
+  ["HASE", ["HA", "SE"], "🐰", "Hase", "MA"],
+  ["BANANE", ["BA", "NA", "NE"], "🍌", "Banane", "TO"],
+  ["TOMATE", ["TO", "MA", "TE"], "🍅", "Tomate", "RA"],
+  ["ELEFANT", ["E", "LE", "FANT"], "🐘", "Elefant", "BA"],
+  ["SCHMETTERLING", ["SCHMET", "TER", "LING"], "🦋", "Schmetterling", "MA"],
+  ["AFFE", ["AF", "FE"], "🐒", "Affe", "TA"],
+  ["PINGUIN", ["PIN", "GU", "IN"], "🐧", "Pinguin", "MA"],
+  ["DELFIN", ["DEL", "FIN"], "🐬", "Delfin", "RA"],
+  ["KAROTTE", ["KA", "ROT", "TE"], "🥕", "Karotte", "MA"],
+  ["FENSTER", ["FENS", "TER"], "🪟", "Fenster", "MA"],
+  ["BLUME", ["BLU", "ME"], "🌸", "Blume", "TA"],
+  ["PIZZA", ["PIZ", "ZA"], "🍕", "Pizza", "TO"],
+  ["RAKETE", ["RA", "KE", "TE"], "🚀", "Rakete", "MA"],
+  ["PLANET", ["PLA", "NET"], "🪐", "Planet", "RO"],
+  ["PIRAT", ["PI", "RAT"], "🏴‍☠️", "Pirat", "MA"],
+  ["TRAKTOR", ["TRAK", "TOR"], "🚜", "Traktor", "BA"],
+  ["ROLLER", ["ROL", "LER"], "🛴", "Roller", "MA"],
+  ["REGENBOGEN", ["RE", "GEN", "BO", "GEN"], "🌈", "Regenbogen", "TA"],
+]);
+
+const germanSentences = [
+  { words: ["DIE", "KATZE", "SCHLÄFT"], image: "🐱💤", imageAlt: "eine schlafende Katze" },
+  { words: ["DER", "HUND", "SCHLÄFT"], image: "🐶💤", imageAlt: "ein schlafender Hund" },
+  { words: ["MAMA", "HAT", "EIS"], image: "👩🍦", imageAlt: "Mama mit Eis" },
+  { words: ["PAPA", "FÄHRT", "AUTO"], image: "👨🚗", imageAlt: "Papa fährt Auto" },
+  { words: ["DER", "ROBOTER", "WINKT"], image: "🤖👋", imageAlt: "Roboter winkt" },
+  { words: ["DER", "PIRAT", "LACHT"], image: "🏴‍☠️😄", imageAlt: "Pirat lacht" },
+];
+
+const languageData = {
+  pl: {
+    flag: "🇵🇱", levelName: "Poziom", locale: "pl-PL", voicePrefix: "pl", letters: polishLetters, words: polishWords, sentences: polishSentences,
+    ui: { language: "Język", menuTitle: "Wybierz poziom", levels: ["Literki", "Wyrazy", "Sylaby", "Litery pisane", "Zdania"], wordCountTitle: "Ile słów?", wordCountDescription: "Wybierz liczbę słów do przećwiczenia.", wordCountAria: "Liczba słów w Level 2", syllableCountTitle: "Ile wyrazów chcesz trenować?", syllableCountDescription: "Wybierz liczbę wyrazów do ułożenia z sylab.", syllableCountAria: "Liczba wyrazów w Level 3", sentenceCountTitle: "Ile zdań chcesz trenować?", sentenceCountDescription: "Wybierz liczbę zdań do ułożenia.", sentenceCountAria: "Liczba zdań w Level 5", letterCountDescription: "Wybierz liczbę liter do przećwiczenia.", letterCountAria: "Liczba liter do przećwiczenia", letterCountTitle: "Ile liter?", writtenLetterCountTitle: "Ile liter pisanych?", menu: "Menu", complete: "Brawo! 🥳👍", backToMenu: "Wróć do menu", emptyLetter: "Pusta litera", progress: ["Postęp w Level 1", "Postęp w Level 2", "Postęp w Level 3", "Postęp w Level 4", "Postęp w Level 5"] },
+  },
+  en: {
+    flag: "🇬🇧", levelName: "Level", locale: "en-GB", voicePrefix: "en", letters: englishLetters, words: englishWords, sentences: englishSentences,
+    ui: { language: "Language", menuTitle: "Choose a level", levels: ["Letters", "Words", "Syllables", "Handwriting", "Sentences"], wordCountTitle: "How many words?", wordCountDescription: "Choose how many words to practise.", wordCountAria: "Number of words in Level 2", syllableCountTitle: "How many words?", syllableCountDescription: "Choose how many words to build from syllables.", syllableCountAria: "Number of words in Level 3", sentenceCountTitle: "How many sentences?", sentenceCountDescription: "Choose how many sentences to build.", sentenceCountAria: "Number of sentences in Level 5", letterCountDescription: "Choose how many letters to practise.", letterCountAria: "Number of letters to practise", letterCountTitle: "How many letters?", writtenLetterCountTitle: "How many handwritten letters?", menu: "Menu", complete: "Great job! 🥳👍", backToMenu: "Back to menu", emptyLetter: "Empty letter", progress: ["Level 1 progress", "Level 2 progress", "Level 3 progress", "Level 4 progress", "Level 5 progress"] },
+  },
+  de: {
+    flag: "🇩🇪", levelName: "Stufe", locale: "de-DE", voicePrefix: "de", letters: germanLetters, words: germanWords, sentences: germanSentences,
+    ui: { language: "Sprache", menuTitle: "Wähle ein Level", levels: ["Buchstaben", "Wörter", "Silben", "Schreibschrift", "Sätze"], wordCountTitle: "Wie viele Wörter?", wordCountDescription: "Wähle die Anzahl der Wörter zum Üben.", wordCountAria: "Anzahl der Wörter in Level 2", syllableCountTitle: "Wie viele Wörter?", syllableCountDescription: "Wähle die Anzahl der Wörter, die du aus Silben zusammensetzt.", syllableCountAria: "Anzahl der Wörter in Level 3", sentenceCountTitle: "Wie viele Sätze?", sentenceCountDescription: "Wähle die Anzahl der Sätze zum Üben.", sentenceCountAria: "Anzahl der Sätze in Level 5", letterCountDescription: "Wähle die Anzahl der Buchstaben zum Üben.", letterCountAria: "Anzahl der Buchstaben zum Üben", letterCountTitle: "Wie viele Buchstaben?", writtenLetterCountTitle: "Wie viele Schreibschrift-Buchstaben?", menu: "Menü", complete: "Super gemacht! 🥳👍", backToMenu: "Zurück zum Menü", emptyLetter: "Leerer Buchstabe", progress: ["Fortschritt in Level 1", "Fortschritt in Level 2", "Fortschritt in Level 3", "Fortschritt in Level 4", "Fortschritt in Level 5"] },
+  },
+};
 
 const screens = {
   menu: document.querySelector("#menu-screen"),
   levelTwoSetup: document.querySelector("#level-two-setup-screen"),
   levelThreeSetup: document.querySelector("#level-three-setup-screen"),
+  levelFiveSetup: document.querySelector("#level-five-setup-screen"),
   letterSetup: document.querySelector("#letter-setup-screen"),
   levelOne: document.querySelector("#level-one-screen"),
   levelTwo: document.querySelector("#level-two-screen"),
@@ -91,6 +212,22 @@ const screens = {
 };
 
 const ui = {
+  languageSelect: document.querySelector("#language-select"),
+  menuTitle: document.querySelector("#menu-title"),
+  levelTitles: ["one", "two", "three", "four", "five"].map((level) => document.querySelector(`#level-${level}-title`)),
+  levelLabels: [1, 2, 3, 4, 5].map((level) => document.querySelector(`#level-${["one", "two", "three", "four", "five"][level - 1]}-label`)),
+  levelTwoSetupTitle: document.querySelector("#level-two-setup-title"),
+  levelTwoSetupDescription: document.querySelector("#level-two-setup-description"),
+  levelTwoCountOptions: document.querySelector("#level-two-count-options"),
+  levelThreeSetupTitle: document.querySelector("#level-three-setup-title"),
+  levelThreeSetupDescription: document.querySelector("#level-three-setup-description"),
+  levelThreeCountOptions: document.querySelector("#level-three-count-options"),
+  levelFiveSetupTitle: document.querySelector("#level-five-setup-title"),
+  levelFiveSetupDescription: document.querySelector("#level-five-setup-description"),
+  levelFiveCountOptions: document.querySelector("#level-five-count-options"),
+  letterCountOptions: document.querySelector("#letter-count-options"),
+  completeTitle: document.querySelector("#complete-title"),
+  completeMenuButton: document.querySelector("#complete-menu-button"),
   singleLetter: document.querySelector("#single-letter"),
   levelOneProgress: document.querySelector("#level-one-progress"),
   levelTwoImage: document.querySelector("#level-two-image"),
@@ -126,6 +263,51 @@ let builtSentenceWords = [];
 let acceptsKeyboard = false;
 let audioContext;
 let levelThreeAdvanceTimer;
+let currentLanguage = (() => {
+  try {
+    return languageData[window.localStorage.getItem("syllabee-language")] ? window.localStorage.getItem("syllabee-language") : "pl";
+  } catch {
+    return "pl";
+  }
+})();
+
+function currentData() {
+  return languageData[currentLanguage];
+}
+
+function translateInterface() {
+  const { ui: text, locale, levelName } = currentData();
+  document.documentElement.lang = currentLanguage;
+  ui.languageSelect.value = currentLanguage;
+  ui.languageSelect.setAttribute("aria-label", text.language);
+  ui.menuTitle.textContent = text.menuTitle;
+  ui.levelTitles.forEach((title, index) => { title.textContent = `${levelName} ${index + 1}`; });
+  ui.levelLabels.forEach((label, index) => { label.textContent = text.levels[index]; });
+  ui.levelTwoSetupTitle.textContent = text.wordCountTitle;
+  ui.levelTwoSetupDescription.textContent = text.wordCountDescription;
+  ui.levelTwoCountOptions.setAttribute("aria-label", text.wordCountAria);
+  ui.levelThreeSetupTitle.textContent = text.syllableCountTitle;
+  ui.levelThreeSetupDescription.textContent = text.syllableCountDescription;
+  ui.levelThreeCountOptions.setAttribute("aria-label", text.syllableCountAria);
+  ui.levelFiveSetupTitle.textContent = text.sentenceCountTitle;
+  ui.levelFiveSetupDescription.textContent = text.sentenceCountDescription;
+  ui.levelFiveCountOptions.setAttribute("aria-label", text.sentenceCountAria);
+  ui.letterCountOptions.setAttribute("aria-label", text.letterCountAria);
+  ui.completeTitle.textContent = text.complete;
+  ui.completeMenuButton.textContent = text.backToMenu;
+  document.querySelectorAll(".menu-button-text").forEach((element) => { element.textContent = text.menu; });
+  [ui.levelOneProgress, ui.levelTwoProgress, ui.levelThreeProgress, ui.levelFourProgress, ui.levelFiveProgress]
+    .forEach((element, index) => element.setAttribute("aria-label", text.progress[index]));
+  document.title = `Syllabee — ${locale}`;
+}
+
+function saveLanguage() {
+  try {
+    window.localStorage.setItem("syllabee-language", currentLanguage);
+  } catch {
+    // Aplikacja działa również, gdy przeglądarka blokuje zapis ustawień.
+  }
+}
 
 function showScreen(name) {
   Object.values(screens).forEach((screen) => screen.classList.add("is-hidden"));
@@ -135,6 +317,7 @@ function showScreen(name) {
 function goToMenu() {
   window.clearTimeout(levelThreeAdvanceTimer);
   levelThreeAdvanceTimer = undefined;
+  window.speechSynthesis?.cancel();
   activeLevel = null;
   letterSetupLevel = null;
   acceptsKeyboard = false;
@@ -155,6 +338,8 @@ function updateProgress(element, current, total) {
 }
 
 // Krótkie dźwięki zwrotne tworzone w przeglądarce — bez dodatkowych plików audio.
+// Pozytywny ton pozostaje przy klikanych poziomach; przy wpisywaniu liter
+// zastępuje go głos odczytujący literę.
 function playFeedback(type) {
   const AudioContextClass = window.AudioContext || window.webkitAudioContext;
   if (!AudioContextClass) return;
@@ -162,13 +347,31 @@ function playFeedback(type) {
   audioContext ||= new AudioContextClass();
   if (audioContext.state === "suspended") audioContext.resume();
 
-  const notes = type === "correct" ? [660, 880] : [170, 120];
   const now = audioContext.currentTime;
 
-  notes.forEach((frequency, index) => {
+  if (type === "error") {
+    // Krótkie, opadające "tu-dum" — wyraźne, ale nie nieprzyjemne dla dziecka.
+    [[220, 150], [145, 75]].forEach(([from, to], index) => {
+      const oscillator = audioContext.createOscillator();
+      const gain = audioContext.createGain();
+      const start = now + index * 0.12;
+      oscillator.type = "triangle";
+      oscillator.frequency.setValueAtTime(from, start);
+      oscillator.frequency.exponentialRampToValueAtTime(to, start + 0.2);
+      gain.gain.setValueAtTime(0.075, start);
+      gain.gain.exponentialRampToValueAtTime(0.001, start + 0.22);
+      oscillator.connect(gain);
+      gain.connect(audioContext.destination);
+      oscillator.start(start);
+      oscillator.stop(start + 0.23);
+    });
+    return;
+  }
+
+  [660, 880].forEach((frequency, index) => {
     const oscillator = audioContext.createOscillator();
     const gain = audioContext.createGain();
-    oscillator.type = type === "correct" ? "sine" : "triangle";
+    oscillator.type = "sine";
     oscillator.frequency.value = frequency;
     gain.gain.setValueAtTime(0.05, now + index * 0.1);
     gain.gain.exponentialRampToValueAtTime(0.001, now + index * 0.1 + 0.13);
@@ -213,35 +416,66 @@ function playApplause() {
   });
 }
 
-// Używamy tylko głosu oznaczonego jako polski. To zapobiega wymowie przez
-// przypadkowy głos systemowy, np. niemiecki lub angielski.
-function speakPolish(text) {
+// Wymowa zawsze używa języka wybranego w menu. Jeśli system nie ma głosu dla
+// tego języka, przeglądarka nadal dostaje właściwy kod locale jako wskazówkę.
+function createSpeech(text) {
+  const { locale, voicePrefix } = currentData();
+  const voices = window.speechSynthesis.getVoices().filter((voice) =>
+    voice.lang.toLocaleLowerCase().startsWith(voicePrefix),
+  );
+  const voice = voices.find((item) => item.lang.replace("_", "-").toLowerCase() === locale.toLowerCase()) || voices[0];
+  const speech = new SpeechSynthesisUtterance(text);
+  speech.lang = locale;
+  if (voice) speech.voice = voice;
+  speech.rate = 0.8;
+  return speech;
+}
+
+function speak(text) {
   if (!("speechSynthesis" in window)) return false;
 
-  const polishVoices = window.speechSynthesis.getVoices().filter((voice) =>
-    voice.lang.toLocaleLowerCase().startsWith("pl"),
-  );
-  // Na tym Macu jest polski głos Zosia (pl_PL), więc wybieramy go w pierwszej
-  // kolejności zamiast przypadkowego głosu zwróconego przez przeglądarkę.
-  const polishVoice = polishVoices.find((voice) => /zosia/i.test(voice.name)) || polishVoices[0];
-  if (!polishVoice) return false;
-
   window.speechSynthesis.cancel();
-  const speech = new SpeechSynthesisUtterance(text);
-  speech.lang = "pl-PL";
-  speech.voice = polishVoice;
-  speech.rate = 0.8;
+  window.speechSynthesis.speak(createSpeech(text));
+  return true;
+}
+
+// Level 1 i Level 4 odczytują nazwę wpisanej litery w wybranym języku.
+function speakLetter(letterName) {
+  speak(letterName);
+}
+
+function queueSpeech(text, onend) {
+  if (!("speechSynthesis" in window)) return false;
+  const speech = createSpeech(text);
+  if (onend) {
+    speech.addEventListener("end", onend, { once: true });
+    speech.addEventListener("error", onend, { once: true });
+  }
   window.speechSynthesis.speak(speech);
   return true;
 }
 
-// Level 1 odczytuje nazwę poprawnie wpisanej litery po polsku.
-function speakLetter(letterName) {
-  if (!speakPolish(letterName)) playFeedback("correct");
+function letterSound(letter) {
+  const letterData = currentData().letters.find((item) => item.letter === letter);
+  return letterData?.sound || letter.toLocaleLowerCase(currentData().locale);
+}
+
+function completedSyllable(syllables, filledLetters) {
+  let endIndex = 0;
+  return syllables.find((syllable) => {
+    endIndex += [...syllable].length;
+    return endIndex === filledLetters;
+  });
+}
+
+// Level 2 kolejkuje głos: zawsze litera, a na końcu sylaby także cała sylaba.
+function speakTypedLetter(letter, syllable) {
+  queueSpeech(letterSound(letter));
+  if (syllable) queueSpeech(syllable.toLocaleLowerCase(currentData().locale));
 }
 
 function speakWord(word) {
-  speakPolish(word.toLocaleLowerCase("pl-PL"));
+  speak(word.toLocaleLowerCase(currentData().locale));
 }
 
 function syllableClass(index, count) {
@@ -253,6 +487,29 @@ function setPicture(element, item) {
   // Zamiast emoji można potem dodać tutaj <img src="assets/images/...">.
   element.textContent = item.image;
   element.setAttribute("aria-label", item.imageAlt);
+}
+
+function setSentencePicture(item) {
+  const element = ui.levelFiveImage;
+  if (!Array.isArray(item.image)) {
+    element.classList.remove("sentence-picture");
+    setPicture(element, item);
+    return;
+  }
+
+  element.classList.add("sentence-picture");
+  element.setAttribute("aria-label", item.imageAlt);
+  const [firstEmoji, lastEmoji] = item.image;
+  const firstPicture = document.createElement("span");
+  firstPicture.className = "sentence-prompt-emoji";
+  firstPicture.textContent = firstEmoji;
+  const middleWord = document.createElement("span");
+  middleWord.className = "sentence-prompt-word";
+  middleWord.textContent = item.words[1];
+  const lastPicture = document.createElement("span");
+  lastPicture.className = "sentence-prompt-emoji";
+  lastPicture.textContent = lastEmoji;
+  element.replaceChildren(firstPicture, middleWord, lastPicture);
 }
 
 // Każda sesja Level 2 ma własną, losowo ułożoną pulę słów. Dzięki temu
@@ -282,6 +539,14 @@ function openLevelThreeSetup() {
   showScreen("levelThreeSetup");
 }
 
+function openLevelFiveSetup() {
+  window.clearTimeout(levelThreeAdvanceTimer);
+  levelThreeAdvanceTimer = undefined;
+  activeLevel = null;
+  acceptsKeyboard = false;
+  showScreen("levelFiveSetup");
+}
+
 function openLetterSetup(level) {
   window.clearTimeout(levelThreeAdvanceTimer);
   levelThreeAdvanceTimer = undefined;
@@ -290,38 +555,41 @@ function openLetterSetup(level) {
   letterSetupLevel = level;
   screens.letterSetup.dataset.level = String(level);
   ui.letterSetupIcon.textContent = level === 1 ? "🅰️" : "✍️";
-  ui.letterSetupTitle.textContent = level === 1 ? "Ile liter?" : "Ile liter pisanych?";
-  ui.letterSetupDescription.textContent = "Wybierz liczbę liter do przećwiczenia.";
+  ui.letterSetupTitle.textContent = level === 1 ? currentData().ui.letterCountTitle : currentData().ui.writtenLetterCountTitle;
+  ui.letterSetupDescription.textContent = currentData().ui.letterCountDescription;
   showScreen("letterSetup");
 }
 
 function startLevel(level, wordCount) {
   window.clearTimeout(levelThreeAdvanceTimer);
   levelThreeAdvanceTimer = undefined;
+  window.speechSynthesis?.cancel();
   activeLevel = level;
   taskIndex = 0;
+  const data = currentData();
   if (level === 1) {
-    levelOneLetters = shuffled(letters).slice(0, Math.min(wordCount ?? letters.length, letters.length));
+    levelOneLetters = shuffled(data.letters).slice(0, Math.min(wordCount ?? data.letters.length, data.letters.length));
     showScreen("levelOne");
     renderLetters();
   }
   if (level === 2) {
-    levelTwoWords = shuffled(words).slice(0, Math.min(wordCount, words.length));
+    levelTwoWords = shuffled(data.words).slice(0, Math.min(wordCount, data.words.length));
     showScreen("levelTwo");
     renderWords();
   }
   if (level === 3) {
+    const syllableWords = data.words.filter((word) => word.syllables.length >= 2);
     levelThreeWords = shuffled(syllableWords).slice(0, Math.min(wordCount, syllableWords.length));
     showScreen("levelThree");
     renderSyllables();
   }
   if (level === 4) {
-    levelFourLetters = shuffled(letters).slice(0, Math.min(wordCount ?? letters.length, letters.length));
+    levelFourLetters = shuffled(data.letters).slice(0, Math.min(wordCount ?? data.letters.length, data.letters.length));
     showScreen("levelFour");
     renderWrittenLetters();
   }
   if (level === 5) {
-    levelFiveSentences = shuffled(sentences);
+    levelFiveSentences = shuffled(data.sentences).slice(0, Math.min(wordCount ?? data.sentences.length, data.sentences.length));
     showScreen("levelFive");
     renderSentences();
   }
@@ -341,7 +609,7 @@ function renderWrittenLetters() {
   const item = levelFourLetters[taskIndex];
   acceptsKeyboard = true;
   updateProgress(ui.levelFourProgress, taskIndex, levelFourLetters.length);
-  ui.writtenLetter.textContent = item.letter.toLocaleLowerCase("pl-PL");
+  ui.writtenLetter.textContent = item.letter.toLocaleLowerCase(currentData().locale);
   ui.writtenLetter.classList.remove("is-correct");
 }
 
@@ -362,7 +630,7 @@ function renderWords() {
       const slot = document.createElement("span");
       slot.className = `letter-slot ${colorClass}`;
       slot.dataset.letter = letter;
-      slot.setAttribute("aria-label", "Pusta litera");
+      slot.setAttribute("aria-label", currentData().ui.emptyLetter);
       group.append(slot);
     });
     ui.letterSlots.append(group);
@@ -372,7 +640,7 @@ function renderWords() {
 
 function handleKeyboard(event) {
   if (!acceptsKeyboard || event.ctrlKey || event.metaKey || event.altKey || event.key.length !== 1) return;
-  const typed = event.key.toLocaleUpperCase("pl-PL");
+  const typed = event.key.toLocaleUpperCase(currentData().locale);
 
   if (activeLevel === 1) {
     const item = levelOneLetters[taskIndex];
@@ -392,7 +660,7 @@ function handleKeyboard(event) {
   if (activeLevel === 4) {
     const item = levelFourLetters[taskIndex];
     if (typed === item.letter) {
-      playFeedback("correct");
+      speakLetter(item.sound);
       acceptsKeyboard = false;
       ui.writtenLetter.classList.add("is-correct");
       levelThreeAdvanceTimer = window.setTimeout(() => {
@@ -410,15 +678,22 @@ function handleKeyboard(event) {
     if (typed === currentSlot.dataset.letter) {
       currentSlot.textContent = typed;
       currentSlot.classList.remove("is-current");
-      playFeedback("correct");
       inputIndex += 1;
+      const item = levelTwoWords[taskIndex];
+      speakTypedLetter(typed, completedSyllable(item.syllables, inputIndex));
       if (inputIndex === slots.length) {
         acceptsKeyboard = false;
-        speakWord(levelTwoWords[taskIndex].word);
-        levelThreeAdvanceTimer = window.setTimeout(() => {
+        // Po ostatniej sylabie dziecko słyszy jeszcze całe poprawnie złożone słowo.
+        let hasAdvanced = false;
+        const advance = () => {
+          if (hasAdvanced || activeLevel !== 2) return;
+          hasAdvanced = true;
           levelThreeAdvanceTimer = undefined;
           nextTask();
-        }, 1300);
+        };
+        if (!queueSpeech(item.word.toLocaleLowerCase(currentData().locale), advance)) {
+          levelThreeAdvanceTimer = window.setTimeout(advance, 1300);
+        }
       } else {
         slots[inputIndex].classList.add("is-current");
       }
@@ -468,6 +743,7 @@ function chooseSyllable(syllable, button, item) {
   renderBuiltWord(item);
   if (builtSyllables.length === item.syllables.length) {
     ui.syllableChoices.querySelectorAll("button").forEach((choice) => { choice.disabled = true; });
+    speakWord(item.word);
     levelThreeAdvanceTimer = window.setTimeout(() => {
       levelThreeAdvanceTimer = undefined;
       nextTask();
@@ -479,7 +755,7 @@ function chooseSyllable(syllable, button, item) {
 function renderSentences() {
   const item = levelFiveSentences[taskIndex];
   builtSentenceWords = [];
-  setPicture(ui.levelFiveImage, item);
+  setSentencePicture(item);
   updateProgress(ui.levelFiveProgress, taskIndex, levelFiveSentences.length);
   renderBuiltSentence(item);
   ui.sentenceChoices.replaceChildren(
@@ -544,6 +820,7 @@ document.querySelectorAll("[data-start-level]").forEach((button) => {
     const level = Number(button.dataset.startLevel);
     if (level === 2) openLevelTwoSetup();
     else if (level === 3) openLevelThreeSetup();
+    else if (level === 5) openLevelFiveSetup();
     else if (level === 1 || level === 4) openLetterSetup(level);
     else startLevel(level);
   });
@@ -554,8 +831,18 @@ document.querySelectorAll("[data-level-two-count]").forEach((button) => {
 document.querySelectorAll("[data-level-three-count]").forEach((button) => {
   button.addEventListener("click", () => startLevel(3, Number(button.dataset.levelThreeCount)));
 });
+document.querySelectorAll("[data-level-five-count]").forEach((button) => {
+  button.addEventListener("click", () => startLevel(5, Number(button.dataset.levelFiveCount)));
+});
 document.querySelectorAll("[data-letter-count]").forEach((button) => {
   button.addEventListener("click", () => startLevel(letterSetupLevel, Number(button.dataset.letterCount)));
 });
 document.querySelectorAll("[data-go-menu]").forEach((button) => button.addEventListener("click", goToMenu));
+ui.languageSelect.addEventListener("change", () => {
+  currentLanguage = ui.languageSelect.value;
+  window.speechSynthesis?.cancel();
+  saveLanguage();
+  translateInterface();
+});
 document.addEventListener("keydown", handleKeyboard);
+translateInterface();
