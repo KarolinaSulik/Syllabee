@@ -1,0 +1,34 @@
+name: Publikuj stronę
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: github-pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Pobierz stronę
+        uses: actions/checkout@v4
+      - name: Przygotuj GitHub Pages
+        uses: actions/configure-pages@v5
+      - name: Prześlij stronę
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: .
+      - name: Opublikuj stronę
+        id: deployment
+        uses: actions/deploy-pages@v4
