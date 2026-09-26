@@ -198,6 +198,7 @@ const languageData = {
 };
 
 const screens = {
+  gameLibrary: document.querySelector("#game-library-screen"),
   menu: document.querySelector("#menu-screen"),
   levelTwoSetup: document.querySelector("#level-two-setup-screen"),
   levelThreeSetup: document.querySelector("#level-three-setup-screen"),
@@ -312,6 +313,36 @@ function saveLanguage() {
 function showScreen(name) {
   Object.values(screens).forEach((screen) => screen.classList.add("is-hidden"));
   screens[name].classList.remove("is-hidden");
+}
+
+function updateGameUrl(game) {
+  const url = new URL(window.location.href);
+  if (game) url.searchParams.set("gra", game);
+  else url.searchParams.delete("gra");
+  window.history.pushState({}, "", url);
+}
+
+function openReadingGame({ updateUrl = true } = {}) {
+  window.clearTimeout(levelThreeAdvanceTimer);
+  levelThreeAdvanceTimer = undefined;
+  window.speechSynthesis?.cancel();
+  activeLevel = null;
+  acceptsKeyboard = false;
+  if (updateUrl) updateGameUrl("czytanie");
+  document.title = "Syllabee — Czytanie sylabowe";
+  showScreen("menu");
+}
+
+function goToLibrary({ updateUrl = true } = {}) {
+  window.clearTimeout(levelThreeAdvanceTimer);
+  levelThreeAdvanceTimer = undefined;
+  window.speechSynthesis?.cancel();
+  activeLevel = null;
+  letterSetupLevel = null;
+  acceptsKeyboard = false;
+  if (updateUrl) updateGameUrl();
+  document.title = "Syllabee — gry edukacyjne";
+  showScreen("gameLibrary");
 }
 
 function goToMenu() {
@@ -838,6 +869,8 @@ document.querySelectorAll("[data-letter-count]").forEach((button) => {
   button.addEventListener("click", () => startLevel(letterSetupLevel, Number(button.dataset.letterCount)));
 });
 document.querySelectorAll("[data-go-menu]").forEach((button) => button.addEventListener("click", goToMenu));
+document.querySelectorAll("[data-open-reading-game]").forEach((button) => button.addEventListener("click", () => openReadingGame()));
+document.querySelectorAll("[data-go-library]").forEach((button) => button.addEventListener("click", () => goToLibrary()));
 ui.languageSelect.addEventListener("change", () => {
   currentLanguage = ui.languageSelect.value;
   window.speechSynthesis?.cancel();
@@ -845,4 +878,11 @@ ui.languageSelect.addEventListener("change", () => {
   translateInterface();
 });
 document.addEventListener("keydown", handleKeyboard);
+window.addEventListener("popstate", () => {
+  const game = new URLSearchParams(window.location.search).get("gra");
+  if (game === "czytanie") openReadingGame({ updateUrl: false });
+  else goToLibrary({ updateUrl: false });
+});
 translateInterface();
+if (new URLSearchParams(window.location.search).get("gra") === "czytanie") openReadingGame({ updateUrl: false });
+else goToLibrary({ updateUrl: false });

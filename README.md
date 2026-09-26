@@ -4,7 +4,7 @@ Prosta webowa gra do nauki czytania metodą sylabową dla małych dzieci.
 
 ## Uruchomienie
 
-Nie trzeba nic instalować. Otwórz plik `index.html` w nowoczesnej przeglądarce, np. Chrome, Safari lub Firefox.
+Nie trzeba nic instalować. Otwórz plik `index.html` w nowoczesnej przeglądarce, np. Chrome, Safari lub Firefox. Strona główna pokazuje bibliotekę gier; obecna gra „Czytanie sylabowe” otwiera się po kliknięciu „Graj teraz”.
 
 1. W prawym górnym rogu wybierz język: polski, angielski albo niemiecki.
 2. Wybierz jeden z pięciu poziomów.

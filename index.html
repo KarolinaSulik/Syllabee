@@ -3,18 +3,64 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Syllabee — prosta nauka czytania metodą sylabową." />
-    <title>Syllabee</title>
+    <meta name="description" content="Syllabee — proste, bezpieczne gry edukacyjne dla dzieci." />
+    <title>Syllabee — gry edukacyjne</title>
     <link rel="stylesheet" href="style.css" />
     <script src="script.js" defer></script>
   </head>
   <body>
     <main class="app">
-      <section id="menu-screen" class="screen" aria-labelledby="menu-title">
+      <section id="game-library-screen" class="screen library-screen" aria-labelledby="library-title">
+        <header class="library-header">
+          <a class="library-brand" href="./" aria-label="Syllabee — strona główna">
+            <span aria-hidden="true">🐝</span>
+            <span>Syllabee</span>
+          </a>
+          <a class="parent-link" href="#dla-rodzicow">Dla rodziców</a>
+        </header>
+
+        <div class="library-content">
+          <p class="library-kicker">Gry edukacyjne dla dzieci</p>
+          <h1 id="library-title">Uczymy przez zabawę</h1>
+          <p class="library-intro">Krótkie, spokojne gry dla dzieci w wieku 4–6 lat. Bez reklam, bez logowania i bez presji.</p>
+
+          <div class="game-library-grid" aria-label="Wybierz grę edukacyjną">
+            <article class="game-library-card is-available">
+              <div class="game-card-illustration reading-illustration" aria-hidden="true">🔤</div>
+              <div class="game-card-copy">
+                <span class="game-card-tag">Dostępna teraz</span>
+                <h2>Czytanie sylabowe</h2>
+                <p>Litery, wyrazy, sylaby i krótkie zdania — krok po kroku.</p>
+              </div>
+              <button class="library-play-button" type="button" data-open-reading-game>Graj teraz <span aria-hidden="true">→</span></button>
+            </article>
+
+            <article class="game-library-card is-coming" aria-label="Nowa gra wkrótce">
+              <div class="game-card-illustration" aria-hidden="true">🎲</div>
+              <div class="game-card-copy">
+                <span class="game-card-tag">Wkrótce</span>
+                <h2>Kolejna gra</h2>
+                <p>Tu pojawi się następna zabawa edukacyjna.</p>
+              </div>
+            </article>
+          </div>
+
+          <section id="dla-rodzicow" class="parent-note" aria-labelledby="parent-note-title">
+            <span aria-hidden="true">💛</span>
+            <div>
+              <h2 id="parent-note-title">Dla rodziców</h2>
+              <p>Najlepiej towarzyszyć dziecku przy pierwszych zabawach, chwalić próby i robić krótkie przerwy.</p>
+            </div>
+          </section>
+        </div>
+      </section>
+
+      <section id="menu-screen" class="screen is-hidden" aria-labelledby="menu-title">
         <div class="menu-brand" aria-label="Syllabee">
           <span class="menu-brand-bee" aria-hidden="true">🐝</span>
           <span>Syllabee</span>
         </div>
+        <button class="library-back-button" type="button" data-go-library>← Wszystkie gry</button>
         <div class="language-selector">
           <select id="language-select" aria-label="Język">
             <option value="pl">🇵🇱 Polski</option>
