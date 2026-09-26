@@ -3,8 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Syllabee — proste, bezpieczne gry edukacyjne dla dzieci." />
-    <title>Syllabee — gry edukacyjne</title>
+    <meta name="description" content="Syllabee — spokojna zabawa literkami i sylabami dla dzieci." />
+    <title>Syllabee — literki i sylaby</title>
     <link rel="stylesheet" href="style.css" />
     <script src="script.js" defer></script>
   </head>
@@ -20,11 +20,11 @@
         </header>
 
         <div class="library-content">
-          <p class="library-kicker">Gry edukacyjne dla dzieci</p>
+          <p class="library-kicker">Dla małych odkrywców</p>
           <h1 id="library-title">Uczymy przez zabawę</h1>
-          <p class="library-intro">Krótkie, spokojne gry dla dzieci w wieku 4–6 lat. Bez reklam, bez logowania i bez presji.</p>
+          <p class="library-intro">Edukacyjna zabawa dla dzieci w wieku 4–6 lat — bez reklam, bez hałasu, bez logowania i bez nadmiaru bodźców.</p>
 
-          <div class="game-library-grid" aria-label="Wybierz grę edukacyjną">
+          <div class="game-library-grid" aria-label="Wybierz zabawę edukacyjną">
             <article class="game-library-card is-available">
               <div class="game-card-illustration reading-illustration" aria-hidden="true">🔤</div>
               <div class="game-card-copy">
@@ -32,15 +32,18 @@
                 <h2>Czytanie sylabowe</h2>
                 <p>Litery, wyrazy, sylaby i krótkie zdania — krok po kroku.</p>
               </div>
-              <button class="library-play-button" type="button" data-open-reading-game>Graj teraz <span aria-hidden="true">→</span></button>
+              <button class="library-play-button" type="button" data-open-reading-game>
+                <span>Graj teraz</span>
+                <span class="library-play-button-icon" aria-hidden="true">→</span>
+              </button>
             </article>
 
             <article class="game-library-card is-coming" aria-label="Nowa gra wkrótce">
               <div class="game-card-illustration" aria-hidden="true">🎲</div>
               <div class="game-card-copy">
                 <span class="game-card-tag">Wkrótce</span>
-                <h2>Kolejna gra</h2>
-                <p>Tu pojawi się następna zabawa edukacyjna.</p>
+                <h2>Kolejna zabawa</h2>
+                <p>Tu pojawi się następna spokojna aktywność.</p>
               </div>
             </article>
           </div>
@@ -60,7 +63,7 @@
           <span class="menu-brand-bee" aria-hidden="true">🐝</span>
           <span>Syllabee</span>
         </div>
-        <button class="library-back-button" type="button" data-go-library>← Wszystkie gry</button>
+        <button class="library-back-button" type="button" data-go-library>← Wszystkie zabawy</button>
         <div class="language-selector">
           <select id="language-select" aria-label="Język">
             <option value="pl">🇵🇱 Polski</option>

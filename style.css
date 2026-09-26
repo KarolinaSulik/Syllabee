@@ -12,15 +12,15 @@ h1 { margin-bottom: 2.5rem; font-size: clamp(2.25rem, 6vw, 4rem); line-height: 1
 #menu-screen > * { position: relative; z-index: 1; }
 .library-screen { justify-content: flex-start; overflow: auto; padding: clamp(1.25rem, 3vw, 2.75rem) 0; background: radial-gradient(circle at 10% 16%, rgba(255, 213, 111, .32), transparent 27%), radial-gradient(circle at 92% 10%, rgba(171, 133, 255, .25), transparent 28%); }
 .library-header { display: flex; width: min(100%, 72rem); align-items: center; justify-content: space-between; }
-.library-brand { display: inline-flex; align-items: center; gap: .45rem; color: #304051; font-family: "Snell Roundhand", "Bradley Hand", "Chalkboard SE", cursive; font-size: clamp(2rem, 4vw, 3rem); font-weight: 700; letter-spacing: -.05em; line-height: 1; text-decoration: none; transform: rotate(-2deg); }
+.library-brand { display: inline-flex; align-items: center; gap: .45rem; color: #304051; font-family: "Marker Felt", "Chalkboard SE", "Comic Sans MS", cursive; font-size: clamp(2rem, 4vw, 3rem); font-weight: 700; letter-spacing: -.05em; line-height: 1; text-decoration: none; transform: rotate(-2deg); }
 .library-brand > span:first-child { font-family: Arial, sans-serif; font-size: .66em; letter-spacing: 0; transform: rotate(8deg); }
 .parent-link, .library-back-button { border: 0; border-radius: 999px; background: rgba(255, 255, 255, .76); color: #4b3574; font: inherit; font-weight: 700; text-decoration: none; }
 .parent-link { padding: .7rem 1rem; }
 .library-content { width: min(100%, 72rem); margin: clamp(3rem, 8vh, 5.5rem) auto 0; }
 .library-kicker { margin-bottom: .8rem; color: #7a4bc6; font-size: .9rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
-.library-content h1 { max-width: 42rem; margin: 0; color: #202c3d; font-size: clamp(2.75rem, 6vw, 5.25rem); letter-spacing: -.065em; }
-.library-intro { max-width: 38rem; margin: 1.1rem auto 0; color: #526071; font-size: clamp(1.1rem, 2.2vw, 1.35rem); font-weight: 600; line-height: 1.55; }
-.game-library-grid { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(15rem, .65fr); gap: 1.25rem; margin-top: clamp(2.5rem, 6vh, 4rem); text-align: left; }
+.library-content h1 { max-width: 38rem; margin: 0 auto; color: #202c3d; font-family: ui-rounded, "Avenir Next", "Segoe UI", sans-serif; font-size: clamp(2.75rem, 6vw, 5.25rem); font-weight: 800; letter-spacing: -.065em; line-height: 1.02; }
+.library-intro { max-width: 44rem; margin: 1.1rem auto 0; color: #526071; font-size: clamp(1.1rem, 2.2vw, 1.35rem); font-weight: 600; line-height: 1.55; }
+.game-library-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.25rem; margin-top: clamp(2.5rem, 6vh, 4rem); text-align: left; }
 .game-library-card { display: grid; min-height: 19rem; align-content: start; gap: 1.15rem; padding: clamp(1.4rem, 3vw, 2.2rem); border: 3px solid transparent; border-radius: 1.75rem; box-shadow: 0 1rem 2.2rem rgba(49, 56, 84, .11); }
 .game-library-card.is-available { grid-template-columns: auto 1fr; border-color: #8c69dc; background: linear-gradient(135deg, #f8f3ff, #fff 65%); }
 .game-library-card.is-coming { background: rgba(255, 255, 255, .58); color: #687387; }
@@ -29,14 +29,19 @@ h1 { margin-bottom: 2.5rem; font-size: clamp(2.25rem, 6vw, 4rem); line-height: 1
 .game-card-copy h2, .parent-note h2 { margin: .5rem 0; color: #273449; font-size: clamp(1.35rem, 2.2vw, 1.8rem); }
 .game-card-copy p, .parent-note p { margin: 0; color: #586579; font-size: 1rem; font-weight: 600; line-height: 1.5; }
 .game-card-tag { color: #7045bb; font-size: .8rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; }
-.library-play-button { grid-column: 1 / -1; width: fit-content; margin-top: auto; padding: .8rem 1.15rem; border: 0; border-radius: .85rem; background: #7348c5; color: #fff; font: inherit; font-weight: 800; box-shadow: 0 .45rem 0 #593493; transition: transform .15s ease, box-shadow .15s ease; }
-.library-play-button:hover { transform: translateY(.15rem); box-shadow: 0 .3rem 0 #593493; }
+.library-play-button { display: inline-flex; grid-column: 1 / -1; width: fit-content; min-height: 3.5rem; margin-top: auto; align-items: center; gap: .9rem; padding: .45rem .55rem .45rem 1.2rem; border: 0; border-radius: .95rem; background: #273449; color: #fff; font: inherit; font-weight: 800; letter-spacing: .01em; box-shadow: 0 .7rem 1.4rem rgba(39, 52, 73, .2); transition: transform .2s ease, box-shadow .2s ease, background .2s ease; }
+.library-play-button-icon { display: grid; width: 2.6rem; height: 2.6rem; place-items: center; border-radius: .68rem; background: #b9f16a; color: #1e2c3d; font-size: 1.35rem; font-weight: 700; line-height: 1; transition: transform .2s ease, background .2s ease; }
+.library-play-button:hover { background: #1e2c3d; box-shadow: 0 1rem 1.75rem rgba(39, 52, 73, .28); transform: translateY(-.18rem); }
+.library-play-button:hover .library-play-button-icon { background: #d0ff8f; transform: translateX(.18rem); }
+.library-play-button:active { box-shadow: 0 .35rem .75rem rgba(39, 52, 73, .18); transform: translateY(.04rem); }
+
+@media (prefers-reduced-motion: reduce) { .library-play-button, .library-play-button-icon { transition: none; } }
 .parent-note { display: flex; max-width: 48rem; margin: clamp(2.5rem, 6vh, 4rem) auto 0; align-items: flex-start; gap: 1rem; padding: 1.25rem 1.5rem; border: 2px solid rgba(234, 182, 74, .4); border-radius: 1.25rem; background: rgba(255, 252, 241, .74); text-align: left; }
 .parent-note > span { font-size: 1.75rem; }
 #menu-screen .menu-brand { position: absolute; top: clamp(1.15rem, 3vh, 2rem); left: 50%; display: inline-flex; align-items: center; gap: .45rem; color: #304051; font-family: "Snell Roundhand", "Bradley Hand", "Chalkboard SE", cursive; font-size: clamp(2rem, 4.3vw, 3.15rem); font-weight: 700; letter-spacing: -.05em; line-height: 1; transform: translateX(-50%) rotate(-2deg); }
 .menu-brand-bee { font-family: Arial, sans-serif; font-size: .66em; letter-spacing: 0; transform: rotate(8deg); }
-.library-back-button { position: absolute; top: clamp(1rem, 3vh, 2rem); left: 0; padding: .65rem .85rem; }
-.language-selector { position: absolute; top: clamp(1rem, 3vh, 2rem); right: 0; }
+#menu-screen .library-back-button { position: absolute; top: clamp(1rem, 3vh, 2rem); left: 0; padding: .65rem .85rem; }
+#menu-screen .language-selector { position: absolute; top: clamp(1rem, 3vh, 2rem); right: 0; }
 .language-selector select { min-height: 2.6rem; padding: .35rem 2rem .35rem .7rem; border: 2px solid #7a4bc6; border-radius: .65rem; background: rgba(255, 255, 255, .9); color: #2d2050; font: inherit; font-size: 1rem; font-weight: 700; }
 #menu-screen #menu-title { position: absolute; top: clamp(7rem, 15vh, 9.5rem); left: 0; width: 100%; margin: 0; color: #1f2937; font-size: clamp(2.25rem, 5vw, 3.75rem); letter-spacing: -.045em; }
 .level-menu { display: grid; width: min(100% - 2.5rem, 76rem); grid-template-columns: repeat(5, minmax(0, 1fr)); gap: clamp(.9rem, 2vw, 1.5rem); margin-top: 3.5rem; }
@@ -82,7 +87,7 @@ h1 { margin-bottom: 2.5rem; font-size: clamp(2.25rem, 6vw, 4rem); line-height: 1
 .single-letter.is-correct { color: #1769c2; }
 .written-letter { display: flex; min-width: .9em; min-height: 1.2em; align-items: center; justify-content: center; font-family: "Chalkboard SE", "Comic Sans MS", "Bradley Hand", cursive; font-size: clamp(10rem, 30vw, 19rem); font-weight: 700; line-height: 1; }
 .written-letter.is-correct { color: #d22727; }
-.letter-slots { display: flex; align-items: flex-end; justify-content: center; gap: clamp(1.5rem, 5vw, 4rem); }
+.letter-slots { display: flex; align-items: flex-end; justify-content: center; gap: clamp(3rem, 9vw, 6rem); }
 .syllable-slots { display: flex; gap: .22em; }
 .letter-slot { display: inline-flex; width: .78em; min-height: 1.22em; align-items: center; justify-content: center; border-bottom: .1em solid currentColor; font-size: clamp(4rem, 10vw, 8rem); font-weight: 700; line-height: 1; }
 .letter-slot.syllable-one, .syllable-piece.syllable-one { color: #d22727; }
@@ -93,7 +98,7 @@ h1 { margin-bottom: 2.5rem; font-size: clamp(2.25rem, 6vw, 4rem); line-height: 1
 .success-panel { display: grid; justify-items: center; gap: 1.25rem; margin-top: 1.5rem; }
 .success-panel p { font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 700; }
 .primary-button { min-height: 4.5rem; padding: .75rem 1.5rem; font-size: clamp(1.25rem, 3vw, 1.75rem); }
-.built-word { display: flex; min-height: clamp(5rem, 10vw, 7rem); align-items: center; justify-content: center; gap: .08em; margin: 1.5rem 0; }
+.built-word { display: flex; min-height: clamp(5rem, 10vw, 7rem); align-items: center; justify-content: center; gap: .3em; margin: 1.5rem 0; }
 .syllable-piece { font-size: clamp(3.5rem, 8vw, 6rem); font-weight: 700; line-height: 1.05; }
 .syllable-choices { display: flex; flex-wrap: wrap; justify-content: center; gap: 1rem; max-width: 48rem; }
 .syllable-choice { min-width: 5rem; min-height: 4.5rem; padding: .4rem .8rem; border: 3px solid #111; border-radius: .65rem; background: #fff; font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 700; }
@@ -102,8 +107,8 @@ h1 { margin-bottom: 2.5rem; font-size: clamp(2.25rem, 6vw, 4rem); line-height: 1
 #level-five-image.sentence-picture { display: flex; align-items: center; justify-content: center; gap: clamp(.6rem, 2vw, 1.5rem); white-space: nowrap; }
 .sentence-prompt-emoji { line-height: 1; }
 .sentence-prompt-word { color: #bd3976; font-size: .42em; font-weight: 800; letter-spacing: -.06em; }
-.built-sentence { display: flex; min-height: clamp(6rem, 13vw, 9rem); align-items: center; justify-content: center; gap: .22em; }
-.sentence-piece { border-bottom: .1em solid #bd3976; color: #1f2937; font-size: clamp(3.5rem, 8vw, 6.5rem); font-weight: 700; line-height: 1.05; }
+.built-sentence { display: flex; min-height: clamp(6rem, 13vw, 9rem); align-items: center; justify-content: center; gap: .42em; }
+.sentence-piece { color: #1f2937; font-size: clamp(3.5rem, 8vw, 6.5rem); font-weight: 700; line-height: 1.05; }
 .sentence-choices { display: flex; flex-wrap: wrap; justify-content: center; gap: 1rem; max-width: 68rem; }
 .sentence-choice { min-width: 8rem; min-height: 6rem; padding: .4rem .8rem; border: 3px solid #111; border-radius: .8rem; background: #fff; font-size: clamp(2.4rem, 6vw, 4.5rem); font-weight: 700; }
 #level-five-screen .built-sentence { position: absolute; top: 50%; left: 50%; width: 100%; margin: 0; transform: translate(-50%, -50%); }
@@ -116,4 +121,5 @@ h1 { margin-bottom: 2.5rem; font-size: clamp(2.25rem, 6vw, 4rem); line-height: 1
 #level-three-screen .syllable-choice { min-width: 8rem; min-height: 6.5rem; font-size: clamp(3rem, 7vw, 5.5rem); }
 .complete-text { margin-bottom: 2rem; }
 @media (max-width: 900px) { .level-menu { width: min(100% - 2.5rem, 42rem); grid-template-columns: repeat(2, minmax(0, 1fr)); } .level-card { min-height: 11rem; } }
-@media (max-width: 620px) { .app { padding: .75rem 1.25rem; } .screen { min-height: calc(100vh - 1.5rem); } .library-screen { padding-top: 1.25rem; } .library-header { align-items: flex-start; } .parent-link { padding: .55rem .7rem; font-size: .82rem; } .library-content { margin-top: 3.2rem; } .game-library-grid { grid-template-columns: 1fr; } .game-library-card { min-height: auto; } .game-library-card.is-available { grid-template-columns: auto 1fr; } .game-library-card.is-coming { display: none; } .parent-note { padding: 1rem; } .library-back-button { top: .15rem; padding: .55rem .65rem; font-size: .8rem; } .language-selector { top: .15rem; } .language-selector select { min-height: 2.3rem; padding-left: .5rem; font-size: .9rem; } #menu-screen #menu-title { top: 8.4rem; } .level-menu { width: min(100% - 2rem, 26rem); grid-template-columns: 1fr; margin-top: 5.5rem; } .level-card { min-height: 7.5rem; grid-template-columns: auto 1fr; grid-template-rows: auto auto; column-gap: 1rem; text-align: left; } .level-card-icon { grid-row: span 2; } .level-card-label { align-self: start; } .word-layout { flex-direction: column; gap: 1.5rem; } .letter-slots { gap: 1rem; } .game-topbar .progress-bar { top: calc(100% + 1rem); width: 100%; } #level-three-screen .picture, #level-five-screen .picture { top: clamp(5rem, 14vh, 7rem); } #level-three-screen .built-word, #level-five-screen .built-sentence { top: 48%; } #level-three-screen .syllable-choices, #level-five-screen .sentence-choices { bottom: 1rem; } #level-three-screen .syllable-choice, #level-five-screen .sentence-choice { min-width: 6rem; min-height: 5rem; } .progress-segment { height: .7rem; } }
+@media (max-width: 620px) { .app { padding: .75rem 1.25rem; } .screen { min-height: calc(100vh - 1.5rem); } .library-screen { padding-top: 1.25rem; } .library-header { align-items: flex-start; } .parent-link { padding: .55rem .7rem; font-size: .82rem; } .library-content { margin-top: 3.2rem; } .game-library-grid { grid-template-columns: 1fr; } .game-library-card { min-height: auto; } .game-library-card.is-available { grid-template-columns: auto 1fr; } .game-library-card.is-coming { display: none; } .parent-note { padding: 1rem; } .library-back-button { top: .15rem; padding: .55rem .65rem; font-size: .8rem; } .language-selector { top: .15rem; } .language-selector select { min-height: 2.3rem; padding-left: .5rem; font-size: .9rem; } #menu-screen #menu-title { top: 8.4rem; } .level-menu { width: min(100% - 2rem, 26rem); grid-template-columns: 1fr; margin-top: 5.5rem; } .level-card { min-height: 7.5rem; grid-template-columns: auto 1fr; grid-template-rows: auto auto; column-gap: 1rem; text-align: left; } .level-card-icon { grid-row: span 2; } .level-card-label { align-self: start; } .word-layout { flex-direction: column; gap: 1.5rem; } .letter-slots { gap: 2rem; } .game-topbar .progress-bar { top: calc(100% + 1rem); width: 100%; } #level-three-screen .picture, #level-five-screen .picture { top: clamp(5rem, 14vh, 7rem); } #level-three-screen .built-word, #level-five-screen .built-sentence { top: 48%; } #level-three-screen .syllable-choices, #level-five-screen .sentence-choices { bottom: 1rem; } #level-three-screen .syllable-choice, #level-five-screen .sentence-choice { min-width: 6rem; min-height: 5rem; } .progress-segment { height: .7rem; } }
+@media (max-width: 620px) { #menu-screen .library-back-button { top: .15rem; padding: .55rem .65rem; } #menu-screen .language-selector { top: .15rem; } }
