@@ -31,7 +31,6 @@
         </header>
 
         <div class="library-content">
-          <p id="library-kicker" class="library-kicker">Dla małych odkrywców</p>
           <h1 id="library-title">Uczymy przez zabawę</h1>
           <p id="library-intro" class="library-intro">Edukacyjna zabawa dla dzieci w wieku 4–6 lat — bez reklam, bez hałasu, bez logowania i bez nadmiaru bodźców.</p>
 
@@ -51,18 +50,10 @@
 
           </div>
 
-          <section id="dla-rodzicow" class="parent-note" aria-labelledby="parent-note-title">
-            <span aria-hidden="true">💛</span>
-            <div>
-              <h2 id="parent-note-title">Dla rodziców</h2>
-              <p id="parent-note-text">Najlepiej towarzyszyć dziecku przy pierwszych zabawach, chwalić próby i robić krótkie przerwy.</p>
-            </div>
-          </section>
-
-          <section class="parent-guide" aria-labelledby="parent-guide-title">
+          <section id="dla-rodzicow" class="parent-guide" aria-labelledby="parent-guide-title">
             <header class="parent-guide-header">
-              <h2 id="parent-guide-title">Jak wspierać dziecko na każdym poziomie</h2>
-              <p id="parent-guide-intro">Wystarczą krótkie, regularne sesje, rozmowa i zainteresowanie tym, co dziecko odkrywa.</p>
+              <h2 id="parent-guide-title">Jak wspierać dziecko na każdym poziomie?</h2>
+              <p id="parent-note-text" class="parent-guide-preface">Najlepiej towarzyszyć dziecku przy pierwszych zabawach, chwalić próby i robić krótkie przerwy. 💛</p>
             </header>
             <div id="parent-level-cards" class="parent-level-accordions"></div>
             <aside class="parent-readiness" aria-labelledby="parent-readiness-title">
@@ -320,14 +311,9 @@
         <div id="movable-letter-bank" class="movable-letter-bank" aria-label="Litery do ułożenia słowa"></div>
         <button id="movable-clear-button" class="movable-clear-button" type="button">Wyczyść</button>
         <div id="montessori-typing" class="montessori-typing is-hidden" aria-label="Wpisywane słowo"></div>
-        <div id="level-six-actions" class="level-six-actions is-hidden" role="dialog" aria-modal="true" aria-live="polite" aria-label="Dobrze">
-          <section class="level-six-success-card">
-            <div id="level-six-celebration" class="level-six-celebration" aria-hidden="true">🚗</div>
-            <p id="level-six-success" class="level-six-success"></p>
-            <div class="level-six-action-buttons">
-              <button id="level-six-next-button" class="level-six-action-button" type="button">Dalej ➡️</button>
-            </div>
-          </section>
+        <button id="montessori-backspace-button" class="montessori-backspace-button is-hidden" type="button">⌫ Usuń literę</button>
+        <div id="level-six-actions" class="level-six-actions is-hidden" aria-live="polite">
+          <button id="level-six-next-button" class="level-six-action-button" type="button">Dalej ➡️</button>
         </div>
         <div class="game-hint" data-game-hint>
           <aside class="game-hint-card is-hidden" data-game-hint-card role="dialog" aria-live="polite" aria-label="Podpowiedź">

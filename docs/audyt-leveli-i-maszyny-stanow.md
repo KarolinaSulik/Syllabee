@@ -133,6 +133,16 @@ Tak jak w levelu 1: automatyczne przejście jest adekwatne, ponieważ jednoznacz
 
 Dziecko widzi obrazek lub rebus oraz pomieszane wyrazy. Układa wyrazy w poprawnej kolejności, budując krótkie zdanie. Przed startem wybiera liczbę zdań.
 
+### Zasady prezentacji sylab — do wdrożenia
+
+Każdy wyraz użyty w tym levelu ma być podzielony wizualnie na sylaby i pokazywany zgodnie z naprzemiennym schematem kolorów:
+
+- pierwsza sylaba jest czerwona;
+- druga sylaba jest niebieska;
+- trzecia sylaba jest ponownie czerwona; kolejne sylaby kontynuują tę naprzemienność.
+
+Litery w obrębie jednej sylaby powinny mieć małe odstępy, a między sąsiednimi sylabami należy zastosować wyraźnie większy odstęp. Dzięki temu podział sylabowy pozostaje czytelny również wtedy, gdy dziecko układa całe zdanie.
+
 ### Stan obecny: maszyna stanów
 
 ```text
@@ -160,7 +170,7 @@ To trzyetapowe zadanie dla słów o długości 3–6 liter:
 2. następnie wpisuje to samo słowo na klawiaturze;
 3. po poprawnym wpisaniu ma przejść do kolejnego obrazka.
 
-Samogłoski są czerwone, a spółgłoski niebieskie.
+Wyraz wyświetlany przy emotce ma mieć sylaby pokolorowane według schematu projektu: pierwsza sylaba na czerwono, druga na niebiesko, trzecia ponownie na czerwono, a kolejne naprzemiennie. To kolorowanie dotyczy całych sylab, a nie podziału na samogłoski i spółgłoski. W obrębie sylaby stosujemy małe odstępy między literami, a między sylabami — większe.
 
 ### Stan obecny: maszyna stanów
 
@@ -190,43 +200,38 @@ Po sukcesie pojawia się pełnoekranowy modal (`aria-modal="true"`) z przyciemni
 
 ### Docelowa maszyna stanów i przejście
 
-Rekomendacja: zachować małe okienko sukcesu i świadome kliknięcie „Dalej”, ale zmienić je z modalu na **nieblokującą kartę na planszy**. Karta powinna pokazywać aktualną emotkę z zadania i ruch właściwy dla obiektu.
+Rekomendacja: po sukcesie nie pokazujemy żadnego okienka ani dodatkowego komunikatu. Na tej samej planszy pojawia się wyłącznie pojedynczy przycisk następnego kroku.
 
 ```text
-[UKŁADANIE] → poprawny wyraz → [SUKCES NA PLANSZY: aktualny obrazek animuje się]
-                                   → klik „Teraz wpisz słowo” → [PISANIE]
+[UKŁADANIE] → poprawny wyraz → [przycisk „Teraz wpisz słowo”]
+                                   → klik → [PISANIE]
 
-[PISANIE] → pełny poprawny wyraz → [SUKCES NA PLANSZY: aktualny obrazek animuje się]
-                                    → klik „Dalej” → [następny obrazek]
+[PISANIE] → pełny poprawny wyraz → [przycisk „Dalej”]
+                                    → klik → [następny obrazek]
 
 [UKŁADANIE lub PISANIE] → błąd → [błąd widoczny, możliwość poprawy]
                                 → [ten sam etap]
 ```
 
-#### Zasady docelowego ekranu sukcesu
+#### Zasady docelowego przejścia
 
-- Obrazek pozostaje **tym samym obrazkiem z aktualnego zadania**, w tym samym miejscu planszy.
-- Okienko nie zaciemnia całego ekranu i nie przechwytuje kliknięć poza własną kartą. Animacja może uruchamiać się w okienku albo na pozostającym za nim obrazku — zawsze dla bieżącej emotki.
-- Pozostałe elementy zadania mogą być nieaktywne po sukcesie, ale przycisk „← Menu” musi pozostać dostępny.
-- Tekst ma wskazywać wyłącznie następny krok: po układaniu „Teraz wpisz słowo”, po pisaniu „Dalej”.
-- Animacja ma być krótka, zapętlona delikatnie lub odtwarzana raz; należy respektować ustawienie ograniczenia ruchu systemowego.
+- Obrazek i poprawnie złożony wyraz pozostają widoczne na planszy.
+- Po układaniu pokazujemy tylko „Teraz wpisz słowo”; po wpisaniu — tylko „Dalej”.
+- Przycisk „← Menu” w lewym górnym rogu pozostaje zawsze dostępny.
+- Nie ma modalu, karty sukcesu, przyciemnienia ekranu ani dodatkowej animacji.
 
-#### Przykłady ruchu zależne od emotki
+## Zasady metodyczne prezentacji wyrazów — do uwzględnienia w audycie
 
-| Typ obrazka | Przykład | Ruch po sukcesie |
-| --- | --- | --- |
-| Pojazd | 🚗 auto, 🚲 rower, 🚀 rakieta | przejeżdża lub przelatuje krótki odcinek i wraca do pozycji startowej |
-| Zwierzę | 🐶 pies, 🐟 ryba, 🐦 ptak | podskakuje, płynie lub trzepocze skrzydłami |
-| Postać | 👩 mama, 🏴‍☠️ pirat | macha lub lekko podskakuje |
-| Przedmiot/natura | 🍦 lody, 🌋 wulkan, 🎈 balon | delikatnie kołysze się, rośnie albo unosi |
-
-Przykład dla słowa **AUTO**: po poprawnym ułożeniu lub wpisaniu 🚗 przesuwa się z lewej do prawej o niewielką odległość, a pod nim pojawia się przycisk odpowiednio „Teraz wpisz słowo” albo „Dalej”. Dziecko wybiera moment przejścia, ale nie jest odcięte od planszy przez okno dialogowe.
+- Pierwsza sylaba jest czerwona, druga niebieska, trzecia znów czerwona; dalsze sylaby powtarzają ten schemat.
+- Między literami jednej sylaby są małe odstępy, a między sylabami — większe.
+- Litery pojawiają się początkowo pojedynczo, a dziecko słyszy odpowiadające im głoski.
+- Po ukończeniu sylaby dziecko słyszy ją w całości; po ukończeniu wyrazu — całe słowo.
+- Po opanowaniu słowa można wyświetlić je jeszcze raz w całości, czarną czcionką, bez kolorystycznej podpowiedzi.
 
 ## Kryteria akceptacji przyszłej zmiany levelu 6
 
-1. Po sukcesie pojawia się małe, nieblokujące okienko/karta; nie ma pełnoekranowej warstwy ani modalu blokującego całą planszę.
-2. Animowana jest emotka aktualnego zadania, nie stała dekoracja ani inny obrazek.
-3. Po ukończeniu układania jedyną główną akcją jest przejście do wpisywania; po ukończeniu wpisywania — przejście do następnego zadania.
-4. Błędna odpowiedź nie powoduje przejścia dalej ani utraty postępu; dziecko otrzymuje czytelną możliwość poprawy.
-5. W fazie pisania istnieje widoczna kontrolka usunięcia ostatniej litery albo klawiatura ekranowa z Backspace, nie tylko obsługa fizycznego klawisza.
-6. Przycisk powrotu do menu działa zawsze, również podczas informacji o sukcesie.
+1. Po sukcesie nie pojawia się okienko, karta, modal ani warstwa blokująca planszę.
+2. Po ukończeniu układania jedyną główną akcją jest przejście do wpisywania; po ukończeniu wpisywania — przejście do następnego zadania.
+3. Błędna odpowiedź nie powoduje przejścia dalej ani utraty postępu; dziecko otrzymuje czytelną możliwość poprawy.
+4. W fazie pisania istnieje widoczna kontrolka usunięcia ostatniej litery albo klawiatura ekranowa z Backspace, nie tylko obsługa fizycznego klawisza.
+5. Przycisk powrotu do menu działa zawsze, również po sukcesie.

@@ -14,6 +14,10 @@ Najważniejsze zasady:
 - czytelna nawigacja dla dziecka oraz rodzica;
 - interfejs i treści dla rodziców dostępne po polsku, angielsku i niemiecku.
 
+### Zasada MINI
+
+**MINI** oznacza minimalizm tekstowy. Przy każdej implementacji najpierw sprawdzamy, czy tekst jest potrzebny do wykonania bieżącego działania. Gra jest przeznaczona dla dzieci, które często jeszcze nie czytają, dlatego komunikaty zostawiamy tylko tam, gdzie pomagają dziecku lub rodzicowi. Zamiast objaśniać oczywiste rzeczy tekstem, używamy czytelnych ikon, obrazu, układu i prostych działań.
+
 ## Mapa gry
 
 ```text
@@ -33,7 +37,8 @@ Menu główne jest biblioteką, która w przyszłości będzie zawierać więcej
 
 - Obecnie pokazywana jest wyłącznie jedna dostępna karta: **Czytanie sylabowe**.
 - Nie pokazujemy pustych kart ani kart „Wkrótce”, dopóki kolejna gra nie będzie gotowa.
-- Nagłówek i opis są krótkie; najważniejszym elementem jest przycisk **Graj teraz**.
+- Pokazujemy tylko tytuł **Uczymy przez zabawę** — bez dodatkowego hasła „Dla małych odkrywców”. Tytuł ma fioletowy kolor używany wcześniej przez to hasło.
+- Opis ograniczamy do najważniejszych informacji: wieku, braku reklam i logowania. Najważniejszym elementem jest przycisk **Graj teraz**.
 - Po prawej stronie nagłówka znajdują się odnośniki **Dla rodziców** i **O twórczyni** oraz wybór języka.
 - Nową grę dodaje się jako kolejną kartę biblioteki. Może mieć własny wybór poziomów albo własny przebieg, bez przebudowy menu głównego.
 
@@ -42,7 +47,7 @@ Menu główne jest biblioteką, która w przyszłości będzie zawierać więcej
 ### Logotyp
 
 - Na stronie głównej oraz na widoku wyboru poziomów używamy pełnego logotypu **Syllabee** w lewym górnym rogu.
-- Pozycja logotypu jest stała między tymi widokami, aby budować rozpoznawalność marki i orientację użytkownika.
+- Pozycja i rozmiar logotypu są takie same na stronie głównej oraz na widoku wyboru poziomów, aby budować rozpoznawalność marki i orientację użytkownika.
 - Nie używamy osobnej ikonki logo, dopóki nie powstanie dedykowany, czytelny znak graficzny. Obecny zasób jest szerokim logotypem.
 - Logotyp jest lekko większy niż pozostałe elementy paska, w ciemnym, pełnym kolorze. Nie stosujemy na nim obniżonej przezroczystości.
 
@@ -83,7 +88,7 @@ Poziomy wymagające wyboru liczby zadań pokazują przed rozgrywką prosty ekran
 
 ## Dla rodziców
 
-Sekcja **Dla rodziców** ma informować, nie przytłaczając tekstem.
+Sekcja **Dla rodziców** ma informować, nie przytłaczając tekstem. Zaczyna się od największego tekstu w sekcji — nagłówka **Jak wspierać dziecko na każdym poziomie?** Następnie pojawia się krótka wskazówka: „Najlepiej towarzyszyć dziecku przy pierwszych zabawach, chwalić próby i robić krótkie przerwy. 💛”, a pod nią akordeony. Nie powtarzamy wewnątrz sekcji etykiety „Dla rodziców”, ponieważ jest już widoczna w linku nawigacyjnym.
 
 - Zawiera sześć domyślnie zamkniętych akordeonów — po jednym dla każdego poziomu.
 - Nagłówek akordeonu zawiera numer i nazwę poziomu.

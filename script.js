@@ -137,6 +137,16 @@ const createWords = (entries) => entries.map(([word, syllables, image, imageAlt,
   choices: [...new Set([...syllables, distractor])],
 }));
 
+// Jawny podział wyrazów z Levelu 5 pozwala pokazać prawidłowe sylaby
+// niezależnie od języka i naprzemiennie je pokolorować.
+const sentenceSyllables = {
+  pl: {
+    KOT: ["KOT"], "ŚPI": ["ŚPI"], WILK: ["WILK"], BIEGNIE: ["BIE", "GNIE"], MAMA: ["MA", "MA"], MA: ["MA"], LODY: ["LO", "DY"], TATA: ["TA", "TA"], MYJE: ["MY", "JE"], AUTO: ["AU", "TO"], ROBOT: ["RO", "BOT"], KASK: ["KASK"], PIRAT: ["PI", "RAT"], "PŁYNIE": ["PŁY", "NIE"], RYBA: ["RY", "BA"], "PŁYWA": ["PŁY", "WA"], ZEBRA: ["ZE", "BRA"], PTAK: ["PTAK"], LECI: ["LE", "CI"], SMOK: ["SMOK"], ZIEJE: ["ZIE", "JE"], OGNIEM: ["O", "GNIEM"], "ŁAPIE": ["ŁA", "PIE"], MYSZ: ["MYSZ"], PIES: ["PIES"], NIESIE: ["NIE", "SIE"], PATYK: ["PA", "TYK"], DRZEWO: ["DRZE", "WO"], LISTKI: ["LIST", "KI"], STATEK: ["STA", "TEK"], KURA: ["KU", "RA"], ZNOSI: ["ZNO", "SI"], JAJA: ["JA", "JA"], FOKA: ["FO", "KA"], DZIECKO: ["DZIEC", "KO"], CZYTA: ["CZY", "TA"], "KSIĄŻKĘ": ["KSIĄŻ", "KĘ"], "ŻABA": ["ŻA", "BA"], KACZKA: ["KACZ", "KA"], "KOŃ": ["KOŃ"], JE: ["JE"], SIANO: ["SIA", "NO"], "KRÓLIK": ["KRÓ", "LIK"], "MAŁPA": ["MAŁ", "PA"], "JABŁKO": ["JABŁ", "KO"], SER: ["SER"], KROWA: ["KRO", "WA"], "TRAWĘ": ["TRA", "WĘ"], OWCA: ["OW", "CA"], "SŁOŃ": ["SŁOŃ"], PIJE: ["PI", "JE"], "WODĘ": ["WO", "DĘ"], MOTYL: ["MO", "TYL"], LATA: ["LA", "TA"], "ŚLIMAK": ["ŚLI", "MAK"], IDZIE: ["I", "DZIE"], "ŻÓŁW": ["ŻÓŁW"], DELFIN: ["DEL", "FIN"], SKACZE: ["SKA", "CZE"], REKIN: ["RE", "KIN"], JEDZIE: ["JEDZ", "IE"], TRAKTOR: ["TRAK", "TOR"], WIEZIE: ["WIE", "ZIE"], "POCIĄG": ["PO", "CIĄG"], ROWER: ["RO", "WER"], "ŁÓDŹ": ["ŁÓDŹ"], KWIAT: ["KWIAT"], "ROŚNIE": ["ROŚ", "NIE"], "ZUPĘ": ["ZU", "PĘ"], PIECZE: ["PIE", "CZE"], CIASTO: ["CIA", "STO"], "BAJKĘ": ["BAJ", "KĘ"], DZIECI: ["DZIE", "CI"], "MAJĄ": ["MA", "JĄ"], KLOCKI: ["KLOC", "KI"], KOTY: ["KO", "TY"], "PIJĄ": ["PI", "JĄ"], MLEKO: ["MLE", "KO"], PTAKI: ["PTA", "KI"], "LECĄ": ["LE", "CĄ"], "PSZCZOŁY": ["PSZCZO", "ŁY"], "ROBIĄ": ["RO", "BIĄ"], "MIÓD": ["MIÓD"], KURY: ["KU", "RY"], "ZNOSZĄ": ["ZNO", "SZĄ"], DRZEWA: ["DRZE", "WA"], "LIŚCIE": ["LI", "ŚCIE"], MYSZY: ["MY", "SZY"], "JEDZĄ": ["JEDZĄ"], "SŁOŃCE": ["SŁOŃ", "CE"], GRZEJE: ["GRZE", "JE"], DESZCZ: ["DESZCZ"], PADA: ["PA", "DA"], WIATR: ["WIATR"], WIEJE: ["WIE", "JE"], "KSIĘŻYC": ["KSIĘ", "ŻYC"], "ŚWIECI": ["ŚWIE", "CI"], "MIŚ": ["MIŚ"], LIS: ["LIS"], LEW: ["LEW"], "ŚWINKA": ["ŚWIN", "KA"], "MUCHĘ": ["MU", "CHĘ"],
+  },
+  en: { CAT: ["CAT"], SLEEPS: ["SLEEPS"], DOG: ["DOG"], MUMMY: ["MUM", "MY"], HAS: ["HAS"], CAKE: ["CAKE"], DADDY: ["DAD", "DY"], CAR: ["CAR"], ROBOT: ["RO", "BOT"], HELMET: ["HEL", "MET"], PIRATE: ["PI", "RATE"], TREASURE: ["TREA", "SURE"] },
+  de: { DIE: ["DIE"], KATZE: ["KAT", "ZE"], "SCHLÄFT": ["SCHLÄFT"], DER: ["DER"], HUND: ["HUND"], MAMA: ["MA", "MA"], HAT: ["HAT"], EIS: ["EIS"], PAPA: ["PA", "PA"], "FÄHRT": ["FÄHRT"], AUTO: ["AU", "TO"], ROBOTER: ["RO", "BO", "TER"], WINKT: ["WINKT"], PIRAT: ["PI", "RAT"], LACHT: ["LACHT"] },
+};
+
 const englishLetters = [
   ["A", "ay"], ["B", "bee"], ["C", "see"], ["D", "dee"], ["E", "ee"],
   ["F", "ef"], ["G", "gee"], ["H", "aitch"], ["I", "eye"], ["J", "jay"],
@@ -226,15 +236,15 @@ const germanSentences = [
 const languageData = {
   pl: {
     flag: "🇵🇱", levelName: "Poziom", locale: "pl-PL", voicePrefix: "pl", letters: polishLetters, words: polishWords, sentences: polishSentences,
-    ui: { language: "Język", menuTitle: "Wybierz poziom", levels: ["Literki", "Wyrazy", "Sylaby", "Litery pisane", "Zdania", "Gra w słowa Montessori"], wordCountTitle: "Ile słów?", wordCountDescription: "Wybierz liczbę słów do przećwiczenia.", wordCountAria: "Liczba słów w Level 2", syllableCountTitle: "Ile wyrazów chcesz trenować?", syllableCountDescription: "Wybierz liczbę wyrazów do ułożenia z sylab.", syllableCountAria: "Liczba wyrazów w Level 3", sentenceCountTitle: "Ile zdań chcesz trenować?", sentenceCountDescription: "Wybierz liczbę zdań do ułożenia.", sentenceCountAria: "Liczba zdań w Level 5", letterCountDescription: "Wybierz liczbę liter do przećwiczenia.", letterCountAria: "Liczba liter do przećwiczenia", letterCountTitle: "Ile liter?", writtenLetterCountTitle: "Ile liter pisanych?", movableInstruction: "Ułóż nazwę obrazka z liter.", movableLettersAria: "Litery do ułożenia słowa", movableBuiltAria: "Układane słowo", movableClear: "Wyczyść", movableTryAgain: "Możesz zmienić litery.", movableRemove: "Usuń literę", typePictureWord: "Teraz wpisz to słowo na klawiaturze.", readPictureWord: "Przeczytaj słowo.", listen: "Posłuchaj słowa", next: "Dalej", repeat: "Jeszcze raz", hint: "Podpowiedź", hintAnswer: "Odpowiedź:", buildComplete: "Super 🙂", typeComplete: "Super 👍", levelSixComplete: "Super 🙂", menu: "Menu", complete: "Brawo! 🥳👍", backToMenu: "Wróć do menu", emptyLetter: "Pusta litera", progress: ["Postęp w Level 1", "Postęp w Level 2", "Postęp w Level 3", "Postęp w Level 4", "Postęp w Level 5", "Postęp w Level 6"] },
+    ui: { language: "Język", menuTitle: "Wybierz poziom", levels: ["Literki", "Wyrazy", "Sylaby", "Litery pisane", "Zdania", "Gra w słowa Montessori"], wordCountTitle: "Ile słów?", wordCountDescription: "Wybierz liczbę słów do przećwiczenia.", wordCountAria: "Liczba słów w Level 2", syllableCountTitle: "Ile wyrazów chcesz trenować?", syllableCountDescription: "Wybierz liczbę wyrazów do ułożenia z sylab.", syllableCountAria: "Liczba wyrazów w Level 3", sentenceCountTitle: "Ile zdań chcesz trenować?", sentenceCountDescription: "Wybierz liczbę zdań do ułożenia.", sentenceCountAria: "Liczba zdań w Level 5", letterCountDescription: "Wybierz liczbę liter do przećwiczenia.", letterCountAria: "Liczba liter do przećwiczenia", letterCountTitle: "Ile liter?", writtenLetterCountTitle: "Ile liter pisanych?", movableInstruction: "Ułóż nazwę obrazka z liter.", movableLettersAria: "Litery do ułożenia słowa", movableBuiltAria: "Układane słowo", movableClear: "Wyczyść", movableTryAgain: "Możesz zmienić litery.", movableRemove: "Usuń literę", typePictureWord: "Teraz wpisz to słowo na klawiaturze.", readPictureWord: "Przeczytaj słowo.", listen: "Posłuchaj słowa", next: "Dalej", continueToTyping: "Teraz wpisz słowo", removeTypedLetter: "Usuń literę", repeat: "Jeszcze raz", hint: "Podpowiedź", hintAnswer: "Odpowiedź:", buildComplete: "Super 🙂", typeComplete: "Super 👍", levelSixComplete: "Super 🙂", menu: "Menu", complete: "Brawo! 🥳👍", backToMenu: "Wróć do menu", emptyLetter: "Pusta litera", progress: ["Postęp w Level 1", "Postęp w Level 2", "Postęp w Level 3", "Postęp w Level 4", "Postęp w Level 5", "Postęp w Level 6"] },
   },
   en: {
     flag: "🇬🇧", levelName: "Level", locale: "en-GB", voicePrefix: "en", letters: englishLetters, words: englishWords, sentences: englishSentences,
-    ui: { language: "Language", menuTitle: "Choose a level", levels: ["Letters", "Words", "Syllables", "Handwriting", "Sentences", "Montessori word game"], wordCountTitle: "How many words?", wordCountDescription: "Choose how many words to practise.", wordCountAria: "Number of words in Level 2", syllableCountTitle: "How many words?", syllableCountDescription: "Choose how many words to build from syllables.", syllableCountAria: "Number of words in Level 3", sentenceCountTitle: "How many sentences?", sentenceCountDescription: "Choose how many sentences to build.", sentenceCountAria: "Number of sentences in Level 5", letterCountDescription: "Choose how many letters to practise.", letterCountAria: "Number of letters to practise", letterCountTitle: "How many letters?", writtenLetterCountTitle: "How many handwritten letters?", movableInstruction: "Build the name of the picture with letters.", movableLettersAria: "Letters for building the word", movableBuiltAria: "Word being built", movableClear: "Clear", movableTryAgain: "You can change the letters.", movableRemove: "Remove letter", typePictureWord: "Now type the word on the keyboard.", readPictureWord: "Read the word.", listen: "Listen to the word", next: "Next", repeat: "Try again", hint: "Hint", hintAnswer: "Answer:", buildComplete: "Great 🙂", typeComplete: "Great 👍", levelSixComplete: "Great 🙂", menu: "Menu", complete: "Great job! 🥳👍", backToMenu: "Back to menu", emptyLetter: "Empty letter", progress: ["Level 1 progress", "Level 2 progress", "Level 3 progress", "Level 4 progress", "Level 5 progress", "Level 6 progress"] },
+    ui: { language: "Language", menuTitle: "Choose a level", levels: ["Letters", "Words", "Syllables", "Handwriting", "Sentences", "Montessori word game"], wordCountTitle: "How many words?", wordCountDescription: "Choose how many words to practise.", wordCountAria: "Number of words in Level 2", syllableCountTitle: "How many words?", syllableCountDescription: "Choose how many words to build from syllables.", syllableCountAria: "Number of words in Level 3", sentenceCountTitle: "How many sentences?", sentenceCountDescription: "Choose how many sentences to build.", sentenceCountAria: "Number of sentences in Level 5", letterCountDescription: "Choose how many letters to practise.", letterCountAria: "Number of letters to practise", letterCountTitle: "How many letters?", writtenLetterCountTitle: "How many handwritten letters?", movableInstruction: "Build the name of the picture with letters.", movableLettersAria: "Letters for building the word", movableBuiltAria: "Word being built", movableClear: "Clear", movableTryAgain: "You can change the letters.", movableRemove: "Remove letter", typePictureWord: "Now type the word on the keyboard.", readPictureWord: "Read the word.", listen: "Listen to the word", next: "Next", continueToTyping: "Now type the word", removeTypedLetter: "Remove letter", repeat: "Try again", hint: "Hint", hintAnswer: "Answer:", buildComplete: "Great 🙂", typeComplete: "Great 👍", levelSixComplete: "Great 🙂", menu: "Menu", complete: "Great job! 🥳👍", backToMenu: "Back to menu", emptyLetter: "Empty letter", progress: ["Level 1 progress", "Level 2 progress", "Level 3 progress", "Level 4 progress", "Level 5 progress", "Level 6 progress"] },
   },
   de: {
     flag: "🇩🇪", levelName: "Stufe", locale: "de-DE", voicePrefix: "de", letters: germanLetters, words: germanWords, sentences: germanSentences,
-    ui: { language: "Sprache", menuTitle: "Wähle ein Level", levels: ["Buchstaben", "Wörter", "Silben", "Schreibschrift", "Sätze", "Montessori-Wortspiel"], wordCountTitle: "Wie viele Wörter?", wordCountDescription: "Wähle die Anzahl der Wörter zum Üben.", wordCountAria: "Anzahl der Wörter in Level 2", syllableCountTitle: "Wie viele Wörter?", syllableCountDescription: "Wähle die Anzahl der Wörter, die du aus Silben zusammensetzt.", syllableCountAria: "Anzahl der Wörter in Level 3", sentenceCountTitle: "Wie viele Sätze?", sentenceCountDescription: "Wähle die Anzahl der Sätze zum Üben.", sentenceCountAria: "Anzahl der Sätze in Level 5", letterCountDescription: "Wähle die Anzahl der Buchstaben zum Üben.", letterCountAria: "Anzahl der Buchstaben zum Üben", letterCountTitle: "Wie viele Buchstaben?", writtenLetterCountTitle: "Wie viele Schreibschrift-Buchstaben?", movableInstruction: "Baue den Namen des Bildes aus Buchstaben.", movableLettersAria: "Buchstaben zum Bilden des Wortes", movableBuiltAria: "Gebautes Wort", movableClear: "Löschen", movableTryAgain: "Du kannst die Buchstaben ändern.", movableRemove: "Buchstabe entfernen", typePictureWord: "Tippe das Wort auf der Tastatur.", readPictureWord: "Lies das Wort.", listen: "Wort anhören", next: "Weiter", repeat: "Noch einmal", hint: "Hinweis", hintAnswer: "Lösung:", buildComplete: "Super 🙂", typeComplete: "Super 👍", levelSixComplete: "Super 🙂", menu: "Menü", complete: "Super gemacht! 🥳👍", backToMenu: "Zurück zum Menü", emptyLetter: "Leerer Buchstabe", progress: ["Fortschritt in Level 1", "Fortschritt in Level 2", "Fortschritt in Level 3", "Fortschritt in Level 4", "Fortschritt in Level 5", "Fortschritt in Level 6"] },
+    ui: { language: "Sprache", menuTitle: "Wähle ein Level", levels: ["Buchstaben", "Wörter", "Silben", "Schreibschrift", "Sätze", "Montessori-Wortspiel"], wordCountTitle: "Wie viele Wörter?", wordCountDescription: "Wähle die Anzahl der Wörter zum Üben.", wordCountAria: "Anzahl der Wörter in Level 2", syllableCountTitle: "Wie viele Wörter?", syllableCountDescription: "Wähle die Anzahl der Wörter, die du aus Silben zusammensetzt.", syllableCountAria: "Anzahl der Wörter in Level 3", sentenceCountTitle: "Wie viele Sätze?", sentenceCountDescription: "Wähle die Anzahl der Sätze zum Üben.", sentenceCountAria: "Anzahl der Sätze in Level 5", letterCountDescription: "Wähle die Anzahl der Buchstaben zum Üben.", letterCountAria: "Anzahl der Buchstaben zum Üben", letterCountTitle: "Wie viele Buchstaben?", writtenLetterCountTitle: "Wie viele Schreibschrift-Buchstaben?", movableInstruction: "Baue den Namen des Bildes aus Buchstaben.", movableLettersAria: "Buchstaben zum Bilden des Wortes", movableBuiltAria: "Gebautes Wort", movableClear: "Löschen", movableTryAgain: "Du kannst die Buchstaben ändern.", movableRemove: "Buchstabe entfernen", typePictureWord: "Tippe das Wort auf der Tastatur.", readPictureWord: "Lies das Wort.", listen: "Wort anhören", next: "Weiter", continueToTyping: "Jetzt Wort tippen", removeTypedLetter: "Buchstabe löschen", repeat: "Noch einmal", hint: "Hinweis", hintAnswer: "Lösung:", buildComplete: "Super 🙂", typeComplete: "Super 👍", levelSixComplete: "Super 🙂", menu: "Menü", complete: "Super gemacht! 🥳👍", backToMenu: "Zurück zum Menü", emptyLetter: "Leerer Buchstabe", progress: ["Fortschritt in Level 1", "Fortschritt in Level 2", "Fortschritt in Level 3", "Fortschritt in Level 4", "Fortschritt in Level 5", "Fortschritt in Level 6"] },
   },
 };
 
@@ -252,8 +262,7 @@ languageData.de.ui.typeComplete = "Richtig! Das Wort ist korrekt.";
 const creatorCopy = {
   pl: {
     parentLink: "Dla rodziców",
-    parentTitle: "Dla rodziców",
-    parentText: "Najlepiej towarzyszyć dziecku przy pierwszych zabawach, chwalić próby i robić krótkie przerwy.",
+    parentText: "Najlepiej towarzyszyć dziecku przy pierwszych zabawach, chwalić próby i robić krótkie przerwy. 💛",
     creatorLink: "O twórczyni",
     kicker: "Syllabee od mamy dla dzieci",
     title: "O twórczyni",
@@ -262,8 +271,7 @@ const creatorCopy = {
   },
   en: {
     parentLink: "For parents",
-    parentTitle: "For parents",
-    parentText: "It is best to join your child for the first few activities, praise their efforts and take short breaks.",
+    parentText: "It is best to join your child for the first few activities, praise their efforts and take short breaks. 💛",
     creatorLink: "About the creator",
     kicker: "Syllabee — from a mum, for children",
     title: "About the creator",
@@ -272,8 +280,7 @@ const creatorCopy = {
   },
   de: {
     parentLink: "Für Eltern",
-    parentTitle: "Für Eltern",
-    parentText: "Begleiten Sie Ihr Kind am besten bei den ersten Übungen, würdigen Sie seine Versuche und machen Sie kurze Pausen.",
+    parentText: "Begleiten Sie Ihr Kind am besten bei den ersten Übungen, würdigen Sie seine Versuche und machen Sie kurze Pausen. 💛",
     creatorLink: "Über die Entwicklerin",
     kicker: "Syllabee — von einer Mama für Kinder",
     title: "Über die Entwicklerin",
@@ -284,9 +291,8 @@ const creatorCopy = {
 
 const libraryCopy = {
   pl: {
-    kicker: "Dla małych odkrywców",
     title: "Uczymy przez zabawę",
-    intro: "Edukacyjna zabawa dla dzieci w wieku 4–6 lat — bez reklam, bez hałasu, bez logowania i bez nadmiaru bodźców.",
+    intro: "Gra dla dzieci 4–6 lat. Bez reklam i logowania.",
     readingTag: "Dostępna teraz",
     readingTitle: "Czytanie sylabowe",
     readingDescription: "Litery, wyrazy, sylaby i krótkie zdania — krok po kroku.",
@@ -296,9 +302,8 @@ const libraryCopy = {
     comingDescription: "Tu pojawi się następna aktywność.",
   },
   en: {
-    kicker: "For little explorers",
     title: "Learning through play",
-    intro: "An educational game for children aged 4–6 — no ads, no noise, no login and no overwhelming stimulation.",
+    intro: "A game for children aged 4–6. No ads or login.",
     readingTag: "Available now",
     readingTitle: "Syllable reading",
     readingDescription: "Letters, words, syllables and short sentences — step by step.",
@@ -308,9 +313,8 @@ const libraryCopy = {
     comingDescription: "Another calm learning activity will appear here.",
   },
   de: {
-    kicker: "Für kleine Entdecker",
     title: "Lernen durch Spielen",
-    intro: "Ein Lernspiel für Kinder von 4 bis 6 Jahren — ohne Werbung, Lärm, Anmeldung und Reizüberflutung.",
+    intro: "Ein Spiel für Kinder von 4–6 Jahren. Ohne Werbung und Anmeldung.",
     readingTag: "Jetzt verfügbar",
     readingTitle: "Silben lesen",
     readingDescription: "Buchstaben, Wörter, Silben und kurze Sätze — Schritt für Schritt.",
@@ -323,9 +327,7 @@ const libraryCopy = {
 
 const parentGuideCopy = {
   pl: {
-    kicker: "Wspólna nauka bez presji",
-    title: "Jak wspierać dziecko na każdym poziomie",
-    intro: "Wystarczą krótkie, regularne sesje, rozmowa i zainteresowanie tym, co dziecko odkrywa.",
+    title: "Jak wspierać dziecko na każdym poziomie?",
     learnLabel: "Czego uczy: ",
     afterLabel: "Po zabawie dziecko może: ",
     supportLabel: "Jak wspierać: ",
@@ -343,9 +345,7 @@ const parentGuideCopy = {
     ],
   },
   en: {
-    kicker: "Learning together, without pressure",
-    title: "How to support your child at every level",
-    intro: "There is no need to do everything at once. A few calm minutes, conversation and interest in what your child discovers are enough.",
+    title: "How can you support your child at every level?",
     learnLabel: "This level teaches: ",
     afterLabel: "After playing, your child may be able to: ",
     supportLabel: "How to support: ",
@@ -363,9 +363,7 @@ const parentGuideCopy = {
     ],
   },
   de: {
-    kicker: "Gemeinsam lernen — ohne Druck",
-    title: "So begleiten Sie Ihr Kind auf jedem Level",
-    intro: "Es muss nicht alles auf einmal passieren. Ein paar ruhige Minuten, ein Gespräch und Interesse an den Entdeckungen Ihres Kindes reichen aus.",
+    title: "So begleiten Sie Ihr Kind auf jedem Level?",
     learnLabel: "Das lernt Ihr Kind: ",
     afterLabel: "Nach dem Spiel kann Ihr Kind vielleicht: ",
     supportLabel: "So können Sie begleiten: ",
@@ -403,7 +401,6 @@ const screens = {
 
 const ui = {
   languageSelects: [...document.querySelectorAll("[data-language-select]")],
-  libraryKicker: document.querySelector("#library-kicker"),
   libraryTitle: document.querySelector("#library-title"),
   libraryIntro: document.querySelector("#library-intro"),
   readingGameTag: document.querySelector("#reading-game-tag"),
@@ -455,16 +452,13 @@ const ui = {
   movableLetterBank: document.querySelector("#movable-letter-bank"),
   movableClearButton: document.querySelector("#movable-clear-button"),
   montessoriTyping: document.querySelector("#montessori-typing"),
+  montessoriBackspaceButton: document.querySelector("#montessori-backspace-button"),
   levelSixActions: document.querySelector("#level-six-actions"),
-  levelSixSuccess: document.querySelector("#level-six-success"),
-  levelSixCelebration: document.querySelector("#level-six-celebration"),
   levelSixNextButton: document.querySelector("#level-six-next-button"),
   gameHintButtons: [...document.querySelectorAll("[data-game-hint-button]")],
   parentLink: document.querySelector("#parent-link"),
-  parentNoteTitle: document.querySelector("#parent-note-title"),
   parentNoteText: document.querySelector("#parent-note-text"),
   parentGuideTitle: document.querySelector("#parent-guide-title"),
-  parentGuideIntro: document.querySelector("#parent-guide-intro"),
   parentLevelCards: document.querySelector("#parent-level-cards"),
   parentReadinessTitle: document.querySelector("#parent-readiness-title"),
   parentReadinessText: document.querySelector("#parent-readiness-text"),
@@ -543,7 +537,6 @@ function toggleGameHint(button) {
 function renderParentGuide() {
   const guide = parentGuideCopy[currentLanguage];
   ui.parentGuideTitle.textContent = guide.title;
-  ui.parentGuideIntro.textContent = guide.intro;
   ui.parentReadinessTitle.textContent = guide.readinessTitle;
   ui.parentReadinessText.textContent = guide.readinessText;
   ui.parentSourcesTitle.textContent = guide.sourcesTitle;
@@ -592,7 +585,6 @@ function translateInterface() {
     select.value = currentLanguage;
     select.setAttribute("aria-label", text.language);
   });
-  ui.libraryKicker.textContent = libraryText.kicker;
   ui.libraryTitle.textContent = libraryText.title;
   ui.libraryIntro.textContent = libraryText.intro;
   ui.readingGameTag.textContent = libraryText.readingTag;
@@ -621,10 +613,10 @@ function translateInterface() {
   ui.movableLetterBank.setAttribute("aria-label", text.movableLettersAria);
   ui.movableClearButton.textContent = text.movableClear;
   ui.levelSixNextButton.textContent = `${text.next} ➡️`;
+  ui.montessoriBackspaceButton.textContent = `⌫ ${text.removeTypedLetter}`;
   ui.gameHintButtons.forEach((button) => { button.setAttribute("aria-label", text.hint); });
   hideGameHints();
   ui.parentLink.textContent = creatorText.parentLink;
-  ui.parentNoteTitle.textContent = creatorText.parentTitle;
   ui.parentNoteText.textContent = creatorText.parentText;
   ui.creatorLink.textContent = creatorText.creatorLink;
   ui.creatorKicker.textContent = creatorText.kicker;
@@ -864,7 +856,20 @@ function speakWord(word) {
 
 function syllableClass(index, count) {
   if (count === 1) return "single-syllable";
-  return index === 0 ? "syllable-one" : "syllable-two";
+  return index % 2 === 0 ? "syllable-one" : "syllable-two";
+}
+
+function createSyllabifiedSentenceWord(word, withFullStop = false) {
+  const wordElement = document.createElement("span");
+  wordElement.className = "sentence-word";
+  const syllables = sentenceSyllables[currentLanguage]?.[word] || [word];
+  syllables.forEach((syllable, index) => {
+    const syllableElement = document.createElement("span");
+    syllableElement.className = `sentence-syllable ${index % 2 === 0 ? "syllable-one" : "syllable-two"}`;
+    syllableElement.textContent = index === syllables.length - 1 && withFullStop ? `${syllable}.` : syllable;
+    wordElement.append(syllableElement);
+  });
+  return wordElement;
 }
 
 // Kolory ruchomego alfabetu w Level 6: samogłoski są czerwone,
@@ -904,7 +909,7 @@ function setSentencePicture(item) {
   firstPicture.textContent = firstEmoji;
   const middleWord = document.createElement("span");
   middleWord.className = "sentence-prompt-word";
-  middleWord.textContent = item.words[1];
+  middleWord.append(createSyllabifiedSentenceWord(item.words[1]));
   if (lastEmoji) {
     const lastPicture = document.createElement("span");
     lastPicture.className = "sentence-prompt-emoji";
@@ -1066,9 +1071,7 @@ function handleKeyboard(event) {
   if (!acceptsKeyboard || event.ctrlKey || event.metaKey || event.altKey) return;
   if (activeLevel === 6 && montessoriStage === "type" && event.key === "Backspace") {
     event.preventDefault();
-    montessoriTypedLetters.pop();
-    montessoriInputIndex = montessoriTypedLetters.length;
-    renderMontessoriTyping(levelSixWords[taskIndex]);
+    removeMontessoriTypedLetter();
     return;
   }
   if (event.key.length !== 1) return;
@@ -1153,6 +1156,13 @@ function handleKeyboard(event) {
   }
 }
 
+function removeMontessoriTypedLetter() {
+  if (activeLevel !== 6 || montessoriStage !== "type" || montessoriTypedLetters.length === 0) return;
+  montessoriTypedLetters.pop();
+  montessoriInputIndex = montessoriTypedLetters.length;
+  renderMontessoriTyping(levelSixWords[taskIndex]);
+}
+
 // LEVEL 3: kliknięcie oczekiwanej sylaby buduje słowo.
 function renderSyllables() {
   const item = levelThreeWords[taskIndex];
@@ -1215,7 +1225,8 @@ function renderSentences() {
       const button = document.createElement("button");
       button.type = "button";
       button.className = "sentence-choice";
-      button.textContent = word;
+      button.setAttribute("aria-label", word);
+      button.append(createSyllabifiedSentenceWord(word));
       button.addEventListener("click", () => chooseSentenceWord(word, button, item));
       return button;
     }),
@@ -1226,7 +1237,7 @@ function renderBuiltSentence(item) {
   ui.builtSentence.replaceChildren(...builtSentenceWords.map((word, index) => {
     const piece = document.createElement("span");
     piece.className = "sentence-piece";
-    piece.textContent = index === item.words.length - 1 ? `${word}.` : word;
+    piece.append(createSyllabifiedSentenceWord(word, index === item.words.length - 1));
     return piece;
   }));
 }
@@ -1256,12 +1267,10 @@ function chooseSentenceWord(word, button, item) {
 // poprawić samo — to cyfrowy odpowiednik kontroli błędu.
 function hideLevelSixActions() {
   ui.levelSixActions.classList.add("is-hidden");
-  ui.levelSixSuccess.textContent = "";
 }
 
-function showLevelSixActions(message, item) {
-  ui.levelSixSuccess.textContent = message;
-  ui.levelSixCelebration.textContent = item.image;
+function showLevelSixActions(nextLabel) {
+  ui.levelSixNextButton.textContent = `${nextLabel} ➡️`;
   ui.levelSixActions.classList.remove("is-hidden");
 }
 
@@ -1285,6 +1294,7 @@ function renderMovableAlphabet() {
   updateProgress(ui.levelSixProgress, taskIndex, levelSixWords.length);
   ui.levelSixInstruction.textContent = "";
   ui.montessoriTyping.classList.add("is-hidden");
+  ui.montessoriBackspaceButton.classList.add("is-hidden");
   ui.montessoriTyping.replaceChildren();
   ui.movableLetterBank.classList.remove("is-hidden");
   ui.movableClearButton.classList.remove("is-hidden");
@@ -1344,7 +1354,7 @@ function chooseMovableLetter(choice, item) {
     renderMovableWord(item);
     ui.movableLetterBank.classList.add("is-hidden");
     ui.movableClearButton.classList.add("is-hidden");
-    showLevelSixActions(currentData().ui.buildComplete, item);
+    showLevelSixActions(currentData().ui.continueToTyping);
     return;
   }
   renderMovableWord(item);
@@ -1368,6 +1378,7 @@ function startMontessoriTyping(item) {
     return letter;
   }));
   ui.montessoriTyping.classList.remove("is-hidden");
+  ui.montessoriBackspaceButton.classList.remove("is-hidden");
   renderMontessoriTyping(item);
 }
 
@@ -1390,8 +1401,9 @@ function renderMontessoriTyping(item) {
 function finishMontessoriWord(item) {
   acceptsKeyboard = false;
   montessoriStage = "typeComplete";
+  ui.montessoriBackspaceButton.classList.add("is-hidden");
   renderMontessoriTyping(item);
-  showLevelSixActions(currentData().ui.typeComplete, item);
+  showLevelSixActions(currentData().ui.next);
 }
 
 function nextTask() {
@@ -1445,6 +1457,7 @@ ui.movableClearButton.addEventListener("click", () => {
   builtMovableLetters = [];
   renderMovableWord(levelSixWords[taskIndex]);
 });
+ui.montessoriBackspaceButton.addEventListener("click", removeMontessoriTypedLetter);
 ui.levelSixNextButton.addEventListener("click", () => {
   if (activeLevel !== 6) return;
   const item = levelSixWords[taskIndex];
