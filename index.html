@@ -13,15 +13,7 @@
       <section id="game-library-screen" class="screen library-screen" aria-labelledby="library-title">
         <header class="library-header">
           <a class="library-brand" href="./" aria-label="Syllabee — strona główna">
-            <svg class="brand-bee" viewBox="0 0 64 64" aria-hidden="true">
-              <path class="brand-bee-line" d="M29 28C17 14 7 18 10 31c2 9 10 12 19 7" />
-              <path class="brand-bee-line" d="M35 28c12-14 22-10 19 3-2 9-11 12-20 7" />
-              <path class="brand-bee-line" d="M28 20 24 14M36 20l4-6" />
-              <circle class="brand-bee-line" cx="32" cy="27" r="7" />
-              <ellipse class="brand-bee-line" cx="32" cy="42" rx="11" ry="14" />
-              <circle class="brand-bee-eye" cx="34.5" cy="26" r="1.4" />
-            </svg>
-            <span>Syllabee</span>
+            <img class="brand-logo" src="assets/images/syllabee-logo-simplified.png" alt="Syllabee" />
           </a>
           <div class="library-header-actions">
             <div class="language-selector library-language-selector">
@@ -57,14 +49,6 @@
               </button>
             </article>
 
-            <article class="game-library-card is-coming" aria-label="Nowa gra wkrótce">
-              <div class="game-card-illustration" aria-hidden="true">🎲</div>
-              <div class="game-card-copy">
-                <span id="coming-game-tag" class="game-card-tag">Wkrótce</span>
-                <h2 id="coming-game-title">Kolejna zabawa</h2>
-                <p id="coming-game-description">Tu pojawi się następna aktywność.</p>
-              </div>
-            </article>
           </div>
 
           <section id="dla-rodzicow" class="parent-note" aria-labelledby="parent-note-title">
@@ -80,7 +64,7 @@
               <h2 id="parent-guide-title">Jak wspierać dziecko na każdym poziomie</h2>
               <p id="parent-guide-intro">Wystarczą krótkie, regularne sesje, rozmowa i zainteresowanie tym, co dziecko odkrywa.</p>
             </header>
-            <div id="parent-level-cards" class="parent-level-cards"></div>
+            <div id="parent-level-cards" class="parent-level-accordions"></div>
             <aside class="parent-readiness" aria-labelledby="parent-readiness-title">
               <span aria-hidden="true">🌱</span>
               <div>
@@ -115,17 +99,9 @@
 
       <section id="menu-screen" class="screen is-hidden" aria-labelledby="menu-title">
         <div class="menu-brand" aria-label="Syllabee">
-          <svg class="brand-bee" viewBox="0 0 64 64" aria-hidden="true">
-            <path class="brand-bee-line" d="M29 28C17 14 7 18 10 31c2 9 10 12 19 7" />
-            <path class="brand-bee-line" d="M35 28c12-14 22-10 19 3-2 9-11 12-20 7" />
-            <path class="brand-bee-line" d="M28 20 24 14M36 20l4-6" />
-            <circle class="brand-bee-line" cx="32" cy="27" r="7" />
-            <ellipse class="brand-bee-line" cx="32" cy="42" rx="11" ry="14" />
-            <circle class="brand-bee-eye" cx="34.5" cy="26" r="1.4" />
-          </svg>
-          <span>Syllabee</span>
+          <img class="brand-logo" src="assets/images/syllabee-logo-simplified.png" alt="Syllabee" />
         </div>
-        <button class="library-back-button" type="button" data-go-library>← Wszystkie zabawy</button>
+        <button class="library-back-button home-menu-button" type="button" data-go-library aria-label="Menu główne">🏠 <span>Menu</span></button>
         <div class="language-selector">
           <select id="language-select" data-language-select aria-label="Język">
             <option value="pl">🇵🇱 Polski</option>
@@ -209,6 +185,21 @@
             <button class="word-count-button level-five-count-button" type="button" data-level-five-count="10">10</button>
             <button class="word-count-button level-five-count-button" type="button" data-level-five-count="15">15</button>
             <button class="word-count-button level-five-count-button" type="button" data-level-five-count="20">20</button>
+          </div>
+        </div>
+      </section>
+
+      <section id="level-six-setup-screen" class="screen is-hidden" aria-labelledby="level-six-setup-title">
+        <button class="back-button setup-back-button" type="button" data-go-menu>← <span class="menu-button-text">Menu</span></button>
+        <div class="level-two-setup">
+          <span class="level-card-icon level-six-setup-icon" aria-hidden="true">🔠</span>
+          <h1 id="level-six-setup-title">Ile słów?</h1>
+          <p id="level-six-setup-description">Wybierz liczbę słów do przećwiczenia.</p>
+          <div id="level-six-count-options" class="word-count-options" aria-label="Liczba słów w Level 6">
+            <button class="word-count-button level-six-count-button" type="button" data-level-six-count="5">5</button>
+            <button class="word-count-button level-six-count-button" type="button" data-level-six-count="10">10</button>
+            <button class="word-count-button level-six-count-button" type="button" data-level-six-count="15">15</button>
+            <button class="word-count-button level-six-count-button" type="button" data-level-six-count="20">20</button>
           </div>
         </div>
       </section>

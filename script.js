@@ -242,6 +242,12 @@ const languageData = {
 languageData.pl.ui.levels[5] = "Słowa z obrazków";
 languageData.en.ui.levels[5] = "Picture words";
 languageData.de.ui.levels[5] = "Bildwörter";
+languageData.pl.ui.buildComplete = "Świetnie! Teraz wpisz słowo.";
+languageData.pl.ui.typeComplete = "Dobrze! Słowo jest poprawne.";
+languageData.en.ui.buildComplete = "Great! Now type the word.";
+languageData.en.ui.typeComplete = "Correct! You wrote the word right.";
+languageData.de.ui.buildComplete = "Super! Tippe jetzt das Wort.";
+languageData.de.ui.typeComplete = "Richtig! Das Wort ist korrekt.";
 
 const creatorCopy = {
   pl: {
@@ -384,6 +390,7 @@ const screens = {
   levelTwoSetup: document.querySelector("#level-two-setup-screen"),
   levelThreeSetup: document.querySelector("#level-three-setup-screen"),
   levelFiveSetup: document.querySelector("#level-five-setup-screen"),
+  levelSixSetup: document.querySelector("#level-six-setup-screen"),
   letterSetup: document.querySelector("#letter-setup-screen"),
   levelOne: document.querySelector("#level-one-screen"),
   levelTwo: document.querySelector("#level-two-screen"),
@@ -403,9 +410,6 @@ const ui = {
   readingGameTitle: document.querySelector("#reading-game-title"),
   readingGameDescription: document.querySelector("#reading-game-description"),
   libraryPlayLabel: document.querySelector("#library-play-label"),
-  comingGameTag: document.querySelector("#coming-game-tag"),
-  comingGameTitle: document.querySelector("#coming-game-title"),
-  comingGameDescription: document.querySelector("#coming-game-description"),
   menuTitle: document.querySelector("#menu-title"),
   levelTitles: ["one", "two", "three", "four", "five", "six"].map((level) => document.querySelector(`#level-${level}-title`)),
   levelLabels: ["one", "two", "three", "four", "five", "six"].map((level) => document.querySelector(`#level-${level}-label`)),
@@ -418,6 +422,9 @@ const ui = {
   levelFiveSetupTitle: document.querySelector("#level-five-setup-title"),
   levelFiveSetupDescription: document.querySelector("#level-five-setup-description"),
   levelFiveCountOptions: document.querySelector("#level-five-count-options"),
+  levelSixSetupTitle: document.querySelector("#level-six-setup-title"),
+  levelSixSetupDescription: document.querySelector("#level-six-setup-description"),
+  levelSixCountOptions: document.querySelector("#level-six-count-options"),
   letterCountOptions: document.querySelector("#letter-count-options"),
   completeTitle: document.querySelector("#complete-title"),
   completeMenuButton: document.querySelector("#complete-menu-button"),
@@ -542,21 +549,37 @@ function renderParentGuide() {
   ui.parentSourcesTitle.textContent = guide.sourcesTitle;
   ui.parentSourcesNote.textContent = guide.sourcesNote;
 
-  ui.parentLevelCards.replaceChildren(...guide.levels.map((level) => {
-    const card = document.createElement("article");
-    card.className = "parent-level-card";
-    const title = document.createElement("h3");
-    title.textContent = level.title;
-    card.append(title);
+  ui.parentLevelCards.replaceChildren(...guide.levels.map((level, index) => {
+    const item = document.createElement("article");
+    item.className = "parent-level-accordion";
 
+    const button = document.createElement("button");
+    const panelId = `parent-level-panel-${index + 1}`;
+    button.className = "parent-level-accordion-button";
+    button.type = "button";
+    button.setAttribute("aria-expanded", "false");
+    button.setAttribute("aria-controls", panelId);
+    button.innerHTML = `<span>${level.title}</span><span class="parent-level-accordion-icon" aria-hidden="true">+</span>`;
+
+    const panel = document.createElement("div");
+    panel.id = panelId;
+    panel.className = "parent-level-accordion-panel";
+    panel.hidden = true;
     [[guide.learnLabel, level.learn], [guide.afterLabel, level.after], [guide.supportLabel, level.support]].forEach(([label, value]) => {
       const paragraph = document.createElement("p");
       const labelElement = document.createElement("strong");
       labelElement.textContent = label;
       paragraph.append(labelElement, value);
-      card.append(paragraph);
+      panel.append(paragraph);
     });
-    return card;
+
+    button.addEventListener("click", () => {
+      const isExpanded = button.getAttribute("aria-expanded") === "true";
+      button.setAttribute("aria-expanded", String(!isExpanded));
+      panel.hidden = isExpanded;
+    });
+    item.append(button, panel);
+    return item;
   }));
 }
 
@@ -576,9 +599,6 @@ function translateInterface() {
   ui.readingGameTitle.textContent = libraryText.readingTitle;
   ui.readingGameDescription.textContent = libraryText.readingDescription;
   ui.libraryPlayLabel.textContent = libraryText.play;
-  ui.comingGameTag.textContent = libraryText.comingTag;
-  ui.comingGameTitle.textContent = libraryText.comingTitle;
-  ui.comingGameDescription.textContent = libraryText.comingDescription;
   ui.menuTitle.textContent = text.menuTitle;
   ui.levelTitles.forEach((title, index) => { title.textContent = `${levelName} ${index + 1}`; });
   ui.levelLabels.forEach((label, index) => { label.textContent = text.levels[index]; });
@@ -591,6 +611,9 @@ function translateInterface() {
   ui.levelFiveSetupTitle.textContent = text.sentenceCountTitle;
   ui.levelFiveSetupDescription.textContent = text.sentenceCountDescription;
   ui.levelFiveCountOptions.setAttribute("aria-label", text.sentenceCountAria);
+  ui.levelSixSetupTitle.textContent = text.wordCountTitle;
+  ui.levelSixSetupDescription.textContent = text.wordCountDescription;
+  ui.levelSixCountOptions.setAttribute("aria-label", text.wordCountAria);
   ui.letterCountOptions.setAttribute("aria-label", text.letterCountAria);
   ui.levelSixInstruction.textContent = text.movableInstruction;
   ui.levelSixProgress.setAttribute("aria-label", text.progress[5]);
@@ -668,14 +691,7 @@ function goToLibrary({ updateUrl = true } = {}) {
 }
 
 function goToMenu() {
-  window.clearTimeout(levelThreeAdvanceTimer);
-  levelThreeAdvanceTimer = undefined;
-  clearLevelTwoSyllableTimers();
-  window.speechSynthesis?.cancel();
-  activeLevel = null;
-  letterSetupLevel = null;
-  acceptsKeyboard = false;
-  showScreen("menu");
+  goToLibrary();
 }
 
 function updateProgress(element, current, total) {
@@ -934,6 +950,14 @@ function openLevelFiveSetup() {
   showScreen("levelFiveSetup");
 }
 
+function openLevelSixSetup() {
+  window.clearTimeout(levelThreeAdvanceTimer);
+  levelThreeAdvanceTimer = undefined;
+  activeLevel = null;
+  acceptsKeyboard = false;
+  showScreen("levelSixSetup");
+}
+
 function openLetterSetup(level) {
   window.clearTimeout(levelThreeAdvanceTimer);
   levelThreeAdvanceTimer = undefined;
@@ -986,7 +1010,7 @@ function startLevel(level, wordCount) {
       const letterCount = [...word].length;
       return letterCount >= 3 && letterCount <= 6;
     });
-    levelSixWords = shuffled(wordsForBuilding).slice(0, 5);
+    levelSixWords = shuffled(wordsForBuilding).slice(0, Math.min(wordCount, wordsForBuilding.length));
     showScreen("levelSix");
     renderMovableAlphabet();
   }
@@ -1394,6 +1418,7 @@ document.querySelectorAll("[data-start-level]").forEach((button) => {
     if (level === 2) openLevelTwoSetup();
     else if (level === 3) openLevelThreeSetup();
     else if (level === 5) openLevelFiveSetup();
+    else if (level === 6) openLevelSixSetup();
     else if (level === 1 || level === 4) openLetterSetup(level);
     else startLevel(level, level === 6 ? 5 : undefined);
   });
@@ -1406,6 +1431,9 @@ document.querySelectorAll("[data-level-three-count]").forEach((button) => {
 });
 document.querySelectorAll("[data-level-five-count]").forEach((button) => {
   button.addEventListener("click", () => startLevel(5, Number(button.dataset.levelFiveCount)));
+});
+document.querySelectorAll("[data-level-six-count]").forEach((button) => {
+  button.addEventListener("click", () => startLevel(6, Number(button.dataset.levelSixCount)));
 });
 document.querySelectorAll("[data-letter-count]").forEach((button) => {
   button.addEventListener("click", () => startLevel(letterSetupLevel, Number(button.dataset.letterCount)));
