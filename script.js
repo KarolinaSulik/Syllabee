@@ -238,6 +238,11 @@ const languageData = {
   },
 };
 
+// Krótsza, bardziej opisowa nazwa Level 6 w menu.
+languageData.pl.ui.levels[5] = "Słowa z obrazków";
+languageData.en.ui.levels[5] = "Picture words";
+languageData.de.ui.levels[5] = "Bildwörter";
+
 const creatorCopy = {
   pl: {
     parentLink: "Dla rodziców",
@@ -445,7 +450,7 @@ const ui = {
   montessoriTyping: document.querySelector("#montessori-typing"),
   levelSixActions: document.querySelector("#level-six-actions"),
   levelSixSuccess: document.querySelector("#level-six-success"),
-  levelSixRepeatButton: document.querySelector("#level-six-repeat-button"),
+  levelSixCelebration: document.querySelector("#level-six-celebration"),
   levelSixNextButton: document.querySelector("#level-six-next-button"),
   gameHintButtons: [...document.querySelectorAll("[data-game-hint-button]")],
   parentLink: document.querySelector("#parent-link"),
@@ -518,11 +523,12 @@ function currentHintAnswer() {
 }
 
 function toggleGameHint(button) {
-  const card = button.closest("[data-game-hint]").querySelector("[data-game-hint-card]");
+  const hint = button.closest("[data-game-hint]");
+  const card = hint.querySelector("[data-game-hint-card]");
   const willShow = card.classList.contains("is-hidden");
   hideGameHints();
   if (!willShow) return;
-  card.textContent = `🙂 ${currentData().ui.hintAnswer} ${currentHintAnswer()}`;
+  hint.querySelector("[data-game-hint-answer]").textContent = `🙂 ${currentData().ui.hintAnswer} ${currentHintAnswer()}`;
   card.classList.remove("is-hidden");
   button.setAttribute("aria-expanded", "true");
 }
@@ -591,9 +597,8 @@ function translateInterface() {
   ui.movableBuiltWord.setAttribute("aria-label", text.movableBuiltAria);
   ui.movableLetterBank.setAttribute("aria-label", text.movableLettersAria);
   ui.movableClearButton.textContent = text.movableClear;
-  ui.levelSixRepeatButton.textContent = `🔄 ${text.repeat}`;
   ui.levelSixNextButton.textContent = `${text.next} ➡️`;
-  ui.gameHintButtons.forEach((button) => { button.querySelector("span").textContent = text.hint; });
+  ui.gameHintButtons.forEach((button) => { button.setAttribute("aria-label", text.hint); });
   hideGameHints();
   ui.parentLink.textContent = creatorText.parentLink;
   ui.parentNoteTitle.textContent = creatorText.parentTitle;
@@ -1230,8 +1235,9 @@ function hideLevelSixActions() {
   ui.levelSixSuccess.textContent = "";
 }
 
-function showLevelSixActions(message) {
+function showLevelSixActions(message, item) {
   ui.levelSixSuccess.textContent = message;
+  ui.levelSixCelebration.textContent = item.image;
   ui.levelSixActions.classList.remove("is-hidden");
 }
 
@@ -1270,7 +1276,7 @@ function renderMovableWord(item) {
     const choice = builtMovableLetters[index];
     if (!choice) {
       const slot = document.createElement("span");
-      slot.className = "movable-empty-slot";
+      slot.className = `movable-empty-slot ${movableLetterColorClass(item.word[index])}`;
       slot.setAttribute("aria-hidden", "true");
       return slot;
     }
@@ -1314,7 +1320,7 @@ function chooseMovableLetter(choice, item) {
     renderMovableWord(item);
     ui.movableLetterBank.classList.add("is-hidden");
     ui.movableClearButton.classList.add("is-hidden");
-    showLevelSixActions(currentData().ui.buildComplete);
+    showLevelSixActions(currentData().ui.buildComplete, item);
     return;
   }
   renderMovableWord(item);
@@ -1361,7 +1367,7 @@ function finishMontessoriWord(item) {
   acceptsKeyboard = false;
   montessoriStage = "typeComplete";
   renderMontessoriTyping(item);
-  showLevelSixActions(currentData().ui.typeComplete);
+  showLevelSixActions(currentData().ui.typeComplete, item);
 }
 
 function nextTask() {
@@ -1405,16 +1411,11 @@ document.querySelectorAll("[data-letter-count]").forEach((button) => {
   button.addEventListener("click", () => startLevel(letterSetupLevel, Number(button.dataset.letterCount)));
 });
 ui.gameHintButtons.forEach((button) => button.addEventListener("click", () => toggleGameHint(button)));
+document.querySelectorAll("[data-game-hint-close]").forEach((button) => button.addEventListener("click", hideGameHints));
 ui.movableClearButton.addEventListener("click", () => {
   if (movableWordComplete || activeLevel !== 6 || montessoriStage !== "build") return;
   builtMovableLetters = [];
   renderMovableWord(levelSixWords[taskIndex]);
-});
-ui.levelSixRepeatButton.addEventListener("click", () => {
-  if (activeLevel !== 6) return;
-  const item = levelSixWords[taskIndex];
-  if (montessoriStage === "buildComplete") renderMovableAlphabet();
-  if (montessoriStage === "typeComplete") startMontessoriTyping(item);
 });
 ui.levelSixNextButton.addEventListener("click", () => {
   if (activeLevel !== 6) return;

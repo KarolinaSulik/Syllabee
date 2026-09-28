@@ -236,8 +236,11 @@
         </div>
         <div id="single-letter" class="single-letter" aria-label="Litera do wpisania"></div>
         <div class="game-hint" data-game-hint>
-          <p class="game-hint-card is-hidden" data-game-hint-card aria-live="polite"></p>
-          <button class="game-hint-button" type="button" data-game-hint-button aria-expanded="false">💡 <span>Podpowiedź</span></button>
+          <aside class="game-hint-card is-hidden" data-game-hint-card role="dialog" aria-live="polite" aria-label="Podpowiedź">
+            <button class="game-hint-close" type="button" data-game-hint-close aria-label="Zamknij podpowiedź">×</button>
+            <p data-game-hint-answer></p>
+          </aside>
+          <button class="game-hint-button" type="button" data-game-hint-button aria-expanded="false" aria-label="Podpowiedź">💡</button>
         </div>
       </section>
 
@@ -252,8 +255,11 @@
           <div id="letter-slots" class="letter-slots" aria-label="Słowo do wpisania"></div>
         </div>
         <div class="game-hint" data-game-hint>
-          <p class="game-hint-card is-hidden" data-game-hint-card aria-live="polite"></p>
-          <button class="game-hint-button" type="button" data-game-hint-button aria-expanded="false">💡 <span>Podpowiedź</span></button>
+          <aside class="game-hint-card is-hidden" data-game-hint-card role="dialog" aria-live="polite" aria-label="Podpowiedź">
+            <button class="game-hint-close" type="button" data-game-hint-close aria-label="Zamknij podpowiedź">×</button>
+            <p data-game-hint-answer></p>
+          </aside>
+          <button class="game-hint-button" type="button" data-game-hint-button aria-expanded="false" aria-label="Podpowiedź">💡</button>
         </div>
       </section>
 
@@ -268,8 +274,11 @@
         <div id="syllable-choices" class="syllable-choices" aria-label="Wybierz sylabę"></div>
         <p id="level-three-hint" class="hint" aria-live="polite"></p>
         <div class="game-hint" data-game-hint>
-          <p class="game-hint-card is-hidden" data-game-hint-card aria-live="polite"></p>
-          <button class="game-hint-button" type="button" data-game-hint-button aria-expanded="false">💡 <span>Podpowiedź</span></button>
+          <aside class="game-hint-card is-hidden" data-game-hint-card role="dialog" aria-live="polite" aria-label="Podpowiedź">
+            <button class="game-hint-close" type="button" data-game-hint-close aria-label="Zamknij podpowiedź">×</button>
+            <p data-game-hint-answer></p>
+          </aside>
+          <button class="game-hint-button" type="button" data-game-hint-button aria-expanded="false" aria-label="Podpowiedź">💡</button>
         </div>
       </section>
 
@@ -281,8 +290,11 @@
         </div>
         <div id="written-letter" class="written-letter" aria-label="Litera pisana do wpisania"></div>
         <div class="game-hint" data-game-hint>
-          <p class="game-hint-card is-hidden" data-game-hint-card aria-live="polite"></p>
-          <button class="game-hint-button" type="button" data-game-hint-button aria-expanded="false">💡 <span>Podpowiedź</span></button>
+          <aside class="game-hint-card is-hidden" data-game-hint-card role="dialog" aria-live="polite" aria-label="Podpowiedź">
+            <button class="game-hint-close" type="button" data-game-hint-close aria-label="Zamknij podpowiedź">×</button>
+            <p data-game-hint-answer></p>
+          </aside>
+          <button class="game-hint-button" type="button" data-game-hint-button aria-expanded="false" aria-label="Podpowiedź">💡</button>
         </div>
       </section>
 
@@ -296,8 +308,11 @@
         <div id="built-sentence" class="built-sentence" aria-label="Układane zdanie"></div>
         <div id="sentence-choices" class="sentence-choices" aria-label="Wybierz wyraz"></div>
         <div class="game-hint" data-game-hint>
-          <p class="game-hint-card is-hidden" data-game-hint-card aria-live="polite"></p>
-          <button class="game-hint-button" type="button" data-game-hint-button aria-expanded="false">💡 <span>Podpowiedź</span></button>
+          <aside class="game-hint-card is-hidden" data-game-hint-card role="dialog" aria-live="polite" aria-label="Podpowiedź">
+            <button class="game-hint-close" type="button" data-game-hint-close aria-label="Zamknij podpowiedź">×</button>
+            <p data-game-hint-answer></p>
+          </aside>
+          <button class="game-hint-button" type="button" data-game-hint-button aria-expanded="false" aria-label="Podpowiedź">💡</button>
         </div>
       </section>
 
@@ -314,17 +329,21 @@
         <div id="movable-letter-bank" class="movable-letter-bank" aria-label="Litery do ułożenia słowa"></div>
         <button id="movable-clear-button" class="movable-clear-button" type="button">Wyczyść</button>
         <div id="montessori-typing" class="montessori-typing is-hidden" aria-label="Wpisywane słowo"></div>
-        <div id="level-six-actions" class="level-six-actions is-hidden" aria-live="polite">
-          <p id="level-six-success" class="level-six-success"></p>
-          <div class="level-six-action-buttons">
-            <button id="level-six-repeat-button" class="level-six-action-button" type="button">🔄 Jeszcze raz</button>
-            <button id="level-six-next-button" class="level-six-action-button" type="button">Dalej ➡️</button>
-          </div>
+        <div id="level-six-actions" class="level-six-actions is-hidden" role="dialog" aria-modal="true" aria-live="polite" aria-label="Dobrze">
+          <section class="level-six-success-card">
+            <div id="level-six-celebration" class="level-six-celebration" aria-hidden="true">🚗</div>
+            <p id="level-six-success" class="level-six-success"></p>
+            <div class="level-six-action-buttons">
+              <button id="level-six-next-button" class="level-six-action-button" type="button">Dalej ➡️</button>
+            </div>
+          </section>
         </div>
-        <p class="montessori-level-badge" aria-label="Poziom inspirowany Montessori">Montessori</p>
         <div class="game-hint" data-game-hint>
-          <p class="game-hint-card is-hidden" data-game-hint-card aria-live="polite"></p>
-          <button class="game-hint-button" type="button" data-game-hint-button aria-expanded="false">💡 <span>Podpowiedź</span></button>
+          <aside class="game-hint-card is-hidden" data-game-hint-card role="dialog" aria-live="polite" aria-label="Podpowiedź">
+            <button class="game-hint-close" type="button" data-game-hint-close aria-label="Zamknij podpowiedź">×</button>
+            <p data-game-hint-answer></p>
+          </aside>
+          <button class="game-hint-button" type="button" data-game-hint-button aria-expanded="false" aria-label="Podpowiedź">💡</button>
         </div>
       </section>
 
