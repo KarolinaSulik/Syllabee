@@ -14,36 +14,45 @@
         <header class="library-header">
           <a class="library-brand" href="./" aria-label="Syllabee — strona główna">
             <svg class="brand-bee" viewBox="0 0 64 64" aria-hidden="true">
-              <path class="brand-bee-wing" d="M27 28C16 14 7 18 10 31c2 9 10 12 19 7" />
-              <path class="brand-bee-wing" d="M37 28c11-14 20-10 17 3-2 9-10 12-19 7" />
-              <circle class="brand-bee-head" cx="32" cy="24" r="8" />
-              <ellipse class="brand-bee-body" cx="32" cy="40" rx="12" ry="15" />
-              <path class="brand-bee-stripe" d="M21 35h22M20 42h24M22 49h20" />
-              <circle class="brand-bee-eye" cx="29" cy="23" r="1.4" />
-              <circle class="brand-bee-eye" cx="35" cy="23" r="1.4" />
-              <path class="brand-bee-smile" d="M29 27c2 2 4 2 6 0" />
-              <path class="brand-bee-antenna" d="M28 18 24 13M36 18l4-5" />
+              <path class="brand-bee-line" d="M29 28C17 14 7 18 10 31c2 9 10 12 19 7" />
+              <path class="brand-bee-line" d="M35 28c12-14 22-10 19 3-2 9-11 12-20 7" />
+              <path class="brand-bee-line" d="M28 20 24 14M36 20l4-6" />
+              <circle class="brand-bee-line" cx="32" cy="27" r="7" />
+              <ellipse class="brand-bee-line" cx="32" cy="42" rx="11" ry="14" />
+              <circle class="brand-bee-eye" cx="34.5" cy="26" r="1.4" />
             </svg>
             <span>Syllabee</span>
           </a>
-          <a class="parent-link" href="#dla-rodzicow">Dla rodziców</a>
+          <div class="library-header-actions">
+            <div class="language-selector library-language-selector">
+              <select id="library-language-select" data-language-select aria-label="Język">
+                <option value="pl">🇵🇱 Polski</option>
+                <option value="en">🇬🇧 English</option>
+                <option value="de">🇩🇪 Deutsch</option>
+              </select>
+            </div>
+            <nav class="library-links" aria-label="Dodatkowe informacje">
+              <a id="parent-link" class="parent-link" href="#dla-rodzicow">Dla rodziców</a>
+              <a id="creator-link" class="parent-link" href="#o-tworczyni">O twórczyni</a>
+            </nav>
+          </div>
         </header>
 
         <div class="library-content">
-          <p class="library-kicker">Dla małych odkrywców</p>
+          <p id="library-kicker" class="library-kicker">Dla małych odkrywców</p>
           <h1 id="library-title">Uczymy przez zabawę</h1>
-          <p class="library-intro">Edukacyjna zabawa dla dzieci w wieku 4–6 lat — bez reklam, bez hałasu, bez logowania i bez nadmiaru bodźców.</p>
+          <p id="library-intro" class="library-intro">Edukacyjna zabawa dla dzieci w wieku 4–6 lat — bez reklam, bez hałasu, bez logowania i bez nadmiaru bodźców.</p>
 
           <div class="game-library-grid" aria-label="Wybierz zabawę edukacyjną">
             <article class="game-library-card is-available">
               <div class="game-card-illustration reading-illustration" aria-hidden="true">🔤</div>
               <div class="game-card-copy">
-                <span class="game-card-tag">Dostępna teraz</span>
-                <h2>Czytanie sylabowe</h2>
-                <p>Litery, wyrazy, sylaby i krótkie zdania — krok po kroku.</p>
+                <span id="reading-game-tag" class="game-card-tag">Dostępna teraz</span>
+                <h2 id="reading-game-title">Czytanie sylabowe</h2>
+                <p id="reading-game-description">Litery, wyrazy, sylaby i krótkie zdania — krok po kroku.</p>
               </div>
               <button class="library-play-button" type="button" data-open-reading-game>
-                <span>Graj teraz</span>
+                <span id="library-play-label">Graj teraz</span>
                 <span class="library-play-button-icon" aria-hidden="true">→</span>
               </button>
             </article>
@@ -51,9 +60,9 @@
             <article class="game-library-card is-coming" aria-label="Nowa gra wkrótce">
               <div class="game-card-illustration" aria-hidden="true">🎲</div>
               <div class="game-card-copy">
-                <span class="game-card-tag">Wkrótce</span>
-                <h2>Kolejna zabawa</h2>
-                <p>Tu pojawi się następna spokojna aktywność.</p>
+                <span id="coming-game-tag" class="game-card-tag">Wkrótce</span>
+                <h2 id="coming-game-title">Kolejna zabawa</h2>
+                <p id="coming-game-description">Tu pojawi się następna aktywność.</p>
               </div>
             </article>
           </div>
@@ -62,7 +71,42 @@
             <span aria-hidden="true">💛</span>
             <div>
               <h2 id="parent-note-title">Dla rodziców</h2>
-              <p>Najlepiej towarzyszyć dziecku przy pierwszych zabawach, chwalić próby i robić krótkie przerwy.</p>
+              <p id="parent-note-text">Najlepiej towarzyszyć dziecku przy pierwszych zabawach, chwalić próby i robić krótkie przerwy.</p>
+            </div>
+          </section>
+
+          <section class="parent-guide" aria-labelledby="parent-guide-title">
+            <header class="parent-guide-header">
+              <h2 id="parent-guide-title">Jak wspierać dziecko na każdym poziomie</h2>
+              <p id="parent-guide-intro">Wystarczą krótkie, regularne sesje, rozmowa i zainteresowanie tym, co dziecko odkrywa.</p>
+            </header>
+            <div id="parent-level-cards" class="parent-level-cards"></div>
+            <aside class="parent-readiness" aria-labelledby="parent-readiness-title">
+              <span aria-hidden="true">🌱</span>
+              <div>
+                <h3 id="parent-readiness-title">Najważniejsza jest gotowość dziecka</h3>
+                <p id="parent-readiness-text">Jeśli dziecko chce się bawić — świetnie. Jeśli nie ma ochoty, nie wywieraj presji — wróci, gdy będzie gotowe.</p>
+              </div>
+            </aside>
+            <footer class="parent-sources" aria-labelledby="parent-sources-title">
+              <h3 id="parent-sources-title">Źródła i ważna informacja</h3>
+              <p id="parent-sources-note">Te wskazówki mają charakter edukacyjny i nie zastępują konsultacji z logopedą. Jeśli rozwój mowy lub słuch dziecka budzi Twój niepokój, skontaktuj się ze specjalistą.</p>
+              <ul>
+                <li><a href="https://logopeda.org.pl/resources/pliki/879_ulotka_rozwoj_mowy_dzieci.pdf" target="_blank" rel="noreferrer">Polski Związek Logopedów — „Jak wspierać rozwój mowy dziecka”, oprac. Hanna Wawrzyniak-Kujawa</a></li>
+                <li><a href="https://samorzad.gov.pl/web/poradnia-pp-hajnowka/rozwijanie-mowy-dziecka" target="_blank" rel="noreferrer">Poradnia Psychologiczno-Pedagogiczna w Hajnówce — „Rozwijanie mowy dziecka”</a></li>
+              </ul>
+            </footer>
+          </section>
+
+          <section id="o-tworczyni" class="creator-note" aria-labelledby="creator-title">
+            <div class="creator-note-photo">
+              <img src="assets/images/tworczyni-syllabee.png" alt="Portret twórczyni Syllabee" />
+            </div>
+            <div>
+              <p class="creator-note-kicker">Syllabee od mamy dla dzieci</p>
+              <h2 id="creator-title">O twórczyni</h2>
+              <p id="creator-first-paragraph">Mam na imię Karolina Sulik, mam 28 lat i jestem mamą czteroletniego Tobiasza, który z radością poznaje literki. Ograniczam dzieciom czas przed ekranem, ale widzę, że technologia używana z uważnością może wspierać naukę i dawać z niej więcej przyjemności. W świecie szybko rozwijającej się AI warto uczyć się korzystać z niej mądrze.</p>
+              <p id="creator-second-paragraph">Po ukończeniu informatyki stworzyłam prostą grę dla syna, aby mógł bawić się literami i łączyć je w sylaby. Podczas testów zauważyłam, że chętnie do niej wraca i woli takie ćwiczenia od sylab na papierze. Chcę podzielić się tym doświadczeniem, aby także inne dzieci mogły odkryć radość z nauki. Jestem też mamą dwójki dzieci — moja córeczka ma dopiero dwa miesiące, ale gdy przyjdzie czas na szkołę, również będzie uczyć się z tej gry.</p>
             </div>
           </section>
 
@@ -72,21 +116,18 @@
       <section id="menu-screen" class="screen is-hidden" aria-labelledby="menu-title">
         <div class="menu-brand" aria-label="Syllabee">
           <svg class="brand-bee" viewBox="0 0 64 64" aria-hidden="true">
-            <path class="brand-bee-wing" d="M27 28C16 14 7 18 10 31c2 9 10 12 19 7" />
-            <path class="brand-bee-wing" d="M37 28c11-14 20-10 17 3-2 9-10 12-19 7" />
-            <circle class="brand-bee-head" cx="32" cy="24" r="8" />
-            <ellipse class="brand-bee-body" cx="32" cy="40" rx="12" ry="15" />
-            <path class="brand-bee-stripe" d="M21 35h22M20 42h24M22 49h20" />
-            <circle class="brand-bee-eye" cx="29" cy="23" r="1.4" />
-            <circle class="brand-bee-eye" cx="35" cy="23" r="1.4" />
-            <path class="brand-bee-smile" d="M29 27c2 2 4 2 6 0" />
-            <path class="brand-bee-antenna" d="M28 18 24 13M36 18l4-5" />
+            <path class="brand-bee-line" d="M29 28C17 14 7 18 10 31c2 9 10 12 19 7" />
+            <path class="brand-bee-line" d="M35 28c12-14 22-10 19 3-2 9-11 12-20 7" />
+            <path class="brand-bee-line" d="M28 20 24 14M36 20l4-6" />
+            <circle class="brand-bee-line" cx="32" cy="27" r="7" />
+            <ellipse class="brand-bee-line" cx="32" cy="42" rx="11" ry="14" />
+            <circle class="brand-bee-eye" cx="34.5" cy="26" r="1.4" />
           </svg>
           <span>Syllabee</span>
         </div>
         <button class="library-back-button" type="button" data-go-library>← Wszystkie zabawy</button>
         <div class="language-selector">
-          <select id="language-select" aria-label="Język">
+          <select id="language-select" data-language-select aria-label="Język">
             <option value="pl">🇵🇱 Polski</option>
             <option value="en">🇬🇧 English</option>
             <option value="de">🇩🇪 Deutsch</option>
@@ -122,7 +163,7 @@
           <button class="level-card" type="button" data-start-level="6">
             <span class="level-card-icon" aria-hidden="true">🔠</span>
             <strong id="level-six-title">Poziom 6</strong>
-            <span id="level-six-label" class="level-card-label">Układam wyrazy</span>
+            <span id="level-six-label" class="level-card-label">Gra w słowa Montessori</span>
           </button>
         </div>
       </section>
@@ -194,6 +235,10 @@
           <div id="level-one-progress" class="progress-bar" role="progressbar" aria-label="Postęp w Level 1"></div>
         </div>
         <div id="single-letter" class="single-letter" aria-label="Litera do wpisania"></div>
+        <div class="game-hint" data-game-hint>
+          <p class="game-hint-card is-hidden" data-game-hint-card aria-live="polite"></p>
+          <button class="game-hint-button" type="button" data-game-hint-button aria-expanded="false">💡 <span>Podpowiedź</span></button>
+        </div>
       </section>
 
       <!-- Level 2: wpisywanie słów -->
@@ -205,6 +250,10 @@
         <div class="word-layout">
           <div id="level-two-image" class="picture" role="img"></div>
           <div id="letter-slots" class="letter-slots" aria-label="Słowo do wpisania"></div>
+        </div>
+        <div class="game-hint" data-game-hint>
+          <p class="game-hint-card is-hidden" data-game-hint-card aria-live="polite"></p>
+          <button class="game-hint-button" type="button" data-game-hint-button aria-expanded="false">💡 <span>Podpowiedź</span></button>
         </div>
       </section>
 
@@ -218,6 +267,10 @@
         <div id="built-word" class="built-word" aria-label="Układane słowo"></div>
         <div id="syllable-choices" class="syllable-choices" aria-label="Wybierz sylabę"></div>
         <p id="level-three-hint" class="hint" aria-live="polite"></p>
+        <div class="game-hint" data-game-hint>
+          <p class="game-hint-card is-hidden" data-game-hint-card aria-live="polite"></p>
+          <button class="game-hint-button" type="button" data-game-hint-button aria-expanded="false">💡 <span>Podpowiedź</span></button>
+        </div>
       </section>
 
       <!-- Level 4: rozpoznawanie liter pisanych. -->
@@ -227,6 +280,10 @@
           <div id="level-four-progress" class="progress-bar" role="progressbar" aria-label="Postęp w Level 4"></div>
         </div>
         <div id="written-letter" class="written-letter" aria-label="Litera pisana do wpisania"></div>
+        <div class="game-hint" data-game-hint>
+          <p class="game-hint-card is-hidden" data-game-hint-card aria-live="polite"></p>
+          <button class="game-hint-button" type="button" data-game-hint-button aria-expanded="false">💡 <span>Podpowiedź</span></button>
+        </div>
       </section>
 
       <!-- Level 5: układanie krótkich zdań z wyrazów. -->
@@ -238,6 +295,10 @@
         <div id="level-five-image" class="picture" role="img"></div>
         <div id="built-sentence" class="built-sentence" aria-label="Układane zdanie"></div>
         <div id="sentence-choices" class="sentence-choices" aria-label="Wybierz wyraz"></div>
+        <div class="game-hint" data-game-hint>
+          <p class="game-hint-card is-hidden" data-game-hint-card aria-live="polite"></p>
+          <button class="game-hint-button" type="button" data-game-hint-button aria-expanded="false">💡 <span>Podpowiedź</span></button>
+        </div>
       </section>
 
       <!-- Level 6: obrazek → ruchome litery → klawiatura → samodzielne czytanie. -->
@@ -253,10 +314,17 @@
         <div id="movable-letter-bank" class="movable-letter-bank" aria-label="Litery do ułożenia słowa"></div>
         <button id="movable-clear-button" class="movable-clear-button" type="button">Wyczyść</button>
         <div id="montessori-typing" class="montessori-typing is-hidden" aria-label="Wpisywane słowo"></div>
-        <div id="montessori-reading" class="montessori-reading is-hidden">
-          <p id="montessori-read-prompt">Przeczytaj słowo.</p>
-          <button id="montessori-speak-button" class="montessori-speak-button" type="button" aria-label="Posłuchaj słowa">🔊</button>
-          <button id="montessori-next-button" class="montessori-next-button" type="button">Dalej</button>
+        <div id="level-six-actions" class="level-six-actions is-hidden" aria-live="polite">
+          <p id="level-six-success" class="level-six-success"></p>
+          <div class="level-six-action-buttons">
+            <button id="level-six-repeat-button" class="level-six-action-button" type="button">🔄 Jeszcze raz</button>
+            <button id="level-six-next-button" class="level-six-action-button" type="button">Dalej ➡️</button>
+          </div>
+        </div>
+        <p class="montessori-level-badge" aria-label="Poziom inspirowany Montessori">Montessori</p>
+        <div class="game-hint" data-game-hint>
+          <p class="game-hint-card is-hidden" data-game-hint-card aria-live="polite"></p>
+          <button class="game-hint-button" type="button" data-game-hint-button aria-expanded="false">💡 <span>Podpowiedź</span></button>
         </div>
       </section>
 
