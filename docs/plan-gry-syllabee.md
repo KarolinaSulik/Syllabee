@@ -102,7 +102,7 @@ Sekcja **Dla rodziców** ma informować, nie przytłaczając tekstem. Zaczyna si
 
 ## O twórczyni
 
-Sekcja **O twórczyni** jest osobną, krótką częścią menu głównego. Zawiera portret oraz zwięzłą historię powstania Syllabee. Nie przenosi rozbudowanej treści do górnej części strony ani nie konkuruje z rozpoczęciem gry.
+Sekcja **O twórczyni** jest osobną, krótką częścią menu głównego. Zawiera portret, nagłówek **O twórczyni** oraz zwięzłą historię powstania Syllabee. Nie używamy dodatkowego podpisu nad tytułem. Sekcja nie przenosi rozbudowanej treści do górnej części strony ani nie konkuruje z rozpoczęciem gry.
 
 ## Responsywność i kontrola jakości
 

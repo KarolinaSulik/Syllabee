@@ -264,7 +264,6 @@ const creatorCopy = {
     parentLink: "Dla rodziców",
     parentText: "Najlepiej towarzyszyć dziecku przy pierwszych zabawach, chwalić próby i robić krótkie przerwy. 💛",
     creatorLink: "O twórczyni",
-    kicker: "Syllabee od mamy dla dzieci",
     title: "O twórczyni",
     firstParagraph: "Mam na imię Karolina Sulik, mam 28 lat i jestem mamą czteroletniego Tobiasza, który z radością poznaje literki. Ograniczam dzieciom czas przed ekranem, ale widzę, że technologia używana z uważnością może wspierać naukę i dawać z niej więcej przyjemności. W świecie szybko rozwijającej się AI warto uczyć się korzystać z niej mądrze.",
     secondParagraph: "Po ukończeniu informatyki stworzyłam prostą grę dla syna, aby mógł bawić się literami i łączyć je w sylaby. Podczas testów zauważyłam, że chętnie do niej wraca i woli takie ćwiczenia od sylab na papierze. Chcę podzielić się tym doświadczeniem, aby także inne dzieci mogły odkryć radość z nauki. Jestem też mamą dwójki dzieci — moja córeczka ma dopiero dwa miesiące, ale gdy przyjdzie czas na szkołę, również będzie uczyć się z tej gry.",
@@ -273,7 +272,6 @@ const creatorCopy = {
     parentLink: "For parents",
     parentText: "It is best to join your child for the first few activities, praise their efforts and take short breaks. 💛",
     creatorLink: "About the creator",
-    kicker: "Syllabee — from a mum, for children",
     title: "About the creator",
     firstParagraph: "I am 28 and the mum of a four-year-old son who loves discovering letters. I limit his screen time, but I believe that technology, used mindfully, can make learning more enjoyable for children. It is not something we can completely set aside today — especially in a world of rapidly developing AI, it is worth learning to use it wisely.",
     secondParagraph: "After completing my computer science degree, I made this simple game for my son so he could play with letters and join them into syllables. While testing it, I noticed that he is more eager to do these activities than syllable exercises on paper. I wanted to share this experience — perhaps other children will discover joy in learning through it too.",
@@ -282,7 +280,6 @@ const creatorCopy = {
     parentLink: "Für Eltern",
     parentText: "Begleiten Sie Ihr Kind am besten bei den ersten Übungen, würdigen Sie seine Versuche und machen Sie kurze Pausen. 💛",
     creatorLink: "Über die Entwicklerin",
-    kicker: "Syllabee — von einer Mama für Kinder",
     title: "Über die Entwicklerin",
     firstParagraph: "Ich bin 28 Jahre alt und Mutter eines vierjährigen Sohnes, der mit Freude Buchstaben entdeckt. Ich begrenze seine Bildschirmzeit, glaube aber, dass Technologie — achtsam eingesetzt — Kindern mehr Freude am Lernen geben kann. Gerade in einer Welt, in der sich KI rasant entwickelt, lohnt es sich, den klugen Umgang damit zu lernen.",
     secondParagraph: "Nach meinem Informatikstudium habe ich dieses einfache Spiel für meinen Sohn entwickelt, damit er mit Buchstaben spielen und sie zu Silben verbinden kann. Beim Testen habe ich beobachtet, dass er sich lieber auf diese Übungen einlässt als auf Silben auf Papier. Diese Erfahrung möchte ich teilen — vielleicht entdecken auch andere Kinder damit Freude am Lernen.",
@@ -453,8 +450,6 @@ const ui = {
   movableClearButton: document.querySelector("#movable-clear-button"),
   montessoriTyping: document.querySelector("#montessori-typing"),
   montessoriBackspaceButton: document.querySelector("#montessori-backspace-button"),
-  levelSixActions: document.querySelector("#level-six-actions"),
-  levelSixNextButton: document.querySelector("#level-six-next-button"),
   gameHintButtons: [...document.querySelectorAll("[data-game-hint-button]")],
   parentLink: document.querySelector("#parent-link"),
   parentNoteText: document.querySelector("#parent-note-text"),
@@ -465,7 +460,6 @@ const ui = {
   parentSourcesTitle: document.querySelector("#parent-sources-title"),
   parentSourcesNote: document.querySelector("#parent-sources-note"),
   creatorLink: document.querySelector("#creator-link"),
-  creatorKicker: document.querySelector(".creator-note-kicker"),
   creatorTitle: document.querySelector("#creator-title"),
   creatorFirstParagraph: document.querySelector("#creator-first-paragraph"),
   creatorSecondParagraph: document.querySelector("#creator-second-paragraph"),
@@ -612,14 +606,12 @@ function translateInterface() {
   ui.movableBuiltWord.setAttribute("aria-label", text.movableBuiltAria);
   ui.movableLetterBank.setAttribute("aria-label", text.movableLettersAria);
   ui.movableClearButton.textContent = text.movableClear;
-  ui.levelSixNextButton.textContent = `${text.next} ➡️`;
   ui.montessoriBackspaceButton.textContent = `⌫ ${text.removeTypedLetter}`;
   ui.gameHintButtons.forEach((button) => { button.setAttribute("aria-label", text.hint); });
   hideGameHints();
   ui.parentLink.textContent = creatorText.parentLink;
   ui.parentNoteText.textContent = creatorText.parentText;
   ui.creatorLink.textContent = creatorText.creatorLink;
-  ui.creatorKicker.textContent = creatorText.kicker;
   ui.creatorTitle.textContent = creatorText.title;
   ui.creatorFirstParagraph.textContent = creatorText.firstParagraph;
   ui.creatorSecondParagraph.textContent = creatorText.secondParagraph;
@@ -883,6 +875,17 @@ function movableLetterColorClass(letter) {
   const vowels = vowelsByLanguage[currentLanguage] || vowelsByLanguage.pl;
   const normalizedLetter = letter.toLocaleUpperCase(currentData().locale);
   return vowels.includes(normalizedLetter) ? "is-vowel" : "is-consonant";
+}
+
+function createMontessoriSyllableGroups(item, createLetterElement) {
+  return item.syllables.map((syllable, syllableIndex) => {
+    const group = document.createElement("div");
+    group.className = "montessori-syllable-slots";
+    [...syllable].forEach((letter, letterIndex) => {
+      group.append(createLetterElement(letter, syllableIndex, letterIndex));
+    });
+    return group;
+  });
 }
 
 function setPicture(element, item) {
@@ -1265,13 +1268,14 @@ function chooseSentenceWord(word, button, item) {
 // LEVEL 6: obrazek prowadzi od znaczenia przez ruchomy alfabet do zapisu
 // i samodzielnego czytania. Błąd pozostaje widoczny, aby dziecko mogło go
 // poprawić samo — to cyfrowy odpowiednik kontroli błędu.
-function hideLevelSixActions() {
-  ui.levelSixActions.classList.add("is-hidden");
-}
+const LEVEL_SIX_ADVANCE_MS = 2000;
 
-function showLevelSixActions(nextLabel) {
-  ui.levelSixNextButton.textContent = `${nextLabel} ➡️`;
-  ui.levelSixActions.classList.remove("is-hidden");
+function scheduleLevelSixAdvance(callback) {
+  window.clearTimeout(levelThreeAdvanceTimer);
+  levelThreeAdvanceTimer = window.setTimeout(() => {
+    levelThreeAdvanceTimer = undefined;
+    if (activeLevel === 6) callback();
+  }, LEVEL_SIX_ADVANCE_MS);
 }
 
 function renderMovableAlphabet() {
@@ -1298,27 +1302,29 @@ function renderMovableAlphabet() {
   ui.montessoriTyping.replaceChildren();
   ui.movableLetterBank.classList.remove("is-hidden");
   ui.movableClearButton.classList.remove("is-hidden");
-  hideLevelSixActions();
   renderMovableWord(item);
 }
 
 function renderMovableWord(item) {
   const builtText = builtMovableLetters.map(({ letter }) => letter).join("");
   const isMismatched = !item.word.startsWith(builtText);
+  let wordIndex = 0;
   ui.movableHint.textContent = "";
-  ui.movableBuiltWord.replaceChildren(...Array.from({ length: [...item.word].length }, (_, index) => {
+  ui.movableBuiltWord.replaceChildren(...createMontessoriSyllableGroups(item, (expectedLetter) => {
+    const index = wordIndex;
+    wordIndex += 1;
     const choice = builtMovableLetters[index];
     if (!choice) {
       const slot = document.createElement("span");
-      slot.className = `movable-empty-slot ${movableLetterColorClass(item.word[index])}`;
+      slot.className = `movable-empty-slot ${movableLetterColorClass(expectedLetter)}`;
       slot.setAttribute("aria-hidden", "true");
       return slot;
     }
 
     const letter = document.createElement("button");
     letter.type = "button";
-    letter.className = `movable-built-letter ${movableLetterColorClass(choice.letter)}`;
-    if (isMismatched && item.word[index] !== choice.letter) letter.classList.add("is-mismatched");
+    letter.className = `movable-built-letter ${movableLetterColorClass(expectedLetter)}`;
+    if (isMismatched && expectedLetter !== choice.letter) letter.classList.add("is-mismatched");
     letter.textContent = choice.letter;
     letter.setAttribute("aria-label", `${currentData().ui.movableRemove}: ${choice.letter}`);
     letter.disabled = movableWordComplete;
@@ -1354,7 +1360,7 @@ function chooseMovableLetter(choice, item) {
     renderMovableWord(item);
     ui.movableLetterBank.classList.add("is-hidden");
     ui.movableClearButton.classList.add("is-hidden");
-    showLevelSixActions(currentData().ui.continueToTyping);
+    scheduleLevelSixAdvance(() => startMontessoriTyping(item));
     return;
   }
   renderMovableWord(item);
@@ -1370,8 +1376,7 @@ function startMontessoriTyping(item) {
   ui.movableHint.textContent = "";
   ui.movableLetterBank.classList.add("is-hidden");
   ui.movableClearButton.classList.add("is-hidden");
-  hideLevelSixActions();
-  ui.movableBuiltWord.replaceChildren(...[...item.word].map((letterValue) => {
+  ui.movableBuiltWord.replaceChildren(...createMontessoriSyllableGroups(item, (letterValue) => {
     const letter = document.createElement("span");
     letter.className = `movable-built-letter is-complete ${movableLetterColorClass(letterValue)}`;
     letter.textContent = letterValue;
@@ -1383,7 +1388,10 @@ function startMontessoriTyping(item) {
 }
 
 function renderMontessoriTyping(item) {
-  ui.montessoriTyping.replaceChildren(...[...item.word].map((letterValue, index) => {
+  let wordIndex = 0;
+  ui.montessoriTyping.replaceChildren(...createMontessoriSyllableGroups(item, (letterValue) => {
+    const index = wordIndex;
+    wordIndex += 1;
     const slot = document.createElement("span");
     slot.className = `montessori-typed-slot ${movableLetterColorClass(letterValue)}`;
     slot.dataset.letter = letterValue;
@@ -1403,7 +1411,7 @@ function finishMontessoriWord(item) {
   montessoriStage = "typeComplete";
   ui.montessoriBackspaceButton.classList.add("is-hidden");
   renderMontessoriTyping(item);
-  showLevelSixActions(currentData().ui.next);
+  scheduleLevelSixAdvance(nextTask);
 }
 
 function nextTask() {
@@ -1458,12 +1466,6 @@ ui.movableClearButton.addEventListener("click", () => {
   renderMovableWord(levelSixWords[taskIndex]);
 });
 ui.montessoriBackspaceButton.addEventListener("click", removeMontessoriTypedLetter);
-ui.levelSixNextButton.addEventListener("click", () => {
-  if (activeLevel !== 6) return;
-  const item = levelSixWords[taskIndex];
-  if (montessoriStage === "buildComplete") startMontessoriTyping(item);
-  if (montessoriStage === "typeComplete") nextTask();
-});
 document.querySelectorAll("[data-go-menu]").forEach((button) => button.addEventListener("click", goToMenu));
 document.querySelectorAll("[data-open-reading-game]").forEach((button) => button.addEventListener("click", () => openReadingGame()));
 document.querySelectorAll("[data-go-library]").forEach((button) => button.addEventListener("click", () => goToLibrary()));

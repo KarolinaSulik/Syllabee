@@ -8,7 +8,7 @@ Wynik zadania **nie powoduje przejścia do kolejnego levelu**. Wszystkie sześć
 
 W obrębie jednego levelu:
 
-- poprawna odpowiedź prowadzi do następnego zadania (automatycznie w levelach 1–5, po kliknięciu w levelu 6);
+- poprawna odpowiedź prowadzi do następnego zadania automatycznie; w levelu 6 przejście następuje po 2 sekundach;
 - zła odpowiedź nie kończy zadania i nie cofa postępu — dziecko może próbować dalej;
 - po ostatnim zadaniu wyświetlany jest wspólny ekran końca ćwiczenia z powrotem do menu.
 
@@ -63,7 +63,7 @@ Automatyczne przejście po 650 ms jest tu właściwe: zadanie jest bardzo krótk
 
 ### Co robi
 
-Dziecko widzi obrazek i puste pola wyrazu podzielone kolorami na sylaby. Wpisuje litery po kolei. Po każdej poprawnej literze słyszy jej nazwę; po zamknięciu sylaby słyszy też sylabę, a po ukończeniu — całe słowo.
+Dziecko widzi obrazek i kreski wyrazu podzielone na sylaby. Wpisuje litery po kolei. Po każdej poprawnej literze słyszy jej nazwę; po zamknięciu sylaby słyszy też sylabę, a po ukończeniu — całe słowo.
 
 ### Stan obecny: maszyna stanów
 
@@ -167,23 +167,23 @@ Automatyczne przejście po odsłuchaniu zdania zachowuje płynność. Tak jak w 
 To trzyetapowe zadanie dla słów o długości 3–6 liter:
 
 1. dziecko widzi obrazek i układa jego nazwę z ruchomych liter (z literami dodatkowymi jako rozpraszaczami);
-2. następnie wpisuje to samo słowo na klawiaturze;
+2. następnie wpisuje to samo słowo na klawiaturze, na kreskach podzielonych na sylaby;
 3. po poprawnym wpisaniu ma przejść do kolejnego obrazka.
 
-Wyraz wyświetlany przy emotce ma mieć sylaby pokolorowane według schematu projektu: pierwsza sylaba na czerwono, druga na niebiesko, trzecia ponownie na czerwono, a kolejne naprzemiennie. To kolorowanie dotyczy całych sylab, a nie podziału na samogłoski i spółgłoski. W obrębie sylaby stosujemy małe odstępy między literami, a między sylabami — większe.
+Level 6 jest wyjątkiem montessoriańskim: każda litera jest umieszczona nad kreską, nigdy w okienku. Kreska pod samogłoską jest czerwona, a pod spółgłoską niebieska. Litery są pogrupowane w sylaby: w obrębie sylaby mają małe odstępy, a między sylabami — wyraźnie większe. Ten podział jest obecny zarówno przy układaniu ruchomych liter, jak i przy wpisywaniu słowa.
 
 ### Stan obecny: maszyna stanów
 
 ```text
 [start] → [UKŁADANIE: obrazek + bank liter]
-                 ├─ poprawny pełny wyraz → [modal „Super”, animowana emotka]
-                 │                         → klik „Dalej” → [PISANIE: wpisz wyraz]
+                 ├─ poprawny pełny wyraz → [zachowaj wyraz na planszy]
+                 │                         → 2 s → [PISANIE: wpisz wyraz]
                  └─ litera w złym miejscu → [pokaż czerwone niedopasowanie]
                                              → [usuń literę / Wyczyść / układaj dalej]
 
-[PISANIE] → [pola wpisywanego wyrazu]
-                 ├─ pełny poprawny wyraz → [modal „Dobrze”, animowana emotka]
-                 │                         → klik „Dalej” → [następny obrazek]
+[PISANIE] → [kreski wpisywanego wyrazu, pogrupowane w sylaby]
+                 ├─ pełny poprawny wyraz → [zachowaj wyraz na planszy]
+                 │                         → 2 s → [następny obrazek]
                  └─ zła litera → [pokaż czerwone niedopasowanie]
                                   → [Backspace] → [popraw wpis]
 ```
@@ -194,20 +194,14 @@ Level 6 nie przechodzi dalej po błędzie. W fazie układania błędna litera po
 
 W tej drugiej fazie jest istotny problem użyteczności: po wpisaniu liczby znaków równej długości słowa nie da się dopisać kolejnych znaków, więc naprawa wymaga Backspace. Na urządzeniu bez wygodnej klawiatury fizycznej może to być trudne.
 
-### Problem obecnego przejścia
+### Przejście po sukcesie
 
-Po sukcesie pojawia się pełnoekranowy modal (`aria-modal="true"`) z przyciemnionym tłem. Blokuje on kliknięcie obrazka, liter, podpowiedzi i menu, aż dziecko użyje przycisku „Dalej”. Emotka jest już animowana, ale animacja odbywa się **w osobnym okienku nad grą**, nie w kontekście zadania. To potwierdza wskazaną obserwację: interakcja z właściwą planszą zostaje przerwana.
-
-### Docelowa maszyna stanów i przejście
-
-Rekomendacja: po sukcesie nie pokazujemy żadnego okienka ani dodatkowego komunikatu. Na tej samej planszy pojawia się wyłącznie pojedynczy przycisk następnego kroku.
+Po sukcesie nie pokazujemy okienka, dodatkowego komunikatu ani przycisku „Dalej”. Dziecko widzi poprawnie złożony albo wpisany wyraz przez 2 sekundy, a następnie ekran sam przechodzi do kolejnego kroku.
 
 ```text
-[UKŁADANIE] → poprawny wyraz → [przycisk „Teraz wpisz słowo”]
-                                   → klik → [PISANIE]
+[UKŁADANIE] → poprawny wyraz → 2 s → [PISANIE]
 
-[PISANIE] → pełny poprawny wyraz → [przycisk „Dalej”]
-                                    → klik → [następny obrazek]
+[PISANIE] → pełny poprawny wyraz → 2 s → [następny obrazek]
 
 [UKŁADANIE lub PISANIE] → błąd → [błąd widoczny, możliwość poprawy]
                                 → [ten sam etap]
@@ -216,22 +210,27 @@ Rekomendacja: po sukcesie nie pokazujemy żadnego okienka ani dodatkowego komuni
 #### Zasady docelowego przejścia
 
 - Obrazek i poprawnie złożony wyraz pozostają widoczne na planszy.
-- Po układaniu pokazujemy tylko „Teraz wpisz słowo”; po wpisaniu — tylko „Dalej”.
+- Po układaniu i po wpisaniu nie pokazujemy przycisku przejścia; wyraz pozostaje widoczny przez 2 sekundy.
 - Przycisk „← Menu” w lewym górnym rogu pozostaje zawsze dostępny.
 - Nie ma modalu, karty sukcesu, przyciemnienia ekranu ani dodatkowej animacji.
 
 ## Zasady metodyczne prezentacji wyrazów — do uwzględnienia w audycie
 
+- Przy wpisywaniu liter stosujemy kreski pod literami, a nie obramowane okienka.
+- Kreski są zgrupowane w sylaby: odstępy w sylabie są małe, a odstępy między sylabami większe.
 - Pierwsza sylaba jest czerwona, druga niebieska, trzecia znów czerwona; dalsze sylaby powtarzają ten schemat.
 - Między literami jednej sylaby są małe odstępy, a między sylabami — większe.
 - Litery pojawiają się początkowo pojedynczo, a dziecko słyszy odpowiadające im głoski.
 - Po ukończeniu sylaby dziecko słyszy ją w całości; po ukończeniu wyrazu — całe słowo.
 - Po opanowaniu słowa można wyświetlić je jeszcze raz w całości, czarną czcionką, bez kolorystycznej podpowiedzi.
 
+Kolorowanie całych sylab dotyczy zwykłych leveli. Wyłącznie w montessoriańskim levelu 6 kolor kreski wynika z rodzaju litery: samogłoska ma kreskę czerwoną, a spółgłoska niebieską.
+
 ## Kryteria akceptacji przyszłej zmiany levelu 6
 
 1. Po sukcesie nie pojawia się okienko, karta, modal ani warstwa blokująca planszę.
-2. Po ukończeniu układania jedyną główną akcją jest przejście do wpisywania; po ukończeniu wpisywania — przejście do następnego zadania.
+2. Po ukończeniu układania ekran sam przechodzi do wpisywania po 2 sekundach, a po ukończeniu wpisywania — do następnego zadania po 2 sekundach; nie ma przycisku „Dalej”.
 3. Błędna odpowiedź nie powoduje przejścia dalej ani utraty postępu; dziecko otrzymuje czytelną możliwość poprawy.
 4. W fazie pisania istnieje widoczna kontrolka usunięcia ostatniej litery albo klawiatura ekranowa z Backspace, nie tylko obsługa fizycznego klawisza.
 5. Przycisk powrotu do menu działa zawsze, również po sukcesie.
+6. W levelu 6 zarówno układane, jak i wpisywane litery są nad kreskami podzielonymi na sylaby; samogłoski mają kreski czerwone, a spółgłoski niebieskie.

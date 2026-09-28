@@ -2,35 +2,37 @@
 
 ## Cel
 
-Zakładka ma dawać rodzicowi krótkie, praktyczne wsparcie w towarzyszeniu dziecku podczas gry. Treść ma być spokojna i konkretna — bez długich instrukcji ani presji.
+Zakładka pomaga rodzicom wspierać dziecko podczas zabawy z Syllabee. Ma przekazywać krótkie, praktyczne wskazówki bez przytłaczania tekstem i bez odciągania uwagi od rozpoczęcia gry.
 
-## Co zawiera
+## Co zawiera obecnie
 
-1. Główny tytuł: **„Jak wspierać dziecko na każdym poziomie?”**
-2. Krótką wskazówkę pod tytułem: „Najlepiej towarzyszyć dziecku przy pierwszych zabawach, chwalić próby i robić krótkie przerwy. 💛”
-3. Sześć zamkniętych domyślnie akordeonów — po jednym dla każdego poziomu gry. Po otwarciu każdy opisuje:
-   - czego uczy poziom;
-   - co dziecko może umieć po zabawie;
-   - jedną praktyczną wskazówkę dla rodzica.
-4. Krótką sekcję o gotowości dziecka.
-5. Źródła oraz informację, że wskazówki nie zastępują konsultacji z logopedą.
+- Tytuł oraz krótką wskazówkę dotyczącą pierwszych zabaw z dzieckiem.
+- Sześć domyślnie zamkniętych akordeonów — po jednym dla każdego poziomu gry. Każdy opisuje, czego uczy poziom, co dziecko może umieć po zabawie i jak rodzic może je wesprzeć.
+- Sekcję „Najważniejsza jest gotowość dziecka”.
+- Sekcję „Źródła i ważna informacja” z informacją, że wskazówki nie zastępują konsultacji ze specjalistą, oraz z linkami do źródeł.
 
-## Stan obecny
+Sekcja jest dostępna z linku „Dla rodziców” w nagłówku strony. Akordeony są domyślnie zamknięte i dostępne po polsku, angielsku oraz niemiecku.
 
-Zakładka jest dostępna z linku „Dla rodziców” w nagłówku strony. Ma komplet sześciu dostępnych z klawiatury akordeonów oraz wersje językowe po polsku, angielsku i niemiecku. Treść głównej wskazówki znajduje się bezpośrednio pod tytułem w każdym języku.
+## Docelowy układ
 
-## Układ i typografia
+Kolejność treści jest stała:
 
-- Nie pokazujemy dodatkowego napisu „Dla rodziców” wewnątrz zakładki — link w nagłówku już pełni tę funkcję.
-- Główny tytuł jest pierwszym elementem sekcji i największym tekstem w niej. Jest pogrubiony, ma wyraźny kontrast i kończy się znakiem zapytania.
-- Wskazówka jest bezpośrednio pod tytułem, w mniejszej, spokojnej czcionce; żółte serce zamyka zdanie.
-- Pod nagłówkiem akordeony są ułożone pionowo. Każdy ma duże pole kliknięcia, czytelny stan otwarcia/zamknięcia i brak przewijania poziomego na telefonie.
-- Sekcje „Gotowość dziecka” i „Źródła i ważna informacja” pozostają pod akordeonami.
+1. Tytuł: „Jak wspierać dziecko na każdym poziomie?”.
+2. Wskazówka: „Najlepiej towarzyszyć dziecku przy pierwszych zabawach, chwalić próby i robić krótkie przerwy. 💛”.
+3. Sześć akordeonów poziomów.
+4. Sekcja o gotowości dziecka.
+5. Źródła i ważna informacja.
 
-## Kryteria kontroli
+W środku zakładki nie występuje dodatkowy napis „Dla rodziców”; ta nazwa jest zachowana wyłącznie w linku nawigacyjnym prowadzącym do sekcji.
 
-- Tytuł jest większy niż wszystkie pozostałe teksty tej zakładki.
-- Nie występuje osobny napis „Dla rodziców” nad tytułem.
-- Wskazówka występuje pod tytułem i kończy się żółtym sercem.
-- Tytuł zawiera znak zapytania we wszystkich wersjach językowych.
-- Na telefonie układ pozostaje jednokolumnowy i czytelny.
+## Typografia i dostępność
+
+- Tytuł jest największym i najsilniejszym elementem typograficznym zakładki.
+- Wskazówka pod nim ma spokojniejszy, mniejszy rozmiar pisma i czytelną interlinię.
+- Nagłówki akordeonów oraz treść pomocnicza są mniejsze od tytułu.
+- Układ działa na telefonach, tabletach i komputerach bez przewijania w poziomie.
+- Akordeony pozostają obsługiwalne klawiaturą i komunikują stan rozwinięcia za pomocą `aria-expanded`.
+
+## Języki
+
+Ta sama struktura jest dostępna po polsku, angielsku i niemiecku. W każdej wersji tytuł ma formę pytania, a wskazówka kończy się żółtym sercem 💛.
