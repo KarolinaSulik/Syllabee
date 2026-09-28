@@ -234,7 +234,7 @@ const languageData = {
   },
   de: {
     flag: "🇩🇪", levelName: "Stufe", locale: "de-DE", voicePrefix: "de", letters: germanLetters, words: germanWords, sentences: germanSentences,
-    ui: { language: "Sprache", menuTitle: "Wähle ein Level", levels: ["Buchstaben", "Wörter", "Silben", "Schreibschrift", "Sätze", "Montessori-Wortspiel"], wordCountTitle: "Wie viele Wörter?", wordCountDescription: "Wähle die Anzahl der Wörter zum Üben.", wordCountAria: "Anzahl der Wörter in Level 2", syllableCountTitle: "Wie viele Wörter?", syllableCountDescription: "Wähle die Anzahl der Wörter, die du aus Silben zusammensetzt.", syllableCountAria: "Anzahl der Wörter in Level 3", sentenceCountTitle: "Wie viele Sätze?", sentenceCountDescription: "Wähle die Anzahl der Sätze zum Üben.", sentenceCountAria: "Anzahl der Sätze in Level 5", letterCountDescription: "Wähle die Anzahl der Buchstaben zum Üben.", letterCountAria: "Anzahl der Buchstaben zum Üben", letterCountTitle: "Wie viele Buchstaben?", writtenLetterCountTitle: "Wie viele Schreibschrift-Buchstaben?", movableInstruction: "Baue den Namen des Bildes aus Buchstaben.", movableLettersAria: "Buchstaben zum Bilden des Wortes", movableBuiltAria: "Gebautes Wort", movableClear: "Löschen", movableTryAgain: "Du kannst die Buchstaben ändern.", movableRemove: "Buchstabe entfernen", typePictureWord: "Tippe das Wort auf der Tastatur.", readPictureWord: "Lies das Wort.", listen: "Wort anhören", next: "Weiter", repeat: "Noch einmal", buildComplete: "Super 🙂", typeComplete: "Super 👍", levelSixComplete: "Super 🙂", menu: "Menü", complete: "Super gemacht! 🥳👍", backToMenu: "Zurück zum Menü", emptyLetter: "Leerer Buchstabe", progress: ["Fortschritt in Level 1", "Fortschritt in Level 2", "Fortschritt in Level 3", "Fortschritt in Level 4", "Fortschritt in Level 5", "Fortschritt in Level 6"] },
+    ui: { language: "Sprache", menuTitle: "Wähle ein Level", levels: ["Buchstaben", "Wörter", "Silben", "Schreibschrift", "Sätze", "Montessori-Wortspiel"], wordCountTitle: "Wie viele Wörter?", wordCountDescription: "Wähle die Anzahl der Wörter zum Üben.", wordCountAria: "Anzahl der Wörter in Level 2", syllableCountTitle: "Wie viele Wörter?", syllableCountDescription: "Wähle die Anzahl der Wörter, die du aus Silben zusammensetzt.", syllableCountAria: "Anzahl der Wörter in Level 3", sentenceCountTitle: "Wie viele Sätze?", sentenceCountDescription: "Wähle die Anzahl der Sätze zum Üben.", sentenceCountAria: "Anzahl der Sätze in Level 5", letterCountDescription: "Wähle die Anzahl der Buchstaben zum Üben.", letterCountAria: "Anzahl der Buchstaben zum Üben", letterCountTitle: "Wie viele Buchstaben?", writtenLetterCountTitle: "Wie viele Schreibschrift-Buchstaben?", movableInstruction: "Baue den Namen des Bildes aus Buchstaben.", movableLettersAria: "Buchstaben zum Bilden des Wortes", movableBuiltAria: "Gebautes Wort", movableClear: "Löschen", movableTryAgain: "Du kannst die Buchstaben ändern.", movableRemove: "Buchstabe entfernen", typePictureWord: "Tippe das Wort auf der Tastatur.", readPictureWord: "Lies das Wort.", listen: "Wort anhören", next: "Weiter", repeat: "Noch einmal", hint: "Hinweis", hintAnswer: "Lösung:", buildComplete: "Super 🙂", typeComplete: "Super 👍", levelSixComplete: "Super 🙂", menu: "Menü", complete: "Super gemacht! 🥳👍", backToMenu: "Zurück zum Menü", emptyLetter: "Leerer Buchstabe", progress: ["Fortschritt in Level 1", "Fortschritt in Level 2", "Fortschritt in Level 3", "Fortschritt in Level 4", "Fortschritt in Level 5", "Fortschritt in Level 6"] },
   },
 };
 
@@ -500,6 +500,33 @@ function currentData() {
   return languageData[currentLanguage];
 }
 
+function hideGameHints() {
+  ui.gameHintButtons.forEach((button) => {
+    button.closest("[data-game-hint]").querySelector("[data-game-hint-card]").classList.add("is-hidden");
+    button.setAttribute("aria-expanded", "false");
+  });
+}
+
+function currentHintAnswer() {
+  if (activeLevel === 1) return levelOneLetters[taskIndex]?.letter;
+  if (activeLevel === 2) return levelTwoWords[taskIndex]?.word;
+  if (activeLevel === 3) return levelThreeWords[taskIndex]?.syllables.join(" · ");
+  if (activeLevel === 4) return levelFourLetters[taskIndex]?.letter;
+  if (activeLevel === 5) return levelFiveSentences[taskIndex]?.words.join(" ");
+  if (activeLevel === 6) return levelSixWords[taskIndex]?.word;
+  return "";
+}
+
+function toggleGameHint(button) {
+  const card = button.closest("[data-game-hint]").querySelector("[data-game-hint-card]");
+  const willShow = card.classList.contains("is-hidden");
+  hideGameHints();
+  if (!willShow) return;
+  card.textContent = `🙂 ${currentData().ui.hintAnswer} ${currentHintAnswer()}`;
+  card.classList.remove("is-hidden");
+  button.setAttribute("aria-expanded", "true");
+}
+
 function renderParentGuide() {
   const guide = parentGuideCopy[currentLanguage];
   ui.parentGuideTitle.textContent = guide.title;
@@ -566,6 +593,8 @@ function translateInterface() {
   ui.movableClearButton.textContent = text.movableClear;
   ui.levelSixRepeatButton.textContent = `🔄 ${text.repeat}`;
   ui.levelSixNextButton.textContent = `${text.next} ➡️`;
+  ui.gameHintButtons.forEach((button) => { button.querySelector("span").textContent = text.hint; });
+  hideGameHints();
   ui.parentLink.textContent = creatorText.parentLink;
   ui.parentNoteTitle.textContent = creatorText.parentTitle;
   ui.parentNoteText.textContent = creatorText.parentText;
@@ -961,6 +990,7 @@ function startLevel(level, wordCount) {
 // LEVEL 1: wpisywanie pojedynczych liter.
 function renderLetters() {
   const item = levelOneLetters[taskIndex];
+  hideGameHints();
   acceptsKeyboard = true;
   updateProgress(ui.levelOneProgress, taskIndex, levelOneLetters.length);
   ui.singleLetter.textContent = item.letter;
@@ -970,6 +1000,7 @@ function renderLetters() {
 // LEVEL 4: rozpoznawanie małych liter zapisanych odręcznie.
 function renderWrittenLetters() {
   const item = levelFourLetters[taskIndex];
+  hideGameHints();
   acceptsKeyboard = true;
   updateProgress(ui.levelFourProgress, taskIndex, levelFourLetters.length);
   ui.writtenLetter.textContent = item.letter.toLocaleLowerCase(currentData().locale);
@@ -979,6 +1010,7 @@ function renderWrittenLetters() {
 // LEVEL 2: wpisywanie całych słów, litera po literze.
 function renderWords() {
   const item = levelTwoWords[taskIndex];
+  hideGameHints();
   inputIndex = 0;
   acceptsKeyboard = true;
   setPicture(ui.levelTwoImage, item);
@@ -1095,6 +1127,7 @@ function handleKeyboard(event) {
 // LEVEL 3: kliknięcie oczekiwanej sylaby buduje słowo.
 function renderSyllables() {
   const item = levelThreeWords[taskIndex];
+  hideGameHints();
   builtSyllables = [];
   setPicture(ui.levelThreeImage, item);
   updateProgress(ui.levelThreeProgress, taskIndex, levelThreeWords.length);
@@ -1143,6 +1176,7 @@ function chooseSyllable(syllable, button, item) {
 // LEVEL 5: kliknięcie wyrazów we właściwej kolejności buduje zdanie.
 function renderSentences() {
   const item = levelFiveSentences[taskIndex];
+  hideGameHints();
   builtSentenceWords = [];
   setSentencePicture(item);
   updateProgress(ui.levelFiveProgress, taskIndex, levelFiveSentences.length);
@@ -1203,6 +1237,7 @@ function showLevelSixActions(message) {
 
 function renderMovableAlphabet() {
   const item = levelSixWords[taskIndex];
+  hideGameHints();
   builtMovableLetters = [];
   movableWordComplete = false;
   montessoriStage = "build";
@@ -1369,6 +1404,7 @@ document.querySelectorAll("[data-level-five-count]").forEach((button) => {
 document.querySelectorAll("[data-letter-count]").forEach((button) => {
   button.addEventListener("click", () => startLevel(letterSetupLevel, Number(button.dataset.letterCount)));
 });
+ui.gameHintButtons.forEach((button) => button.addEventListener("click", () => toggleGameHint(button)));
 ui.movableClearButton.addEventListener("click", () => {
   if (movableWordComplete || activeLevel !== 6 || montessoriStage !== "build") return;
   builtMovableLetters = [];
