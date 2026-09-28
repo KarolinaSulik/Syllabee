@@ -13,7 +13,17 @@
       <section id="game-library-screen" class="screen library-screen" aria-labelledby="library-title">
         <header class="library-header">
           <a class="library-brand" href="./" aria-label="Syllabee — strona główna">
-            <span aria-hidden="true">🐝</span>
+            <svg class="brand-bee" viewBox="0 0 64 64" aria-hidden="true">
+              <path class="brand-bee-wing" d="M27 28C16 14 7 18 10 31c2 9 10 12 19 7" />
+              <path class="brand-bee-wing" d="M37 28c11-14 20-10 17 3-2 9-10 12-19 7" />
+              <circle class="brand-bee-head" cx="32" cy="24" r="8" />
+              <ellipse class="brand-bee-body" cx="32" cy="40" rx="12" ry="15" />
+              <path class="brand-bee-stripe" d="M21 35h22M20 42h24M22 49h20" />
+              <circle class="brand-bee-eye" cx="29" cy="23" r="1.4" />
+              <circle class="brand-bee-eye" cx="35" cy="23" r="1.4" />
+              <path class="brand-bee-smile" d="M29 27c2 2 4 2 6 0" />
+              <path class="brand-bee-antenna" d="M28 18 24 13M36 18l4-5" />
+            </svg>
             <span>Syllabee</span>
           </a>
           <a class="parent-link" href="#dla-rodzicow">Dla rodziców</a>
@@ -55,12 +65,23 @@
               <p>Najlepiej towarzyszyć dziecku przy pierwszych zabawach, chwalić próby i robić krótkie przerwy.</p>
             </div>
           </section>
+
         </div>
       </section>
 
       <section id="menu-screen" class="screen is-hidden" aria-labelledby="menu-title">
         <div class="menu-brand" aria-label="Syllabee">
-          <span class="menu-brand-bee" aria-hidden="true">🐝</span>
+          <svg class="brand-bee" viewBox="0 0 64 64" aria-hidden="true">
+            <path class="brand-bee-wing" d="M27 28C16 14 7 18 10 31c2 9 10 12 19 7" />
+            <path class="brand-bee-wing" d="M37 28c11-14 20-10 17 3-2 9-10 12-19 7" />
+            <circle class="brand-bee-head" cx="32" cy="24" r="8" />
+            <ellipse class="brand-bee-body" cx="32" cy="40" rx="12" ry="15" />
+            <path class="brand-bee-stripe" d="M21 35h22M20 42h24M22 49h20" />
+            <circle class="brand-bee-eye" cx="29" cy="23" r="1.4" />
+            <circle class="brand-bee-eye" cx="35" cy="23" r="1.4" />
+            <path class="brand-bee-smile" d="M29 27c2 2 4 2 6 0" />
+            <path class="brand-bee-antenna" d="M28 18 24 13M36 18l4-5" />
+          </svg>
           <span>Syllabee</span>
         </div>
         <button class="library-back-button" type="button" data-go-library>← Wszystkie zabawy</button>
@@ -97,6 +118,11 @@
             <span class="level-card-icon" aria-hidden="true">💬</span>
             <strong id="level-five-title">Poziom 5</strong>
             <span id="level-five-label" class="level-card-label">Zdania</span>
+          </button>
+          <button class="level-card" type="button" data-start-level="6">
+            <span class="level-card-icon" aria-hidden="true">🔠</span>
+            <strong id="level-six-title">Poziom 6</strong>
+            <span id="level-six-label" class="level-card-label">Układam wyrazy</span>
           </button>
         </div>
       </section>
@@ -212,6 +238,26 @@
         <div id="level-five-image" class="picture" role="img"></div>
         <div id="built-sentence" class="built-sentence" aria-label="Układane zdanie"></div>
         <div id="sentence-choices" class="sentence-choices" aria-label="Wybierz wyraz"></div>
+      </section>
+
+      <!-- Level 6: obrazek → ruchome litery → klawiatura → samodzielne czytanie. -->
+      <section id="level-six-screen" class="screen is-hidden" aria-label="Level 6: słowa z obrazków">
+        <div class="game-topbar">
+          <button class="back-button" type="button" data-go-menu>← <span class="menu-button-text">Menu</span></button>
+          <div id="level-six-progress" class="progress-bar" role="progressbar" aria-label="Postęp w Level 6"></div>
+        </div>
+        <p id="level-six-instruction" class="movable-instruction">Ułóż nazwę obrazka z liter.</p>
+        <div id="level-six-image" class="picture" role="img"></div>
+        <div id="movable-built-word" class="movable-built-word" aria-label="Układane słowo"></div>
+        <p id="movable-hint" class="movable-hint" aria-live="polite"></p>
+        <div id="movable-letter-bank" class="movable-letter-bank" aria-label="Litery do ułożenia słowa"></div>
+        <button id="movable-clear-button" class="movable-clear-button" type="button">Wyczyść</button>
+        <div id="montessori-typing" class="montessori-typing is-hidden" aria-label="Wpisywane słowo"></div>
+        <div id="montessori-reading" class="montessori-reading is-hidden">
+          <p id="montessori-read-prompt">Przeczytaj słowo.</p>
+          <button id="montessori-speak-button" class="montessori-speak-button" type="button" aria-label="Posłuchaj słowa">🔊</button>
+          <button id="montessori-next-button" class="montessori-next-button" type="button">Dalej</button>
+        </div>
       </section>
 
       <section id="complete-screen" class="screen is-hidden" aria-labelledby="complete-title">
