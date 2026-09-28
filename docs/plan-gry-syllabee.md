@@ -44,6 +44,20 @@ Menu główne jest biblioteką, która w przyszłości będzie zawierać więcej
 - Na stronie głównej oraz na widoku wyboru poziomów używamy pełnego logotypu **Syllabee** w lewym górnym rogu.
 - Pozycja logotypu jest stała między tymi widokami, aby budować rozpoznawalność marki i orientację użytkownika.
 - Nie używamy osobnej ikonki logo, dopóki nie powstanie dedykowany, czytelny znak graficzny. Obecny zasób jest szerokim logotypem.
+- Logotyp jest lekko większy niż pozostałe elementy paska, w ciemnym, pełnym kolorze. Nie stosujemy na nim obniżonej przezroczystości.
+
+### Pasek widoku „Wybierz poziom”
+
+- Logo, przycisk **🏠 Menu** i wybór języka tworzą jeden poziomy pasek na górze widoku.
+- Ich środki w pionie muszą znajdować się na jednej linii. Pasek budujemy ze wspólnego układu i wspólnych wartości pozycjonowania, a nie z niezależnie dobranych wartości `top`.
+- Logo jest po lewej, przycisk Menu bezpośrednio za nim z czytelną przerwą, a wybór języka przy prawej krawędzi.
+- Na szerokich ekranach każdy element ma taki sam odstęp od najbliższej krawędzi: `clamp(1rem, 3vw, 2rem)`. Na telefonie odstęp wynosi `0.75rem`.
+
+### Odstępy od krawędzi
+
+- Każdy widok ma zdefiniowany wspólny poziomy padding; elementy stałe nie mogą dotykać krawędzi ekranu ani mieć przypadkowo różnych marginesów.
+- Na komputerze używamy responsywnej wartości `clamp(1rem, 3vw, 2rem)`, a na telefonie `0.75rem` lub większej, jeśli wymaga tego czytelność.
+- Przed zmianą widoku należy sprawdzić wyrównanie górnego paska oraz równy odstęp elementów od obu bocznych krawędzi.
 
 ### Powrót do menu
 
