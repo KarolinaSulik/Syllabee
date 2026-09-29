@@ -42,14 +42,15 @@ Przycisk „← Menu” jest dostępny w trakcie każdego levelu. Podpowiedź po
 
 ### Co robi
 
-Dziecko widzi pojedynczą drukowaną literę i wpisuje ją na klawiaturze. Sesja losuje litery z puli wybranego języka; przed startem dziecko wybiera liczbę liter.
+Dziecko widzi dużą drukowaną literę oraz pod nią jej powtórzenia. Sesja losuje litery z puli wybranego języka, a dla każdej z nich także liczbę powtórzeń od 1 do 6; przed startem dziecko wybiera liczbę różnych liter.
 
 ### Stan obecny: maszyna stanów
 
 ```text
-[start] → [pokaż literę, nasłuchuj klawiatury]
-                 ├─ właściwy klawisz → [odczytaj nazwę/dźwięk litery,
-                 │                     zaznacz literę] → 650 ms → [następna litera]
+[start] → [pokaż literę i 1–6 jej powtórzeń, nasłuchuj klawiatury]
+                 ├─ właściwy klawisz → [zaznacz kolejne powtórzenie,
+                 │                     odczytaj nazwę/dźwięk litery]
+                 │                     → [kolejne powtórzenie lub, po ostatnim, 650 ms → następna litera]
                  └─ niewłaściwy klawisz → [krótki dźwięk błędu] → [pokaż tę samą literę]
 ```
 

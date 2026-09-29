@@ -423,6 +423,8 @@ const ui = {
   completeTitle: document.querySelector("#complete-title"),
   completeMenuButton: document.querySelector("#complete-menu-button"),
   singleLetter: document.querySelector("#single-letter"),
+  repeatedLetterSlots: document.querySelector("#repeated-letter-slots"),
+  levelOneExplosion: document.querySelector("#level-one-explosion"),
   levelOneProgress: document.querySelector("#level-one-progress"),
   levelTwoImage: document.querySelector("#level-two-image"),
   levelTwoProgress: document.querySelector("#level-two-progress"),
@@ -486,6 +488,7 @@ let montessoriTypedLetters = [];
 let acceptsKeyboard = false;
 let audioContext;
 let levelThreeAdvanceTimer;
+let levelOneExplosionTimer;
 let levelTwoSyllableTimers = new Set();
 const LEVEL_TWO_SYLLABLE_PAUSE_MS = 2000;
 let currentLanguage = (() => {
@@ -642,6 +645,13 @@ function clearLevelTwoSyllableTimers() {
   levelTwoSyllableTimers.clear();
 }
 
+function clearLevelOneExplosion() {
+  window.clearTimeout(levelOneExplosionTimer);
+  levelOneExplosionTimer = undefined;
+  ui.levelOneExplosion.classList.remove("is-active");
+  ui.levelOneExplosion.replaceChildren();
+}
+
 function updateGameUrl(game) {
   const url = new URL(window.location.href);
   if (game) url.searchParams.set("gra", game);
@@ -653,6 +663,7 @@ function openReadingGame({ updateUrl = true } = {}) {
   window.clearTimeout(levelThreeAdvanceTimer);
   levelThreeAdvanceTimer = undefined;
   clearLevelTwoSyllableTimers();
+  clearLevelOneExplosion();
   window.speechSynthesis?.cancel();
   activeLevel = null;
   acceptsKeyboard = false;
@@ -665,6 +676,7 @@ function goToLibrary({ updateUrl = true } = {}) {
   window.clearTimeout(levelThreeAdvanceTimer);
   levelThreeAdvanceTimer = undefined;
   clearLevelTwoSyllableTimers();
+  clearLevelOneExplosion();
   window.speechSynthesis?.cancel();
   activeLevel = null;
   letterSetupLevel = null;
@@ -983,12 +995,14 @@ function startLevel(level, wordCount) {
   window.clearTimeout(levelThreeAdvanceTimer);
   levelThreeAdvanceTimer = undefined;
   clearLevelTwoSyllableTimers();
+  clearLevelOneExplosion();
   window.speechSynthesis?.cancel();
   activeLevel = level;
   taskIndex = 0;
   const data = currentData();
   if (level === 1) {
-    levelOneLetters = shuffled(data.letters).slice(0, Math.min(wordCount ?? data.letters.length, data.letters.length));
+    levelOneLetters = shuffled(data.letters)
+      .slice(0, Math.min(wordCount ?? data.letters.length, data.letters.length));
     showScreen("levelOne");
     renderLetters();
   }
@@ -1024,7 +1038,7 @@ function startLevel(level, wordCount) {
   }
 }
 
-// LEVEL 1: wpisywanie pojedynczych liter.
+// LEVEL 1: litery są wpisywane kolejno, bez czekania na zakończenie dźwięku.
 function renderLetters() {
   const item = levelOneLetters[taskIndex];
   hideGameHints();
@@ -1032,6 +1046,40 @@ function renderLetters() {
   updateProgress(ui.levelOneProgress, taskIndex, levelOneLetters.length);
   ui.singleLetter.textContent = item.letter;
   ui.singleLetter.classList.remove("is-correct");
+  ui.repeatedLetterSlots.replaceChildren(...levelOneLetters.map((letterItem, index) => {
+    const slot = document.createElement("span");
+    slot.className = "repeated-letter-slot";
+    slot.textContent = index < taskIndex ? letterItem.letter : "•";
+    if (index < taskIndex) slot.classList.add("is-filled");
+    slot.setAttribute("aria-label", index < taskIndex ? letterItem.letter : currentData().ui.emptyLetter);
+    return slot;
+  }));
+}
+
+function playLevelOneExplosion(onComplete) {
+  const colors = ["#ff4f70", "#ffbd2e", "#3bc8ff", "#7ed957", "#a978ff"];
+  ui.levelOneExplosion.replaceChildren(...Array.from({ length: 32 }, (_, index) => {
+    const particle = document.createElement("span");
+    const angle = (Math.PI * 2 * index) / 32;
+    const distance = 8 + Math.random() * 34;
+    particle.className = "explosion-particle";
+    particle.style.setProperty("--x", `${Math.cos(angle) * distance}vw`);
+    particle.style.setProperty("--y", `${Math.sin(angle) * distance}vh`);
+    particle.style.setProperty("--size", `${.45 + Math.random() * .8}rem`);
+    particle.style.setProperty("--color", colors[index % colors.length]);
+    particle.style.setProperty("--delay", `${Math.random() * .12}s`);
+    return particle;
+  }));
+  ui.levelOneExplosion.classList.remove("is-active");
+  // Wymusza ponowne uruchomienie animacji przy kolejnej rozgrywce.
+  void ui.levelOneExplosion.offsetWidth;
+  ui.levelOneExplosion.classList.add("is-active");
+  levelOneExplosionTimer = window.setTimeout(() => {
+    levelOneExplosionTimer = undefined;
+    ui.levelOneExplosion.classList.remove("is-active");
+    ui.levelOneExplosion.replaceChildren();
+    onComplete();
+  }, 950);
 }
 
 // LEVEL 4: rozpoznawanie małych liter zapisanych odręcznie.
@@ -1083,13 +1131,10 @@ function handleKeyboard(event) {
   if (activeLevel === 1) {
     const item = levelOneLetters[taskIndex];
     if (typed === item.letter) {
-      speakLetter(item.sound);
-      acceptsKeyboard = false;
+      // Głos jest tylko dodatkiem: nie zatrzymuje sekwencji kolejnych liter.
+      queueSpeech(item.sound);
       ui.singleLetter.classList.add("is-correct");
-      levelThreeAdvanceTimer = window.setTimeout(() => {
-        levelThreeAdvanceTimer = undefined;
-        nextTask();
-      }, 650);
+      nextTask();
     } else {
       playFeedback("error");
     }
@@ -1134,7 +1179,10 @@ function handleKeyboard(event) {
             levelThreeAdvanceTimer = window.setTimeout(advance, 1300);
           }
         };
-        speakTypedLetter(typed, syllable, speakCompletedWord);
+        // W wyrazie jednosylabowym sylaba i cały wyraz brzmią tak samo
+        // (np. „nos”), więc odczytujemy go tylko raz.
+        if (item.syllables.length === 1) speakCompletedWord();
+        else speakTypedLetter(typed, syllable, speakCompletedWord);
       } else {
         const resumeKeyboard = () => {
           if (activeLevel === 2) acceptsKeyboard = true;
@@ -1419,9 +1467,13 @@ function nextTask() {
   const max = activeLevel === 1 ? levelOneLetters.length : activeLevel === 2 ? levelTwoWords.length : activeLevel === 3 ? levelThreeWords.length : activeLevel === 4 ? levelFourLetters.length : activeLevel === 5 ? levelFiveSentences.length : levelSixWords.length;
   if (taskIndex === max) {
     acceptsKeyboard = false;
-    showScreen("complete");
-    if (activeLevel === 6) ui.completeTitle.textContent = currentData().ui.levelSixComplete;
-    else playApplause();
+    const showComplete = () => {
+      showScreen("complete");
+      if (activeLevel === 6) ui.completeTitle.textContent = currentData().ui.levelSixComplete;
+      else playApplause();
+    };
+    if (activeLevel === 1) playLevelOneExplosion(showComplete);
+    else showComplete();
     return;
   }
   if (activeLevel === 1) renderLetters();
