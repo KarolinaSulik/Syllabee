@@ -472,6 +472,7 @@ let taskIndex = 0;
 let levelTwoWords = [];
 let levelThreeWords = [];
 let levelOneLetters = [];
+let levelOneRepeatCount = 0;
 let levelFourLetters = [];
 let levelFiveSentences = [];
 let levelSixWords = [];
@@ -491,6 +492,8 @@ let levelThreeAdvanceTimer;
 let levelOneExplosionTimer;
 let levelTwoSyllableTimers = new Set();
 const LEVEL_TWO_SYLLABLE_PAUSE_MS = 2000;
+const LEVEL_ONE_MIN_REPETITIONS = 2;
+const LEVEL_ONE_MAX_REPETITIONS = 6;
 let currentLanguage = (() => {
   try {
     return languageData[window.localStorage.getItem("syllabee-language")] ? window.localStorage.getItem("syllabee-language") : "pl";
@@ -716,20 +719,20 @@ function playFeedback(type) {
   const now = audioContext.currentTime;
 
   if (type === "error") {
-    // Krótkie, opadające "tu-dum" — wyraźne, ale nie nieprzyjemne dla dziecka.
+    // Krótkie, opadające "tu-dum" — wyraźne, ale nadal łagodne dla dziecka.
     [[220, 150], [145, 75]].forEach(([from, to], index) => {
       const oscillator = audioContext.createOscillator();
       const gain = audioContext.createGain();
-      const start = now + index * 0.12;
+      const start = now + index * 0.15;
       oscillator.type = "triangle";
       oscillator.frequency.setValueAtTime(from, start);
-      oscillator.frequency.exponentialRampToValueAtTime(to, start + 0.2);
-      gain.gain.setValueAtTime(0.075, start);
-      gain.gain.exponentialRampToValueAtTime(0.001, start + 0.22);
+      oscillator.frequency.exponentialRampToValueAtTime(to, start + 0.25);
+      gain.gain.setValueAtTime(0.12, start);
+      gain.gain.exponentialRampToValueAtTime(0.001, start + 0.28);
       oscillator.connect(gain);
       gain.connect(audioContext.destination);
       oscillator.start(start);
-      oscillator.stop(start + 0.23);
+      oscillator.stop(start + 0.29);
     });
     return;
   }
@@ -745,6 +748,31 @@ function playFeedback(type) {
     gain.connect(audioContext.destination);
     oscillator.start(now + index * 0.1);
     oscillator.stop(now + index * 0.1 + 0.14);
+  });
+}
+
+// Krótki, radosny „pop” uruchamiany razem z wybuchem konfetti.
+function playConfettiPop() {
+  const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+  if (!AudioContextClass) return;
+
+  audioContext ||= new AudioContextClass();
+  if (audioContext.state === "suspended") audioContext.resume();
+
+  const now = audioContext.currentTime;
+  [420, 620, 880].forEach((frequency, index) => {
+    const oscillator = audioContext.createOscillator();
+    const gain = audioContext.createGain();
+    const start = now + index * .035;
+    oscillator.type = "triangle";
+    oscillator.frequency.setValueAtTime(frequency, start);
+    oscillator.frequency.exponentialRampToValueAtTime(frequency * 1.22, start + .12);
+    gain.gain.setValueAtTime(.055, start);
+    gain.gain.exponentialRampToValueAtTime(.001, start + .16);
+    oscillator.connect(gain);
+    gain.connect(audioContext.destination);
+    oscillator.start(start);
+    oscillator.stop(start + .17);
   });
 }
 
@@ -1002,7 +1030,12 @@ function startLevel(level, wordCount) {
   const data = currentData();
   if (level === 1) {
     levelOneLetters = shuffled(data.letters)
-      .slice(0, Math.min(wordCount ?? data.letters.length, data.letters.length));
+      .slice(0, Math.min(wordCount ?? data.letters.length, data.letters.length))
+      .map((letter) => ({
+        ...letter,
+        repetitions: Math.floor(Math.random() * (LEVEL_ONE_MAX_REPETITIONS - LEVEL_ONE_MIN_REPETITIONS + 1)) + LEVEL_ONE_MIN_REPETITIONS,
+      }));
+    levelOneRepeatCount = 0;
     showScreen("levelOne");
     renderLetters();
   }
@@ -1038,7 +1071,8 @@ function startLevel(level, wordCount) {
   }
 }
 
-// LEVEL 1: litery są wpisywane kolejno, bez czekania na zakończenie dźwięku.
+// LEVEL 1: jedna litera jest wpisywana kilka razy z rzędu. Głos nie blokuje
+// klawiatury, dzięki czemu dziecko może wpisać całą serię szybko.
 function renderLetters() {
   const item = levelOneLetters[taskIndex];
   hideGameHints();
@@ -1046,40 +1080,44 @@ function renderLetters() {
   updateProgress(ui.levelOneProgress, taskIndex, levelOneLetters.length);
   ui.singleLetter.textContent = item.letter;
   ui.singleLetter.classList.remove("is-correct");
-  ui.repeatedLetterSlots.replaceChildren(...levelOneLetters.map((letterItem, index) => {
+  ui.repeatedLetterSlots.replaceChildren(...Array.from({ length: item.repetitions }, (_, index) => {
     const slot = document.createElement("span");
     slot.className = "repeated-letter-slot";
-    slot.textContent = index < taskIndex ? letterItem.letter : "•";
-    if (index < taskIndex) slot.classList.add("is-filled");
-    slot.setAttribute("aria-label", index < taskIndex ? letterItem.letter : currentData().ui.emptyLetter);
+    slot.textContent = index < levelOneRepeatCount ? item.letter : "•";
+    if (index < levelOneRepeatCount) slot.classList.add("is-filled");
+    slot.setAttribute("aria-label", index < levelOneRepeatCount ? item.letter : currentData().ui.emptyLetter);
     return slot;
   }));
+  ui.repeatedLetterSlots.setAttribute("aria-label", `${item.letter}: ${levelOneRepeatCount}/${item.repetitions}`);
 }
 
 function playLevelOneExplosion(onComplete) {
-  const colors = ["#ff4f70", "#ffbd2e", "#3bc8ff", "#7ed957", "#a978ff"];
-  ui.levelOneExplosion.replaceChildren(...Array.from({ length: 32 }, (_, index) => {
+  const colors = ["#ff4f70", "#ffbd2e", "#3bc8ff", "#7ed957", "#a978ff", "#ff7d28"];
+  ui.levelOneExplosion.replaceChildren(...Array.from({ length: 110 }, (_, index) => {
     const particle = document.createElement("span");
-    const angle = (Math.PI * 2 * index) / 32;
-    const distance = 8 + Math.random() * 34;
+    const angle = (Math.PI * 2 * index) / 110 + (Math.random() - .5) * .16;
+    const horizontalDistance = 24 + Math.random() * 54;
+    const verticalDistance = 18 + Math.random() * 58;
     particle.className = "explosion-particle";
-    particle.style.setProperty("--x", `${Math.cos(angle) * distance}vw`);
-    particle.style.setProperty("--y", `${Math.sin(angle) * distance}vh`);
-    particle.style.setProperty("--size", `${.45 + Math.random() * .8}rem`);
+    particle.style.setProperty("--x", `${Math.cos(angle) * horizontalDistance}vw`);
+    particle.style.setProperty("--y", `${Math.sin(angle) * verticalDistance}vh`);
+    particle.style.setProperty("--turns", String(2 + Math.floor(Math.random() * 4)));
+    particle.style.setProperty("--size", `${.55 + Math.random() * .8}rem`);
     particle.style.setProperty("--color", colors[index % colors.length]);
-    particle.style.setProperty("--delay", `${Math.random() * .12}s`);
+    particle.style.setProperty("--delay", `${Math.random() * .25}s`);
     return particle;
   }));
   ui.levelOneExplosion.classList.remove("is-active");
   // Wymusza ponowne uruchomienie animacji przy kolejnej rozgrywce.
   void ui.levelOneExplosion.offsetWidth;
   ui.levelOneExplosion.classList.add("is-active");
+  playConfettiPop();
   levelOneExplosionTimer = window.setTimeout(() => {
     levelOneExplosionTimer = undefined;
     ui.levelOneExplosion.classList.remove("is-active");
     ui.levelOneExplosion.replaceChildren();
     onComplete();
-  }, 950);
+  }, 2000);
 }
 
 // LEVEL 4: rozpoznawanie małych liter zapisanych odręcznie.
@@ -1129,12 +1167,19 @@ function handleKeyboard(event) {
   const typed = event.key.toLocaleUpperCase(currentData().locale);
 
   if (activeLevel === 1) {
+    event.preventDefault();
     const item = levelOneLetters[taskIndex];
     if (typed === item.letter) {
-      // Głos jest tylko dodatkiem: nie zatrzymuje sekwencji kolejnych liter.
+      // Głos jest tylko dodatkiem: nie zatrzymuje kolejnych szybkich wpisów.
       queueSpeech(item.sound);
-      ui.singleLetter.classList.add("is-correct");
-      nextTask();
+      levelOneRepeatCount += 1;
+      renderLetters();
+      if (levelOneRepeatCount === item.repetitions) {
+        acceptsKeyboard = false;
+        ui.singleLetter.classList.add("is-correct");
+        levelOneRepeatCount = 0;
+        playLevelOneExplosion(nextTask);
+      }
     } else {
       playFeedback("error");
     }
@@ -1472,8 +1517,7 @@ function nextTask() {
       if (activeLevel === 6) ui.completeTitle.textContent = currentData().ui.levelSixComplete;
       else playApplause();
     };
-    if (activeLevel === 1) playLevelOneExplosion(showComplete);
-    else showComplete();
+    showComplete();
     return;
   }
   if (activeLevel === 1) renderLetters();
