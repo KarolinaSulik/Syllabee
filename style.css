@@ -36,7 +36,7 @@ h1 { margin-bottom: 2.5rem; font-size: clamp(2.25rem, 6vw, 4rem); line-height: 1
 @keyframes tiny-bee-fly-two { 0% { transform: rotate(22deg) scale(.96); } 48% { transform: translate(-18vw, 5rem) rotate(-12deg) scale(.92); } 100% { transform: translate(-34vw, -4rem) rotate(16deg) scale(.96); } }
 @keyframes tiny-bee-fly-three { 0% { transform: rotate(12deg) scale(.78); } 45% { transform: translate(23vw, -6rem) rotate(-14deg) scale(.82); } 100% { transform: translate(42vw, 3rem) rotate(8deg) scale(.78); } }
 .game-library-grid { position: relative; display: grid; grid-template-columns: minmax(0, 36rem); justify-content: center; gap: 1.25rem; margin-top: clamp(2.5rem, 6vh, 4rem); text-align: left; }
-.library-card-bee { position: absolute; top: 50%; left: calc(50% - 21rem); z-index: 0; width: min(28rem, 42vw); pointer-events: none; transform: translate(-50%, -50%); }
+.library-card-bee { position: absolute; top: 50%; left: calc(50% - 21rem); z-index: 0; width: 28rem; max-width: 42vw; height: auto; max-height: 18.67rem; object-fit: contain; pointer-events: none; transform: translate(-50%, -50%); }
 .game-library-card { position: relative; z-index: 1; display: grid; min-height: 19rem; align-content: start; gap: 1.15rem; padding: clamp(1.4rem, 3vw, 2.2rem); border: 3px solid transparent; border-radius: 1.75rem; box-shadow: 0 1rem 2.2rem rgba(49, 56, 84, .11); }
 .game-library-card.is-available { grid-template-columns: auto 1fr; border-color: #8c69dc; background: linear-gradient(135deg, #f8f3ff, #fff 65%); }
 .game-card-illustration { display: grid; width: 5.8rem; height: 5.8rem; place-items: center; border-radius: 1.5rem; background: #eef0f5; font-size: 3rem; line-height: 1; }
