@@ -11,7 +11,7 @@ h1 { margin-bottom: 2.5rem; font-size: clamp(2.25rem, 6vw, 4rem); line-height: 1
 #menu-screen { overflow: hidden; isolation: isolate; background: transparent; }
 #menu-screen > * { position: relative; z-index: 1; }
 .library-screen { justify-content: flex-start; overflow: auto; padding: var(--header-top) var(--screen-edge-padding) clamp(1.25rem, 3vw, 2.75rem); background: transparent; }
-.library-header { display: flex; width: 100%; align-items: center; justify-content: space-between; }
+.library-header { position: relative; z-index: 1; display: flex; width: 100%; align-items: center; justify-content: space-between; }
 .library-brand { display: inline-flex; align-items: center; gap: .22rem; color: #46576b; font-family: "Bradley Hand", "Chalkboard SE", "Segoe Print", cursive; font-size: clamp(1.85rem, 3.4vw, 2.7rem); font-weight: 400; letter-spacing: -.075em; line-height: 1; text-decoration: none; transform: rotate(-1.5deg); }
 .brand-logo { display: block; width: min(11rem, 33vw); max-height: 3.35rem; height: auto; }
 .brand-bee { width: 1.72em; height: 1.72em; flex: 0 0 auto; margin: -.36em -.13em; overflow: visible; transform: translateY(.01em) rotate(4deg); }
@@ -22,11 +22,22 @@ h1 { margin-bottom: 2.5rem; font-size: clamp(2.25rem, 6vw, 4rem); line-height: 1
 .library-language-selector { flex: 0 0 auto; }
 .parent-link, .library-back-button { border: 0; border-radius: 999px; background: rgba(255, 255, 255, .76); color: #4b3574; font: inherit; font-weight: 700; text-decoration: none; }
 .parent-link { padding: .7rem 1rem; }
-.library-content { width: min(100%, 72rem); margin: clamp(3rem, 8vh, 5.5rem) auto 0; }
+.library-content { position: relative; z-index: 1; width: min(100%, 72rem); margin: clamp(3rem, 8vh, 5.5rem) auto 0; }
 .library-content h1 { max-width: 42rem; margin: 0 auto; color: #7a4bc6; font-family: ui-rounded, "Avenir Next", "Segoe UI", sans-serif; font-size: clamp(2.6rem, 5.4vw, 4.75rem); font-weight: 500; letter-spacing: -.055em; line-height: 1.08; }
 .library-intro { max-width: 44rem; margin: 1.1rem auto 0; color: #526071; font-size: clamp(1.1rem, 2.2vw, 1.35rem); font-weight: 400; line-height: 1.55; }
-.game-library-grid { display: grid; grid-template-columns: minmax(0, 36rem); justify-content: center; gap: 1.25rem; margin-top: clamp(2.5rem, 6vh, 4rem); text-align: left; }
-.game-library-card { display: grid; min-height: 19rem; align-content: start; gap: 1.15rem; padding: clamp(1.4rem, 3vw, 2.2rem); border: 3px solid transparent; border-radius: 1.75rem; box-shadow: 0 1rem 2.2rem rgba(49, 56, 84, .11); }
+.library-tiny-bees { position: absolute; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; }
+.tiny-bee { position: absolute; display: block; width: 1.25rem; height: .78rem; border: .09rem solid #263047; border-radius: 52% 48% 50% 50%; background: repeating-linear-gradient(90deg, #ffc52b 0 .26rem, #263047 .26rem .42rem); box-shadow: .12rem .12rem 0 rgba(38, 48, 71, .12); }
+.tiny-bee::before { position: absolute; bottom: .45rem; left: .08rem; width: .64rem; height: .45rem; border: .08rem solid rgba(54, 83, 110, .55); border-radius: 75% 25% 70% 30%; background: rgba(255, 255, 255, .7); box-shadow: .38rem .08rem 0 -.03rem rgba(255, 255, 255, .7), .38rem .08rem 0 .05rem rgba(54, 83, 110, .45); content: ""; transform: rotate(-20deg); }
+.tiny-bee::after { position: absolute; top: .22rem; right: .12rem; width: .12rem; height: .12rem; border-radius: 50%; background: #263047; content: ""; }
+.tiny-bee-one { top: 15rem; left: 7vw; animation: tiny-bee-fly-one 26s ease-in-out infinite alternate; }
+.tiny-bee-two { top: 25rem; right: 8vw; animation: tiny-bee-fly-two 31s ease-in-out infinite alternate; }
+.tiny-bee-three { top: 39rem; left: 12vw; animation: tiny-bee-fly-three 28s ease-in-out infinite alternate; }
+@keyframes tiny-bee-fly-one { 0% { transform: rotate(-18deg) scale(1.2); } 42% { transform: translate(16vw, 4rem) rotate(10deg) scale(1.18); } 100% { transform: translate(31vw, -2rem) rotate(-10deg) scale(1.2); } }
+@keyframes tiny-bee-fly-two { 0% { transform: rotate(22deg) scale(.96); } 48% { transform: translate(-18vw, 5rem) rotate(-12deg) scale(.92); } 100% { transform: translate(-34vw, -4rem) rotate(16deg) scale(.96); } }
+@keyframes tiny-bee-fly-three { 0% { transform: rotate(12deg) scale(.78); } 45% { transform: translate(23vw, -6rem) rotate(-14deg) scale(.82); } 100% { transform: translate(42vw, 3rem) rotate(8deg) scale(.78); } }
+.game-library-grid { position: relative; display: grid; grid-template-columns: minmax(0, 36rem); justify-content: center; gap: 1.25rem; margin-top: clamp(2.5rem, 6vh, 4rem); text-align: left; }
+.library-card-bee { position: absolute; top: 50%; left: calc(50% - 21rem); z-index: 0; width: min(28rem, 42vw); pointer-events: none; transform: translate(-50%, -50%); }
+.game-library-card { position: relative; z-index: 1; display: grid; min-height: 19rem; align-content: start; gap: 1.15rem; padding: clamp(1.4rem, 3vw, 2.2rem); border: 3px solid transparent; border-radius: 1.75rem; box-shadow: 0 1rem 2.2rem rgba(49, 56, 84, .11); }
 .game-library-card.is-available { grid-template-columns: auto 1fr; border-color: #8c69dc; background: linear-gradient(135deg, #f8f3ff, #fff 65%); }
 .game-card-illustration { display: grid; width: 5.8rem; height: 5.8rem; place-items: center; border-radius: 1.5rem; background: #eef0f5; font-size: 3rem; line-height: 1; }
 .reading-illustration { background: #eadfff; }
@@ -39,7 +50,7 @@ h1 { margin-bottom: 2.5rem; font-size: clamp(2.25rem, 6vw, 4rem); line-height: 1
 .library-play-button:hover .library-play-button-icon { background: rgba(255, 255, 255, .3); transform: translateX(.18rem); }
 .library-play-button:active { box-shadow: 0 .35rem .8rem rgba(105, 60, 190, .23), inset 0 1px 0 rgba(255, 255, 255, .2); transform: translateY(.04rem); }
 
-@media (prefers-reduced-motion: reduce) { .library-play-button, .library-play-button-icon { transition: none; } }
+@media (prefers-reduced-motion: reduce) { .library-play-button, .library-play-button-icon { transition: none; } .tiny-bee { animation: none; } }
 .parent-guide { max-width: 68rem; margin: clamp(2.5rem, 6vh, 4.5rem) auto 0; padding: clamp(1.35rem, 3vw, 2.25rem); border: 2px solid rgba(91, 117, 154, .2); border-radius: 1.5rem; background: rgba(255, 255, 255, .68); box-shadow: 0 .8rem 1.8rem rgba(54, 66, 91, .08); text-align: left; }
 .parent-guide-header { max-width: 48rem; }
 .parent-guide h2 { margin: 0; color: #27364a; font-size: clamp(2.15rem, 4.6vw, 3.35rem); font-weight: 700; letter-spacing: -.035em; line-height: 1.12; }
