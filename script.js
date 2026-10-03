@@ -494,6 +494,8 @@ let levelTwoSyllableTimers = new Set();
 const LEVEL_TWO_SYLLABLE_PAUSE_MS = 2000;
 const LEVEL_ONE_MIN_REPETITIONS = 2;
 const LEVEL_ONE_MAX_REPETITIONS = 6;
+const GA_MEASUREMENT_ID = "G-PR1J7WEW4W";
+const ANALYTICS_CONSENT_KEY = "syllabee-analytics-consent";
 let currentLanguage = (() => {
   try {
     return languageData[window.localStorage.getItem("syllabee-language")] ? window.localStorage.getItem("syllabee-language") : "pl";
@@ -504,6 +506,51 @@ let currentLanguage = (() => {
 
 function currentData() {
   return languageData[currentLanguage];
+}
+
+function savedAnalyticsConsent() {
+  try {
+    return window.localStorage.getItem(ANALYTICS_CONSENT_KEY);
+  } catch {
+    return null;
+  }
+}
+
+function saveAnalyticsConsent(value) {
+  try {
+    window.localStorage.setItem(ANALYTICS_CONSENT_KEY, value);
+  } catch {
+    // Brak dostępu do localStorage nie blokuje bieżącej decyzji użytkownika.
+  }
+}
+
+function enableGoogleAnalytics() {
+  if (window.syllabeeAnalyticsEnabled) return;
+  window.syllabeeAnalyticsEnabled = true;
+  window.dataLayer = window.dataLayer || [];
+  window.gtag = window.gtag || function gtag() { window.dataLayer.push(arguments); };
+  window.gtag("js", new Date());
+  window.gtag("config", GA_MEASUREMENT_ID);
+
+  const tag = document.createElement("script");
+  tag.async = true;
+  tag.src = `https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`;
+  document.head.append(tag);
+}
+
+function setAnalyticsConsent(granted) {
+  saveAnalyticsConsent(granted ? "granted" : "denied");
+  document.querySelector("#analytics-consent")?.classList.add("is-hidden");
+  if (!granted) return;
+  enableGoogleAnalytics();
+  trackAnalyticsEvent("analytics_consent_granted", { language: currentLanguage });
+}
+
+// Integracja jest celowo anonimowa i ładuje się dopiero po zgodzie. Wysyła
+// wyłącznie zbiorcze zdarzenia postępu — bez wpisywanych liter i danych dziecka.
+function trackAnalyticsEvent(eventName, parameters = {}) {
+  if (!window.syllabeeAnalyticsEnabled || typeof window.gtag !== "function") return;
+  window.gtag("event", eventName, parameters);
 }
 
 function hideGameHints() {
@@ -673,6 +720,7 @@ function openReadingGame({ updateUrl = true } = {}) {
   if (updateUrl) updateGameUrl("czytanie");
   document.title = "Syllabee — Czytanie sylabowe";
   showScreen("menu");
+  trackAnalyticsEvent("reading_game_opened", { language: currentLanguage });
 }
 
 function goToLibrary({ updateUrl = true } = {}) {
@@ -1027,6 +1075,11 @@ function startLevel(level, wordCount) {
   window.speechSynthesis?.cancel();
   activeLevel = level;
   taskIndex = 0;
+  trackAnalyticsEvent("level_started", {
+    level_number: level,
+    task_count: wordCount || 0,
+    language: currentLanguage,
+  });
   const data = currentData();
   if (level === 1) {
     levelOneLetters = shuffled(data.letters)
@@ -1512,6 +1565,11 @@ function nextTask() {
   const max = activeLevel === 1 ? levelOneLetters.length : activeLevel === 2 ? levelTwoWords.length : activeLevel === 3 ? levelThreeWords.length : activeLevel === 4 ? levelFourLetters.length : activeLevel === 5 ? levelFiveSentences.length : levelSixWords.length;
   if (taskIndex === max) {
     acceptsKeyboard = false;
+    trackAnalyticsEvent("level_completed", {
+      level_number: activeLevel,
+      task_count: max,
+      language: currentLanguage,
+    });
     const showComplete = () => {
       showScreen("complete");
       if (activeLevel === 6) ui.completeTitle.textContent = currentData().ui.levelSixComplete;
@@ -1531,6 +1589,7 @@ function nextTask() {
 document.querySelectorAll("[data-start-level]").forEach((button) => {
   button.addEventListener("click", () => {
     const level = Number(button.dataset.startLevel);
+    trackAnalyticsEvent("level_selected", { level_number: level, language: currentLanguage });
     if (level === 2) openLevelTwoSetup();
     else if (level === 3) openLevelThreeSetup();
     else if (level === 5) openLevelFiveSetup();
@@ -1565,6 +1624,8 @@ ui.montessoriBackspaceButton.addEventListener("click", removeMontessoriTypedLett
 document.querySelectorAll("[data-go-menu]").forEach((button) => button.addEventListener("click", goToMenu));
 document.querySelectorAll("[data-open-reading-game]").forEach((button) => button.addEventListener("click", () => openReadingGame()));
 document.querySelectorAll("[data-go-library]").forEach((button) => button.addEventListener("click", () => goToLibrary()));
+document.querySelector("#analytics-consent-accept")?.addEventListener("click", () => setAnalyticsConsent(true));
+document.querySelector("#analytics-consent-reject")?.addEventListener("click", () => setAnalyticsConsent(false));
 ui.languageSelects.forEach((select) => select.addEventListener("change", () => {
   currentLanguage = select.value;
   clearLevelTwoSyllableTimers();
@@ -1578,6 +1639,12 @@ window.addEventListener("popstate", () => {
   if (game === "czytanie") openReadingGame({ updateUrl: false });
   else goToLibrary({ updateUrl: false });
 });
+if (savedAnalyticsConsent() === "granted") {
+  document.querySelector("#analytics-consent")?.classList.add("is-hidden");
+  enableGoogleAnalytics();
+} else if (savedAnalyticsConsent() === "denied") {
+  document.querySelector("#analytics-consent")?.classList.add("is-hidden");
+}
 translateInterface();
 if (new URLSearchParams(window.location.search).get("gra") === "czytanie") openReadingGame({ updateUrl: false });
 else goToLibrary({ updateUrl: false });
