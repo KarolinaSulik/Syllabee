@@ -147,7 +147,7 @@ h1 { margin-bottom: 2.5rem; font-size: clamp(2.25rem, 6vw, 4rem); line-height: 1
 .game-topbar .game-menu-button { position: absolute; top: 0; left: calc(var(--screen-edge-padding) + var(--game-logo-width) + 1rem); z-index: 1; }
 .back-button { padding: .65rem .9rem; border: 2px solid #111; border-radius: .5rem; background: #fff; font-size: 1.1rem; font-weight: 700; }
 .game-menu-button { position: relative; display: inline-flex; min-height: 2.65rem; align-items: center; gap: .38rem; padding: .58rem .8rem; border: 1px solid rgba(75, 53, 116, .14); border-radius: 999px; background: rgba(255, 255, 255, .76); color: #4b3574; box-shadow: 0 .2rem .55rem rgba(52, 42, 86, .08); font: inherit; font-size: .98rem; font-weight: 700; }
-.game-menu-button::before { position: absolute; top: -.22rem; right: calc(100% + 1rem); display: block; width: var(--game-logo-width); height: 3rem; background: url("assets/images/syllabee-logo-smile-sweet.png") center / contain no-repeat; content: ""; }
+.game-menu-button::before { position: absolute; top: -.22rem; right: calc(100% + 1rem); display: block; width: var(--game-logo-width); height: 3rem; background: url("assets/images/syllabee-instagram-profile-big-head.png") center / contain no-repeat; content: ""; }
 .game-menu-button:hover, .game-menu-button:focus-visible { background: rgba(255, 255, 255, .95); color: #4b3574; transform: translateY(-.08rem); }
 .setup-back-button:hover, .setup-back-button:focus-visible { transform: translateY(-.08rem); }
 .game-hint { position: fixed; bottom: var(--screen-edge-padding); left: var(--screen-edge-padding); z-index: 10; }
