@@ -13,7 +13,7 @@
       <section id="game-library-screen" class="screen library-screen" aria-labelledby="library-title">
         <header class="library-header">
           <a class="library-brand" href="./" aria-label="Syllabee — strona główna">
-            <img class="brand-logo" src="assets/images/syllabee-logo-smile.png" alt="Syllabee" />
+            <img class="brand-logo" src="assets/images/syllabee-logo-smile-sweet.png" alt="Syllabee" />
           </a>
           <div class="library-header-actions">
             <div class="language-selector library-language-selector">
@@ -97,7 +97,7 @@
 
       <section id="menu-screen" class="screen is-hidden" aria-labelledby="menu-title">
         <div class="menu-brand" aria-label="Syllabee">
-          <img class="brand-logo" src="assets/images/syllabee-logo-smile.png" alt="Syllabee" />
+          <img class="brand-logo" src="assets/images/syllabee-logo-smile-sweet.png" alt="Syllabee" />
         </div>
         <button class="library-back-button home-menu-button" type="button" data-go-library aria-label="Menu główne">🏠 <span>Menu</span></button>
         <div class="language-selector">
@@ -138,6 +138,11 @@
             <span class="level-card-icon" aria-hidden="true">🔠</span>
             <strong id="level-six-title">Poziom 6</strong>
             <span id="level-six-label" class="level-card-label">Gra w słowa Montessori</span>
+          </button>
+          <button class="level-card" type="button" data-start-level="7">
+            <span class="level-card-icon" aria-hidden="true">✨</span>
+            <strong id="level-seven-title">Poziom 7</strong>
+            <span id="level-seven-label" class="level-card-label">Emoji opowieści</span>
           </button>
         </div>
       </section>
@@ -213,6 +218,20 @@
             <button class="word-count-button level-six-count-button" type="button" data-level-six-count="10">10</button>
             <button class="word-count-button level-six-count-button" type="button" data-level-six-count="15">15</button>
             <button class="word-count-button level-six-count-button" type="button" data-level-six-count="20">20</button>
+          </div>
+        </div>
+      </section>
+
+      <section id="level-seven-setup-screen" class="screen is-hidden" aria-labelledby="level-seven-setup-title">
+        <button class="back-button game-menu-button setup-back-button" type="button" data-go-menu><span aria-hidden="true">🏠</span><span class="menu-button-text">Menu</span></button>
+        <div class="level-two-setup">
+          <span class="level-card-icon level-seven-setup-icon" aria-hidden="true">✨</span>
+          <h1 id="level-seven-setup-title">Ile opowieści?</h1>
+          <p id="level-seven-setup-description">Wymyśl zdanie z emoji, a potem przeczytaj je rodzicowi.</p>
+          <div id="level-seven-count-options" class="word-count-options" aria-label="Liczba opowieści w Level 7">
+            <button class="word-count-button level-seven-count-button" type="button" data-level-seven-count="3">3</button>
+            <button class="word-count-button level-seven-count-button" type="button" data-level-seven-count="5">5</button>
+            <button class="word-count-button level-seven-count-button" type="button" data-level-seven-count="10">10</button>
           </div>
         </div>
       </section>
@@ -342,6 +361,22 @@
             <p data-game-hint-answer></p>
           </aside>
           <button class="game-hint-button" type="button" data-game-hint-button aria-expanded="false" aria-label="Podpowiedź">💡</button>
+        </div>
+      </section>
+
+      <!-- Level 7: dziecko układa własne, zabawne zdanie z kart emoji. -->
+      <section id="level-seven-screen" class="screen is-hidden" aria-label="Level 7: Emoji opowieści">
+        <div class="game-topbar">
+          <button class="back-button game-menu-button" type="button" data-go-menu><span aria-hidden="true">🏠</span><span class="menu-button-text">Menu</span></button>
+          <div id="level-seven-progress" class="progress-bar" role="progressbar" aria-label="Postęp w Level 7"></div>
+        </div>
+        <p id="level-seven-instruction" class="emoji-story-instruction">Wybierz emoji i wymyśl swoje zdanie.</p>
+        <div id="emoji-story-sentence" class="emoji-story-sentence" aria-live="polite" aria-label="Twoje zdanie"></div>
+        <div id="emoji-story-choices" class="emoji-story-choices" aria-label="Karty emoji do ułożenia zdania"></div>
+        <div id="emoji-story-read-panel" class="emoji-story-read-panel is-hidden" aria-live="polite">
+          <p id="emoji-story-read-prompt"></p>
+          <button id="emoji-story-read-button" class="primary-button" type="button"></button>
+          <button id="emoji-story-parent-button" class="emoji-story-parent-button is-hidden" type="button"></button>
         </div>
       </section>
 

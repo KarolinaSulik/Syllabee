@@ -23,7 +23,7 @@ Najważniejsze zasady:
 ```text
 Menu główne
   → karta dostępnej gry: „Czytanie sylabowe”
-    → wybór jednego z 6 poziomów
+    → wybór jednego z 7 poziomów
       → ustawienie liczby zadań (gdy dany poziom tego wymaga)
         → rozgrywka
           → kolejne zadanie / wynik / powrót do Menu
@@ -73,7 +73,7 @@ Menu główne jest biblioteką, która w przyszłości będzie zawierać więcej
 
 ## Gra „Czytanie sylabowe”
 
-Po otwarciu gry użytkownik widzi sześć wyraźnych kart poziomów. Każda karta ma numer, nazwę, ikonę, własny kolor oraz krótki cel.
+Po otwarciu gry użytkownik widzi siedem wyraźnych kart poziomów. Każda karta ma numer, nazwę, ikonę, własny kolor oraz krótki cel.
 
 | Poziom | Nazwa | Cel |
 | --- | --- | --- |
@@ -82,6 +82,7 @@ Po otwarciu gry użytkownik widzi sześć wyraźnych kart poziomów. Każda kart
 | 3 | Sylaby | Układanie wyrazów z sylab. |
 | 4 | Litery pisane | Rozpoznawanie i wpisywanie liter pisanych. |
 | 5 | Zdania | Układanie krótkich zdań we właściwej kolejności. |
+| 7 | Emoji opowieści | Tworzenie własnych zdań z kart emoji i czytanie ich rodzicowi. |
 | 6 | Układam wyrazy | Układanie nazwy obrazka z liter, następnie wpisanie i odczytanie wyrazu. |
 
 Poziomy wymagające wyboru liczby zadań pokazują przed rozgrywką prosty ekran ustawienia. Po zakończeniu ćwiczenia dziecko może przejść do kolejnego zadania albo wrócić do Menu.
@@ -90,7 +91,7 @@ Poziomy wymagające wyboru liczby zadań pokazują przed rozgrywką prosty ekran
 
 Sekcja **Dla rodziców** ma informować, nie przytłaczając tekstem. Zaczyna się od największego tekstu w sekcji — nagłówka **Jak wspierać dziecko na każdym poziomie?** Następnie pojawia się krótka wskazówka: „Najlepiej towarzyszyć dziecku przy pierwszych zabawach, chwalić próby i robić krótkie przerwy. 💛”, a pod nią akordeony. Nie powtarzamy wewnątrz sekcji etykiety „Dla rodziców”, ponieważ jest już widoczna w linku nawigacyjnym.
 
-- Zawiera sześć domyślnie zamkniętych akordeonów — po jednym dla każdego poziomu.
+- Zawiera siedem domyślnie zamkniętych akordeonów — po jednym dla każdego poziomu.
 - Nagłówek akordeonu zawiera numer i nazwę poziomu.
 - Po rozwinięciu każdy akordeon pokazuje tylko trzy informacje:
   1. czego uczy poziom;
@@ -117,7 +118,7 @@ Na telefonie, tablecie i komputerze należy zachować:
 Przed udostępnieniem zmian ręcznie sprawdzamy:
 
 1. Menu główne i przejście do jedynej dostępnej gry.
-2. Wszystkie sześć kart poziomów oraz ich cele.
+2. Wszystkie siedem kart poziomów oraz ich cele.
 3. Działanie przycisku **🏠 Menu** i wariantu **← Menu**.
 4. Rozwijanie i zwijanie każdego z sześciu opisów dla rodziców.
 5. Polski, angielski i niemiecki wariant tekstów.

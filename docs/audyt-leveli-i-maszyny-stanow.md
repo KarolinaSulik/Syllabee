@@ -4,7 +4,7 @@
 
 ## Najważniejszy wniosek
 
-Wynik zadania **nie powoduje przejścia do kolejnego levelu**. Wszystkie sześć leveli można wybrać niezależnie z menu; nie ma blokad ani automatycznego odblokowywania następnego levelu.
+Wynik zadania **nie powoduje przejścia do kolejnego levelu**. Wszystkie siedem leveli można wybrać niezależnie z menu; nie ma blokad ani automatycznego odblokowywania następnego levelu.
 
 W obrębie jednego levelu:
 
