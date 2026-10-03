@@ -155,6 +155,8 @@ const englishLetters = [
 ].map(([letter, sound]) => ({ letter, sound }));
 
 const englishWords = createWords([
+  ["CAT", ["CAT"], "🐱", "cat", "MA"],
+  ["DOG", ["DOG"], "🐶", "dog", "MA"],
   ["MUMMY", ["MUM", "MY"], "👩", "mummy", "PA"],
   ["DADDY", ["DAD", "DY"], "👨", "daddy", "MA"],
   ["ROBOT", ["RO", "BOT"], "🤖", "robot", "TA"],
@@ -198,6 +200,8 @@ const germanLetters = [
 ].map(([letter, sound]) => ({ letter, sound }));
 
 const germanWords = createWords([
+  ["HUND", ["HUND"], "🐶", "Hund", "MA"],
+  ["MAUS", ["MAUS"], "🐭", "Maus", "PA"],
   ["MAMA", ["MA", "MA"], "👩", "Mama", "PA"],
   ["PAPA", ["PA", "PA"], "👨", "Papa", "MA"],
   ["OMA", ["O", "MA"], "👵", "Oma", "PA"],
@@ -383,6 +387,7 @@ const screens = {
   gameLibrary: document.querySelector("#game-library-screen"),
   menu: document.querySelector("#menu-screen"),
   levelTwoSetup: document.querySelector("#level-two-setup-screen"),
+  levelTwoSyllableSetup: document.querySelector("#level-two-syllable-setup-screen"),
   levelThreeSetup: document.querySelector("#level-three-setup-screen"),
   levelFiveSetup: document.querySelector("#level-five-setup-screen"),
   levelSixSetup: document.querySelector("#level-six-setup-screen"),
@@ -410,6 +415,9 @@ const ui = {
   levelTwoSetupTitle: document.querySelector("#level-two-setup-title"),
   levelTwoSetupDescription: document.querySelector("#level-two-setup-description"),
   levelTwoCountOptions: document.querySelector("#level-two-count-options"),
+  levelTwoSyllableSetupTitle: document.querySelector("#level-two-syllable-setup-title"),
+  levelTwoSyllableSetupDescription: document.querySelector("#level-two-syllable-setup-description"),
+  levelTwoSyllableOptions: document.querySelector("#level-two-syllable-options"),
   levelThreeSetupTitle: document.querySelector("#level-three-setup-title"),
   levelThreeSetupDescription: document.querySelector("#level-three-setup-description"),
   levelThreeCountOptions: document.querySelector("#level-three-count-options"),
@@ -470,6 +478,7 @@ const ui = {
 let activeLevel = null;
 let taskIndex = 0;
 let levelTwoWords = [];
+let levelTwoWordCount = 0;
 let levelThreeWords = [];
 let levelOneLetters = [];
 let levelOneRepeatCount = 0;
@@ -491,7 +500,7 @@ let audioContext;
 let levelThreeAdvanceTimer;
 let levelOneExplosionTimer;
 let levelTwoSyllableTimers = new Set();
-const LEVEL_TWO_SYLLABLE_PAUSE_MS = 2000;
+const LEVEL_TWO_SYLLABLE_PAUSE_MS = 350;
 const LEVEL_ONE_MIN_REPETITIONS = 2;
 const LEVEL_ONE_MAX_REPETITIONS = 6;
 const GA_MEASUREMENT_ID = "G-PR1J7WEW4W";
@@ -503,6 +512,12 @@ let currentLanguage = (() => {
     return "pl";
   }
 })();
+
+const levelTwoSyllableCopy = {
+  pl: { title: "Ile sylab mają wyrazy?", description: "Wybierz rodzaj wyrazów do przećwiczenia.", aria: "Liczba sylab w wyrazach", options: ["1 sylaba", "2 sylaby", "3 sylaby", "Wszystkie"] },
+  en: { title: "How many syllables?", description: "Choose which words to practise.", aria: "Number of syllables in the words", options: ["1 syllable", "2 syllables", "3 syllables", "All words"] },
+  de: { title: "Wie viele Silben haben die Wörter?", description: "Wähle die Wörter zum Üben aus.", aria: "Silbenanzahl der Wörter", options: ["1 Silbe", "2 Silben", "3 Silben", "Alle Wörter"] },
+};
 
 function currentData() {
   return languageData[currentLanguage];
@@ -644,6 +659,13 @@ function translateInterface() {
   ui.levelTwoSetupTitle.textContent = text.wordCountTitle;
   ui.levelTwoSetupDescription.textContent = text.wordCountDescription;
   ui.levelTwoCountOptions.setAttribute("aria-label", text.wordCountAria);
+  const levelTwoSyllables = levelTwoSyllableCopy[currentLanguage];
+  ui.levelTwoSyllableSetupTitle.textContent = levelTwoSyllables.title;
+  ui.levelTwoSyllableSetupDescription.textContent = levelTwoSyllables.description;
+  ui.levelTwoSyllableOptions.setAttribute("aria-label", levelTwoSyllables.aria);
+  ui.levelTwoSyllableOptions.querySelectorAll("[data-level-two-syllables]").forEach((button, index) => {
+    button.textContent = levelTwoSyllables.options[index];
+  });
   ui.levelThreeSetupTitle.textContent = text.syllableCountTitle;
   ui.levelThreeSetupDescription.textContent = text.syllableCountDescription;
   ui.levelThreeCountOptions.setAttribute("aria-label", text.syllableCountAria);
@@ -917,8 +939,9 @@ function speakTypedLetter(letter, syllable, onSyllableEnd) {
     return;
   }
 
-  // Dziecko najpierw słyszy nazwę wpisanej litery, a dopiero po wyraźnej
-  // przerwie — całą domkniętą sylabę.
+  // Dziecko najpierw słyszy nazwę wpisanej litery, a zaraz potem domkniętą
+  // sylabę. Długa przerwa tutaj odkładała kolejne komunikaty głosowe, co przy
+  // wyrazach trzysylabowych wyglądało jak zawieszenie gry.
   const queueSyllable = () => {
     const timer = window.setTimeout(() => {
       levelTwoSyllableTimers.delete(timer);
@@ -1027,7 +1050,13 @@ function openLevelTwoSetup() {
   levelThreeAdvanceTimer = undefined;
   activeLevel = null;
   acceptsKeyboard = false;
+  levelTwoWordCount = 0;
   showScreen("levelTwoSetup");
+}
+
+function openLevelTwoSyllableSetup(wordCount) {
+  levelTwoWordCount = wordCount;
+  showScreen("levelTwoSyllableSetup");
 }
 
 function openLevelThreeSetup() {
@@ -1067,7 +1096,7 @@ function openLetterSetup(level) {
   showScreen("letterSetup");
 }
 
-function startLevel(level, wordCount) {
+function startLevel(level, wordCount, syllableCount = "all") {
   window.clearTimeout(levelThreeAdvanceTimer);
   levelThreeAdvanceTimer = undefined;
   clearLevelTwoSyllableTimers();
@@ -1093,7 +1122,10 @@ function startLevel(level, wordCount) {
     renderLetters();
   }
   if (level === 2) {
-    levelTwoWords = shuffled(data.words).slice(0, Math.min(wordCount, data.words.length));
+    const words = syllableCount === "all"
+      ? data.words
+      : data.words.filter((word) => word.syllables.length === Number(syllableCount));
+    levelTwoWords = shuffled(words).slice(0, Math.min(wordCount, words.length));
     showScreen("levelTwo");
     renderWords();
   }
@@ -1257,6 +1289,11 @@ function handleKeyboard(event) {
     const slots = [...ui.letterSlots.querySelectorAll(".letter-slot")];
     const currentSlot = slots[inputIndex];
     if (typed === currentSlot.dataset.letter) {
+      // Nie pozwalamy, by głosy i opóźnione sylaby z poprzednich liter
+      // ustawiały się w długiej kolejce. Wpisanie kolejnej litery oznacza, że
+      // dziecko jest już gotowe na następny krok.
+      clearLevelTwoSyllableTimers();
+      window.speechSynthesis?.cancel();
       currentSlot.textContent = typed;
       currentSlot.classList.remove("is-current");
       inputIndex += 1;
@@ -1264,7 +1301,8 @@ function handleKeyboard(event) {
       const syllable = completedSyllable(item.syllables, inputIndex);
       if (inputIndex === slots.length) {
         acceptsKeyboard = false;
-        // Po ostatniej sylabie dziecko słyszy jeszcze całe poprawnie złożone słowo.
+        // Na końcu odczytujemy od razu całe ułożone słowo. Nie dodajemy już
+        // litery ani sylaby do kolejki, dzięki czemu przejście jest płynne.
         let hasAdvanced = false;
         const advance = () => {
           if (hasAdvanced || activeLevel !== 2) return;
@@ -1277,15 +1315,9 @@ function handleKeyboard(event) {
             levelThreeAdvanceTimer = window.setTimeout(advance, 1300);
           }
         };
-        // W wyrazie jednosylabowym sylaba i cały wyraz brzmią tak samo
-        // (np. „nos”), więc odczytujemy go tylko raz.
-        if (item.syllables.length === 1) speakCompletedWord();
-        else speakTypedLetter(typed, syllable, speakCompletedWord);
+        speakCompletedWord();
       } else {
-        const resumeKeyboard = () => {
-          if (activeLevel === 2) acceptsKeyboard = true;
-        };
-        speakTypedLetter(typed, syllable, syllable ? resumeKeyboard : undefined);
+        speakTypedLetter(typed, syllable);
         slots[inputIndex].classList.add("is-current");
       }
     } else {
@@ -1599,7 +1631,10 @@ document.querySelectorAll("[data-start-level]").forEach((button) => {
   });
 });
 document.querySelectorAll("[data-level-two-count]").forEach((button) => {
-  button.addEventListener("click", () => startLevel(2, Number(button.dataset.levelTwoCount)));
+  button.addEventListener("click", () => openLevelTwoSyllableSetup(Number(button.dataset.levelTwoCount)));
+});
+document.querySelectorAll("[data-level-two-syllables]").forEach((button) => {
+  button.addEventListener("click", () => startLevel(2, levelTwoWordCount, button.dataset.levelTwoSyllables));
 });
 document.querySelectorAll("[data-level-three-count]").forEach((button) => {
   button.addEventListener("click", () => startLevel(3, Number(button.dataset.levelThreeCount)));
