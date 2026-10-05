@@ -156,7 +156,12 @@ h1 { margin-bottom: 2.5rem; font-size: clamp(2.25rem, 6vw, 4rem); line-height: 1
 .level-card:nth-child(8) { --card-accent: #d34273; --card-tint: #ffe7f0; }
 .level-card-icon { display: grid; width: 3.4rem; height: 3.4rem; place-items: center; border-radius: 1.15rem; background: var(--card-tint); font-size: 2rem; line-height: 1; }
 .level-card-label { color: #526071; font-size: .78em; font-weight: 600; }
-.level-plus-badge { position: absolute; top: .7rem; left: .7rem; display: inline-flex; align-items: center; gap: .28rem; padding: .28rem .48rem; border: 1px solid rgba(111, 69, 187, .2); border-radius: 999px; background: rgba(255, 255, 255, .88); box-shadow: 0 .18rem .45rem rgba(75, 49, 126, .1); color: #7045bb; font-size: .62rem; font-weight: 800; letter-spacing: .025em; line-height: 1; }
+.level-card-plus { background: rgba(236, 233, 243, .88); }
+.level-card-plus > .level-card-icon, .level-card-plus > strong, .level-card-plus > .level-card-label { opacity: .8; }
+.level-card-plus:hover { background: rgba(248, 245, 252, .96); }
+.level-card-plus:hover > .level-card-icon, .level-card-plus:hover > strong, .level-card-plus:hover > .level-card-label { opacity: .9; }
+.level-plus-badge { position: absolute; top: -.7rem; left: 50%; z-index: 2; display: inline-flex; min-height: 1.8rem; align-items: center; justify-content: center; gap: .5rem; padding: .28rem .45rem .28rem .75rem; border: 1px solid rgba(107, 66, 175, .35); border-radius: 999px; background: linear-gradient(135deg, #f6edff, #e8d8ff); box-shadow: 0 .35rem .7rem rgba(75, 49, 126, .18); color: #633b9c; font-size: .67rem; font-weight: 800; letter-spacing: .025em; line-height: 1; transform: translateX(-50%); white-space: nowrap; }
+.level-plus-star { display: grid; width: 1.35rem; height: 1.35rem; place-items: center; border-radius: 50%; background: linear-gradient(135deg, #ffe98c, #f3bb2e); color: #8b5b00; font-size: 1.05rem; line-height: 1; text-shadow: 0 1px 0 rgba(255, 255, 255, .5); }
 .level-card:hover { transform: translateY(-.35rem); border-color: var(--card-accent); background: #fff; box-shadow: 0 1rem 2rem rgba(31, 41, 55, .14); color: #1f2937; }
 .level-card:focus-visible { outline-color: var(--card-accent); }
 .level-two-setup { display: grid; justify-items: center; gap: 1.25rem; padding: 2rem; }
