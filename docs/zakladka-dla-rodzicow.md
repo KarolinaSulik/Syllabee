@@ -7,7 +7,7 @@ Zakładka pomaga rodzicom wspierać dziecko podczas zabawy z Syllabee. Ma przeka
 ## Co zawiera obecnie
 
 - Tytuł oraz krótką wskazówkę dotyczącą pierwszych zabaw z dzieckiem.
-- Siedem domyślnie zamkniętych akordeonów — po jednym dla każdego poziomu gry. Każdy opisuje, czego uczy poziom, co dziecko może umieć po zabawie i jak rodzic może je wesprzeć.
+- Osiem domyślnie zamkniętych akordeonów — po jednym dla każdego poziomu gry. Każdy opisuje, czego uczy poziom, co dziecko może umieć po zabawie i jak rodzic może je wesprzeć.
 - Sekcję „Najważniejsza jest gotowość dziecka”.
 - Sekcję „Źródła i ważna informacja” z informacją, że wskazówki nie zastępują konsultacji ze specjalistą, oraz z linkami do źródeł.
 
@@ -19,7 +19,7 @@ Kolejność treści jest stała:
 
 1. Tytuł: „Jak wspierać dziecko na każdym poziomie?”.
 2. Wskazówka: „Najlepiej towarzyszyć dziecku przy pierwszych zabawach, chwalić próby i robić krótkie przerwy. 💛”.
-3. Siedem akordeonów poziomów.
+3. Osiem akordeonów poziomów.
 4. Sekcja o gotowości dziecka.
 5. Źródła i ważna informacja.
 

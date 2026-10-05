@@ -301,6 +301,36 @@ languageData.en.ui.typeComplete = "Correct! You wrote the word right.";
 languageData.de.ui.buildComplete = "Super! Tippe jetzt das Wort.";
 languageData.de.ui.typeComplete = "Richtig! Das Wort ist korrekt.";
 
+const levelEightCopy = {
+  pl: { label: "Słowa na literę", title: "Ile słów na jedną literę?", description: "Wpisz słowa, które zaczynają się od pokazanej litery.", countAria: "Liczba słów na jedną literę w Poziomie 8", instruction: "Wpisz słowo na literę:", input: "Wpisz słowo", submit: "Gotowe", skip: "Nie wiem — dalej", answers: "Wpisane słowa", progress: "Postęp w Poziomie 8", needsLetter: "To słowo musi zaczynać się od litery", empty: "Najpierw wpisz słowo.", again: "Spróbuj jeszcze raz.", next: "Świetnie! Wpisz kolejne słowo.", done: "Brawo! Wszystkie słowa są gotowe." },
+  en: { label: "Words by letter", title: "How many words for one letter?", description: "Type words that start with the displayed letter.", countAria: "Number of words for one letter in Level 8", instruction: "Type a word starting with:", input: "Type a word", submit: "Done", skip: "I don't know — next", answers: "Typed words", progress: "Level 8 progress", needsLetter: "This word must start with the letter", empty: "Type a word first.", again: "Try again.", next: "Great! Type another word.", done: "Great! All words are ready." },
+  de: { label: "Wörter zum Buchstaben", title: "Wie viele Wörter zu einem Buchstaben?", description: "Tippe Wörter, die mit dem gezeigten Buchstaben beginnen.", countAria: "Anzahl der Wörter zu einem Buchstaben in Level 8", instruction: "Tippe ein Wort mit:", input: "Wort tippen", submit: "Fertig", skip: "Ich weiß es nicht — weiter", answers: "Eingegebene Wörter", progress: "Fortschritt in Level 8", needsLetter: "Dieses Wort muss mit dem Buchstaben beginnen", empty: "Tippe zuerst ein Wort.", again: "Versuche es noch einmal.", next: "Super! Tippe ein weiteres Wort.", done: "Super! Alle Wörter sind fertig." },
+};
+// Dodatkowe, proste słowa do swobodnego wyszukiwania w Levelu 8. Każde ma
+// ręcznie sprawdzony podział na sylaby — nie dzielimy słów automatycznie.
+const levelEightExtraWords = {
+  pl: [
+    ["RAMA", ["RA", "MA"]], ["RAK", ["RAK"]], ["RYŚ", ["RYŚ"]], ["RÓŻA", ["RÓ", "ŻA"]],
+  ],
+  en: [
+    ["RAT", ["RAT"]], ["RED", ["RED"]], ["RAIN", ["RAIN"]], ["RIVER", ["RIV", "ER"]],
+  ],
+  de: [
+    ["RAD", ["RAD"], "🚲"], ["REH", ["REH"], "🦌"], ["RABE", ["RA", "BE"], "🐦‍⬛"],
+    ["REGEN", ["RE", "GEN"], "🌧️"], ["ROSE", ["RO", "SE"], "🌹"],
+  ],
+};
+Object.entries(levelEightCopy).forEach(([language, copy]) => {
+  languageData[language].ui.levels.push(copy.label);
+  languageData[language].ui.progress.push(copy.progress);
+});
+Object.assign(levelEightCopy.pl, { letterCountTitle: "Ile liter?", letterCountDescription: "Wybierz, ile liter chcesz przećwiczyć po kolei.", letterCountAria: "Liczba liter w Poziomie 8" });
+Object.assign(levelEightCopy.en, { letterCountTitle: "How many letters?", letterCountDescription: "Choose how many letters you want to practise in turn.", letterCountAria: "Number of letters in Level 8" });
+Object.assign(levelEightCopy.de, { letterCountTitle: "Wie viele Buchstaben?", letterCountDescription: "Wähle, wie viele Buchstaben du nacheinander üben möchtest.", letterCountAria: "Anzahl der Buchstaben in Level 8" });
+Object.assign(levelEightCopy.pl, { notInDictionary: "Tego słowa nie ma jeszcze w słowniku tej gry. Wybierz inne." });
+Object.assign(levelEightCopy.en, { notInDictionary: "This word is not in this game’s word list yet. Choose another one." });
+Object.assign(levelEightCopy.de, { notInDictionary: "Dieses Wort ist noch nicht in der Wortliste dieses Spiels. Wähle ein anderes." });
+
 const creatorCopy = {
   pl: {
     parentLink: "Dla rodziców",
@@ -382,6 +412,7 @@ const parentGuideCopy = {
       { title: "Poziom 5 · Zdania", learn: "że kolejność wyrazów tworzy znaczenie.", after: "ułożyć krótkie zdanie i przeczytać je ze wsparciem.", support: "Zapytaj: „Co się dzieje?”. Zamieńcie dwa wyrazy i sprawdźcie, co się zmieniło." },
       { title: "Poziom 6 · Układam wyrazy", learn: "układania wyrazu z liter i poprawiania pomyłek.", after: "ułożyć, wpisać i przeczytać nazwę obrazka.", support: "Nazwijcie obrazek, przeciągnijcie dźwięki i pozwól dziecku samemu wybrać litery." },
       { title: "Poziom 7 · Emoji opowieści", learn: "tworzenia własnych zdań i opowiadania o nich.", after: "ułożyć proste zdanie i przeczytać je bliskiej osobie.", support: "Nie poprawiaj od razu. Najpierw zapytaj: „Co wydarzyło się w tej historii?” i daj dziecku czas na przeczytanie." },
+      { title: "Poziom 8 · Słowa na literę", learn: "samodzielnego wyszukiwania słów rozpoczynających się od podanej litery.", after: "wymyślić i zapisać jedno, dwa lub trzy słowa na tę samą literę.", support: "Podajcie kilka przykładów z otoczenia, ale zostaw dziecku czas na własne pomysły. Po wpisaniu przeczytajcie sylaby razem." },
     ],
   },
   en: {
@@ -401,6 +432,7 @@ const parentGuideCopy = {
       { title: "Level 5 · Sentences", learn: "that word order creates meaning.", after: "put together and read a short sentence with support.", support: "Ask what is happening. Swap two words and see what changes." },
       { title: "Level 6 · Building words", learn: "building words with letters and correcting mistakes.", after: "build, type and read a picture name.", support: "Name the picture, stretch out its sounds and let your child choose the letters." },
       { title: "Level 7 · Emoji stories", learn: "creating their own sentences and telling a story.", after: "make a simple sentence and read it to someone close.", support: "Do not correct straight away. First ask what happened in the story and give your child time to read it." },
+      { title: "Level 8 · Words by letter", learn: "finding words that begin with a given letter independently.", after: "think of and write one, two or three words for the same letter.", support: "Offer a few examples from everyday life, then leave time for your child’s own ideas. Read the syllables together afterwards." },
     ],
   },
   de: {
@@ -420,6 +452,7 @@ const parentGuideCopy = {
       { title: "Level 5 · Sätze", learn: "dass die Wortreihenfolge Bedeutung schafft.", after: "einen kurzen Satz mit Unterstützung ordnen und lesen.", support: "Fragen Sie, was passiert. Tauschen Sie zwei Wörter und sehen Sie, was sich ändert." },
       { title: "Level 6 · Wörter bauen", learn: "Wörter aus Buchstaben zu bauen und Fehler zu korrigieren.", after: "einen Bildnamen bauen, tippen und lesen.", support: "Benennen Sie das Bild, ziehen Sie die Laute in die Länge und lassen Sie Ihr Kind die Buchstaben wählen." },
       { title: "Level 7 · Emoji-Geschichten", learn: "eigene Sätze zu bilden und darüber zu erzählen.", after: "einen einfachen Satz bilden und einer vertrauten Person vorlesen.", support: "Korrigieren Sie nicht sofort. Fragen Sie zuerst, was in der Geschichte passiert, und geben Sie Zeit zum Vorlesen." },
+      { title: "Level 8 · Wörter zum Buchstaben", learn: "selbstständig Wörter zu einem vorgegebenen Anfangsbuchstaben zu finden.", after: "ein, zwei oder drei Wörter zum gleichen Buchstaben zu finden und zu schreiben.", support: "Nennen Sie ein paar Beispiele aus dem Alltag und lassen Sie dann Raum für eigene Ideen. Lesen Sie anschließend die Silben zusammen." },
     ],
   },
 };
@@ -433,6 +466,8 @@ const screens = {
   levelFiveSetup: document.querySelector("#level-five-setup-screen"),
   levelSixSetup: document.querySelector("#level-six-setup-screen"),
   levelSevenSetup: document.querySelector("#level-seven-setup-screen"),
+  levelEightSetup: document.querySelector("#level-eight-setup-screen"),
+  levelEightWordSetup: document.querySelector("#level-eight-word-setup-screen"),
   letterSetup: document.querySelector("#letter-setup-screen"),
   levelOne: document.querySelector("#level-one-screen"),
   levelTwo: document.querySelector("#level-two-screen"),
@@ -441,6 +476,7 @@ const screens = {
   levelFive: document.querySelector("#level-five-screen"),
   levelSix: document.querySelector("#level-six-screen"),
   levelSeven: document.querySelector("#level-seven-screen"),
+  levelEight: document.querySelector("#level-eight-screen"),
   complete: document.querySelector("#complete-screen"),
 };
 
@@ -453,8 +489,8 @@ const ui = {
   readingGameDescription: document.querySelector("#reading-game-description"),
   libraryPlayLabel: document.querySelector("#library-play-label"),
   menuTitle: document.querySelector("#menu-title"),
-  levelTitles: ["one", "two", "three", "four", "five", "six", "seven"].map((level) => document.querySelector(`#level-${level}-title`)),
-  levelLabels: ["one", "two", "three", "four", "five", "six", "seven"].map((level) => document.querySelector(`#level-${level}-label`)),
+  levelTitles: ["one", "two", "three", "four", "five", "six", "seven", "eight"].map((level) => document.querySelector(`#level-${level}-title`)),
+  levelLabels: ["one", "two", "three", "four", "five", "six", "seven", "eight"].map((level) => document.querySelector(`#level-${level}-label`)),
   levelTwoSetupTitle: document.querySelector("#level-two-setup-title"),
   levelTwoSetupDescription: document.querySelector("#level-two-setup-description"),
   levelTwoCountOptions: document.querySelector("#level-two-count-options"),
@@ -473,6 +509,12 @@ const ui = {
   levelSevenSetupTitle: document.querySelector("#level-seven-setup-title"),
   levelSevenSetupDescription: document.querySelector("#level-seven-setup-description"),
   levelSevenCountOptions: document.querySelector("#level-seven-count-options"),
+  levelEightSetupTitle: document.querySelector("#level-eight-setup-title"),
+  levelEightSetupDescription: document.querySelector("#level-eight-setup-description"),
+  levelEightCountOptions: document.querySelector("#level-eight-count-options"),
+  levelEightWordSetupTitle: document.querySelector("#level-eight-word-setup-title"),
+  levelEightWordSetupDescription: document.querySelector("#level-eight-word-setup-description"),
+  levelEightWordCountOptions: document.querySelector("#level-eight-word-count-options"),
   letterCountOptions: document.querySelector("#letter-count-options"),
   completeTitle: document.querySelector("#complete-title"),
   completeMenuButton: document.querySelector("#complete-menu-button"),
@@ -514,6 +556,16 @@ const ui = {
   emojiStoryReadPrompt: document.querySelector("#emoji-story-read-prompt"),
   emojiStoryReadButton: document.querySelector("#emoji-story-read-button"),
   emojiStoryParentButton: document.querySelector("#emoji-story-parent-button"),
+  levelEightProgress: document.querySelector("#level-eight-progress"),
+  levelEightInstruction: document.querySelector("#level-eight-instruction"),
+  levelEightLetter: document.querySelector("#level-eight-letter"),
+  levelEightForm: document.querySelector("#level-eight-form"),
+  levelEightInput: document.querySelector("#level-eight-input"),
+  levelEightInputLabel: document.querySelector("#level-eight-input-label"),
+  levelEightSubmit: document.querySelector("#level-eight-submit"),
+  levelEightSkipButton: document.querySelector("#level-eight-skip-button"),
+  levelEightMessage: document.querySelector("#level-eight-message"),
+  levelEightAnswers: document.querySelector("#level-eight-answers"),
   gameHintButtons: [...document.querySelectorAll("[data-game-hint-button]")],
   parentLink: document.querySelector("#parent-link"),
   parentNoteText: document.querySelector("#parent-note-text"),
@@ -540,6 +592,11 @@ let levelFourLetters = [];
 let levelFiveSentences = [];
 let levelSixWords = [];
 let levelSevenCount = 0;
+let levelEightWordCount = 0;
+let levelEightLetterCount = 0;
+let levelEightLetter = "";
+let levelEightLetters = [];
+let levelEightAnswers = [];
 let emojiStorySubject = null;
 let emojiStoryAction = null;
 let letterSetupLevel = null;
@@ -640,6 +697,7 @@ function currentHintAnswer() {
   if (activeLevel === 5) return levelFiveSentences[taskIndex]?.words.join(" ");
   if (activeLevel === 6) return levelSixWords[taskIndex]?.word;
   if (activeLevel === 7) return [emojiStorySubject?.word, emojiStoryAction?.word].filter(Boolean).join(" ");
+  if (activeLevel === 8) return levelEightWordBank().filter(({ word }) => word.startsWith(levelEightLetter)).slice(0, 3).map(({ word }) => word).join(" · ");
   return "";
 }
 
@@ -742,6 +800,19 @@ function translateInterface() {
   ui.emojiStoryReadPrompt.textContent = text.readToParent;
   ui.emojiStoryReadButton.textContent = text.readAloud;
   ui.emojiStoryParentButton.textContent = text.parentReady;
+  const levelEightText = levelEightCopy[currentLanguage];
+  ui.levelEightSetupTitle.textContent = levelEightText.letterCountTitle;
+  ui.levelEightSetupDescription.textContent = levelEightText.letterCountDescription;
+  ui.levelEightCountOptions.setAttribute("aria-label", levelEightText.letterCountAria);
+  ui.levelEightWordSetupTitle.textContent = levelEightText.title;
+  ui.levelEightWordSetupDescription.textContent = levelEightText.description;
+  ui.levelEightWordCountOptions.setAttribute("aria-label", levelEightText.countAria);
+  ui.levelEightInstruction.textContent = levelEightText.instruction;
+  ui.levelEightInput.placeholder = levelEightText.input;
+  ui.levelEightInputLabel.textContent = levelEightText.input;
+  ui.levelEightSubmit.textContent = levelEightText.submit;
+  ui.levelEightSkipButton.textContent = levelEightText.skip;
+  ui.levelEightAnswers.setAttribute("aria-label", levelEightText.answers);
   ui.letterCountOptions.setAttribute("aria-label", text.letterCountAria);
   ui.levelSixInstruction.textContent = text.movableInstruction;
   ui.levelSixProgress.setAttribute("aria-label", text.progress[5]);
@@ -761,7 +832,7 @@ function translateInterface() {
   ui.completeTitle.textContent = text.complete;
   ui.completeMenuButton.textContent = text.backToMenu;
   document.querySelectorAll(".menu-button-text").forEach((element) => { element.textContent = text.menu; });
-  [ui.levelOneProgress, ui.levelTwoProgress, ui.levelThreeProgress, ui.levelFourProgress, ui.levelFiveProgress, ui.levelSixProgress, ui.levelSevenProgress]
+  [ui.levelOneProgress, ui.levelTwoProgress, ui.levelThreeProgress, ui.levelFourProgress, ui.levelFiveProgress, ui.levelSixProgress, ui.levelSevenProgress, ui.levelEightProgress]
     .forEach((element, index) => element.setAttribute("aria-label", text.progress[index]));
   document.title = `Syllabee — ${locale}`;
 }
@@ -1158,6 +1229,19 @@ function openLevelSevenSetup() {
   showScreen("levelSevenSetup");
 }
 
+function openLevelEightSetup() {
+  window.clearTimeout(levelThreeAdvanceTimer);
+  levelThreeAdvanceTimer = undefined;
+  activeLevel = null;
+  acceptsKeyboard = false;
+  showScreen("levelEightSetup");
+}
+
+function openLevelEightWordSetup(letterCount) {
+  levelEightLetterCount = letterCount;
+  showScreen("levelEightWordSetup");
+}
+
 function openLetterSetup(level) {
   window.clearTimeout(levelThreeAdvanceTimer);
   levelThreeAdvanceTimer = undefined;
@@ -1233,6 +1317,19 @@ function startLevel(level, wordCount, syllableCount = "all") {
     levelSevenCount = wordCount;
     showScreen("levelSeven");
     renderEmojiStory();
+  }
+  if (level === 8) {
+    levelEightLetterCount = wordCount;
+    levelEightWordCount = Number(syllableCount);
+    const wordBank = levelEightWordBank();
+    const usableLetters = data.letters
+      .map(({ letter }) => letter)
+      .filter((letter) => wordBank.filter(({ word }) => word.startsWith(letter)).length >= levelEightWordCount);
+    levelEightLetters = createLetterSequence(usableLetters, levelEightLetterCount);
+    levelEightLetter = levelEightLetters[taskIndex] || data.letters[0].letter;
+    levelEightAnswers = [];
+    showScreen("levelEight");
+    renderLetterWords();
   }
 }
 
@@ -1750,9 +1847,125 @@ function finishMontessoriWord(item) {
   scheduleLevelSixAdvance(nextTask);
 }
 
+// LEVEL 8 przyjmuje tylko słowa z gotowym podziałem na sylaby w wybranym
+// języku. Dzięki temu nie pokazujemy błędnych, zgadywanych cięć.
+function levelEightWordBank() {
+  const words = new Map();
+  currentData().words.forEach((item) => words.set(item.word, {
+    word: item.word,
+    syllables: item.syllables,
+    image: item.image,
+  }));
+  Object.entries(sentenceSyllables[currentLanguage] || {}).forEach(([word, syllables]) => {
+    if (!words.has(word)) words.set(word, { word, syllables, image: null });
+  });
+  (levelEightExtraWords[currentLanguage] || []).forEach(([word, syllables, image = null]) => {
+    if (!words.has(word)) words.set(word, { word, syllables, image });
+  });
+  return [...words.values()];
+}
+
+// Gdy wybór obejmuje więcej liter niż dostępnych kategorii, nowa, losowa
+// kolejka zaczyna się od początku. Każda pozycja nadal ma wymagane 1–3 słowa.
+function createLetterSequence(letters, count) {
+  if (letters.length === 0) return [];
+  const sequence = [];
+  while (sequence.length < count) {
+    const round = shuffled(letters);
+    round.forEach((letter) => {
+      if (sequence.length < count && (letters.length === 1 || letter !== sequence.at(-1))) sequence.push(letter);
+    });
+  }
+  return sequence;
+}
+
+function renderLetterWords() {
+  const text = levelEightCopy[currentLanguage];
+  hideGameHints();
+  levelEightLetter = levelEightLetters[taskIndex];
+  updateProgress(ui.levelEightProgress, taskIndex, levelEightLetters.length);
+  ui.levelEightLetter.textContent = levelEightLetter;
+  ui.levelEightLetter.setAttribute("aria-label", `${text.instruction} ${levelEightLetter}`);
+  ui.levelEightMessage.textContent = "";
+  ui.levelEightMessage.classList.remove("is-error");
+  ui.levelEightInput.value = "";
+  ui.levelEightInput.disabled = false;
+  ui.levelEightSubmit.disabled = false;
+  ui.levelEightAnswers.replaceChildren();
+  ui.levelEightInput.focus();
+}
+
+function renderLetterWordAnswers() {
+  ui.levelEightAnswers.replaceChildren(...levelEightAnswers.map(({ word, syllables, image }) => {
+    const answer = document.createElement("div");
+    answer.className = "letter-word-answer";
+    syllables.forEach((syllable, index) => {
+      const part = document.createElement("span");
+      part.className = syllableClass(index, syllables.length);
+      part.textContent = syllable;
+      answer.append(part);
+    });
+    if (image) {
+      const emoji = document.createElement("span");
+      emoji.className = "letter-word-emoji";
+      emoji.setAttribute("aria-hidden", "true");
+      emoji.textContent = image;
+      answer.append(emoji);
+    }
+    return answer;
+  }));
+}
+
+function submitLetterWord(event) {
+  event.preventDefault();
+  if (activeLevel !== 8) return;
+  const text = levelEightCopy[currentLanguage];
+  const word = ui.levelEightInput.value.trim().toLocaleUpperCase(currentData().locale);
+  // Pobieramy literę bezpośrednio z widocznego ekranu, aby walidacja zawsze
+  // dotyczyła dokładnie tego zadania, które dziecko właśnie widzi.
+  const targetLetter = ui.levelEightLetter.textContent.trim().toLocaleUpperCase(currentData().locale);
+  ui.levelEightMessage.classList.remove("is-error");
+  if (!word) {
+    ui.levelEightMessage.textContent = text.empty;
+    ui.levelEightMessage.classList.add("is-error");
+    return;
+  }
+  if (!word.startsWith(targetLetter)) {
+    ui.levelEightMessage.textContent = `${text.needsLetter} „${targetLetter}”.`;
+    ui.levelEightMessage.classList.add("is-error");
+    playFeedback("error");
+    return;
+  }
+  if (levelEightAnswers.some((answer) => answer.word === word)) {
+    ui.levelEightMessage.textContent = text.again;
+    ui.levelEightMessage.classList.add("is-error");
+    return;
+  }
+  const knownWord = levelEightWordBank().find((item) => item.word === word);
+  if (!knownWord) {
+    ui.levelEightMessage.textContent = text.notInDictionary;
+    ui.levelEightMessage.classList.add("is-error");
+    playFeedback("error");
+    return;
+  }
+  levelEightAnswers.push(knownWord);
+  renderLetterWordAnswers();
+  speakWord(word);
+  if (levelEightAnswers.length === levelEightWordCount) {
+    ui.levelEightMessage.textContent = text.done;
+    ui.levelEightInput.disabled = true;
+    ui.levelEightSubmit.disabled = true;
+    window.setTimeout(() => { if (activeLevel === 8) nextTask(); }, 1100);
+    return;
+  }
+  ui.levelEightMessage.textContent = text.next;
+  ui.levelEightInput.value = "";
+  ui.levelEightInput.focus();
+}
+
 function nextTask() {
   taskIndex += 1;
-  const max = activeLevel === 1 ? levelOneLetters.length : activeLevel === 2 ? levelTwoWords.length : activeLevel === 3 ? levelThreeWords.length : activeLevel === 4 ? levelFourLetters.length : activeLevel === 5 ? levelFiveSentences.length : activeLevel === 6 ? levelSixWords.length : levelSevenCount;
+  const max = activeLevel === 1 ? levelOneLetters.length : activeLevel === 2 ? levelTwoWords.length : activeLevel === 3 ? levelThreeWords.length : activeLevel === 4 ? levelFourLetters.length : activeLevel === 5 ? levelFiveSentences.length : activeLevel === 6 ? levelSixWords.length : activeLevel === 7 ? levelSevenCount : levelEightLetters.length;
   if (taskIndex === max) {
     acceptsKeyboard = false;
     trackAnalyticsEvent("level_completed", {
@@ -1775,6 +1988,7 @@ function nextTask() {
   if (activeLevel === 5) renderSentences();
   if (activeLevel === 6) renderMovableAlphabet();
   if (activeLevel === 7) renderEmojiStory();
+  if (activeLevel === 8) renderLetterWords();
 }
 
 document.querySelectorAll("[data-start-level]").forEach((button) => {
@@ -1786,6 +2000,7 @@ document.querySelectorAll("[data-start-level]").forEach((button) => {
     else if (level === 5) openLevelFiveSetup();
     else if (level === 6) openLevelSixSetup();
     else if (level === 7) openLevelSevenSetup();
+    else if (level === 8) openLevelEightSetup();
     else if (level === 1 || level === 4) openLetterSetup(level);
     else startLevel(level, level === 6 ? 5 : undefined);
   });
@@ -1808,6 +2023,12 @@ document.querySelectorAll("[data-level-six-count]").forEach((button) => {
 document.querySelectorAll("[data-level-seven-count]").forEach((button) => {
   button.addEventListener("click", () => startLevel(7, Number(button.dataset.levelSevenCount)));
 });
+document.querySelectorAll("[data-level-eight-letter-count]").forEach((button) => {
+  button.addEventListener("click", () => openLevelEightWordSetup(Number(button.dataset.levelEightLetterCount)));
+});
+document.querySelectorAll("[data-level-eight-count]").forEach((button) => {
+  button.addEventListener("click", () => startLevel(8, levelEightLetterCount, Number(button.dataset.levelEightCount)));
+});
 document.querySelectorAll("[data-letter-count]").forEach((button) => {
   button.addEventListener("click", () => startLevel(letterSetupLevel, Number(button.dataset.letterCount)));
 });
@@ -1821,6 +2042,7 @@ ui.movableClearButton.addEventListener("click", () => {
 ui.montessoriBackspaceButton.addEventListener("click", removeMontessoriTypedLetter);
 ui.emojiStoryReadButton.addEventListener("click", readEmojiStoryToParent);
 ui.emojiStoryParentButton.addEventListener("click", nextTask);
+ui.levelEightForm.addEventListener("submit", submitLetterWord);
 document.querySelectorAll("[data-go-menu]").forEach((button) => button.addEventListener("click", goToMenu));
 document.querySelectorAll("[data-open-reading-game]").forEach((button) => button.addEventListener("click", () => openReadingGame()));
 document.querySelectorAll("[data-go-library]").forEach((button) => button.addEventListener("click", () => goToLibrary()));
