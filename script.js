@@ -333,7 +333,7 @@ const creatorCopy = {
     parentText: "Begleiten Sie Ihr Kind am besten bei den ersten Übungen, würdigen Sie seine Versuche und machen Sie kurze Pausen. 💛",
     creatorLink: "Über die Entwicklerin",
     title: "Über die Entwicklerin",
-    firstParagraph: "Ich bin 28 Jahre alt und Mutter eines vierjährigen Sohnes, der mit Freude Buchstaben entdeckt. Ich begrenze seine Bildschirmzeit, glaube aber, dass Technologie — achtsam eingesetzt — Kindern mehr Freude am Lernen geben kann. Gerade in einer Welt, in der sich KI rasant entwickelt, lohnt es sich, den klugen Umgang damit zu lernen.",
+    firstParagraph: "Ich heiße Karolina Sulik, bin 28 Jahre alt, lebe in Deutschland und bin Mutter eines vierjährigen Sohnes, der mit Freude Buchstaben entdeckt. Ich begrenze seine Bildschirmzeit, glaube aber, dass Technologie — achtsam eingesetzt — Kindern mehr Freude am Lernen geben kann. Gerade in einer Welt, in der sich KI rasant entwickelt, lohnt es sich, den klugen Umgang damit zu lernen.",
     secondParagraph: "Nach meinem Informatikstudium habe ich dieses einfache Spiel für meinen Sohn entwickelt, damit er mit Buchstaben spielen und sie zu Silben verbinden kann. Beim Testen habe ich beobachtet, dass er sich lieber auf diese Übungen einlässt als auf Silben auf Papier. Diese Erfahrung möchte ich teilen — vielleicht entdecken auch andere Kinder damit Freude am Lernen.",
   },
 };

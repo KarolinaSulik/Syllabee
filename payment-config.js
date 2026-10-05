@@ -5,6 +5,6 @@
  * Nigdy nie wpisuj tutaj klucza service_role ani sekretów Stripe.
  */
 window.SYLLABEE_PAYMENTS_CONFIG = {
-  supabaseUrl: "",
-  supabaseAnonKey: "",
+  supabaseUrl: "https://iyzshkpfcmzthokzuwiw.supabase.co",
+  supabaseAnonKey: "sb_publishable_zE3i0RgTmpvQu4ctclUeMA_hDH38vbV",
 };

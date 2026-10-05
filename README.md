@@ -22,6 +22,8 @@ Zestawy dla każdego języka są na początku pliku `script.js`. Każdy wpis sł
 
 ## Syllabee Plus: Stripe + Supabase
 
+Pełny opis architektury, schematu danych, bezpieczeństwa, przepływów, wdrożenia i zasad zmian znajduje się w [dokumentacji backendu, bazy i płatności](docs/backend-baza-danych-i-platnosci.md). To jest dokument referencyjny dla kolejnych prac nad tym obszarem.
+
 Poziomy 1–4 są bezpłatne. Poziomy 5–8 są częścią **Syllabee Plus** i wymagają jednorazowego zakupu za **3,99 €**. Uprawnienie jest przypisane do konta rodzica i nadawane dopiero przez zweryfikowany webhook Stripe — nie przez kod przeglądarki.
 
 ### 1. Załóż projekt Supabase
