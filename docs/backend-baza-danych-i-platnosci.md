@@ -1,8 +1,24 @@
-# Backend, baza danych i płatności
+# Dokumentacja techniczna: backend, baza danych i płatności
 
 Ten dokument jest źródłem prawdy dla integracji **Syllabee Plus**. Przed zmianą logowania, płatności, dostępu do poziomów 5–8, Supabase albo Stripe przeczytaj ten dokument oraz wskazany plik implementacyjny — nie trzeba zaczynać od analizy całego projektu.
 
-## Cel i granice systemu
+## Spis treści
+
+1. [Zakres i architektura](#1-zakres-i-architektura)
+2. [Przepływ logowania, płatności i dostępu](#2-przepływ-logowania-płatności-i-dostępu)
+3. [Baza danych](#3-baza-danych)
+4. [Autoryzacja i bezpieczeństwo](#4-autoryzacja-i-bezpieczeństwo)
+5. [Analityka i śledzone eventy](#5-analityka-i-śledzone-eventy)
+6. [Konfiguracja środowiska](#6-konfiguracja-środowiska)
+7. [Wdrożenie i utrzymanie](#7-wdrożenie-i-utrzymanie)
+8. [Testy akceptacyjne](#8-testy-akceptacyjne)
+9. [Zasady zmian dla kolejnych agentów](#9-zasady-zmian-dla-kolejnych-agentów)
+
+---
+
+## 1. Zakres i architektura
+
+### Cel systemu
 
 Syllabee jest statyczną aplikacją HTML/CSS/JS. Nie ma własnego serwera aplikacyjnego ani własnego API uruchamianego w repozytorium. Backend zapewniają:
 
@@ -12,9 +28,9 @@ Syllabee jest statyczną aplikacją HTML/CSS/JS. Nie ma własnego serwera aplika
 - **Stripe Checkout** — jednorazowa płatność kartą;
 - **Stripe webhook** — jedyne źródło, które po potwierdzonej płatności nadaje płatny dostęp.
 
-Zakres produktu: poziomy 1–4 są bezpłatne, a poziomy 5–8 wymagają Syllabee Plus. Cena jest definiowana po stronie Stripe jako jednorazowa cena (`one-time`); obecny komunikat na stronie to 3,99 EUR. Dostęp jest przypisany do konta rodzica, a nie do przeglądarki lub urządzenia.
+Poziomy 1–4 są bezpłatne, a poziomy 5–8 wymagają Syllabee Plus. Cena jest definiowana po stronie Stripe jako jednorazowa cena (`one-time`); obecny komunikat na stronie to 3,99 EUR. Dostęp jest przypisany do konta rodzica, a nie do przeglądarki lub urządzenia.
 
-## Mapa implementacji
+### Mapa implementacji
 
 | Obszar | Plik | Odpowiedzialność |
 | --- | --- | --- |
@@ -29,7 +45,9 @@ Zakres produktu: poziomy 1–4 są bezpłatne, a poziomy 5–8 wymagają Syllabe
 
 `README.md` zawiera skróconą instrukcję pierwszego wdrożenia. Ten dokument opisuje decyzje architektoniczne i utrzymanie.
 
-## Przepływ użytkownika i danych
+## 2. Przepływ logowania, płatności i dostępu
+
+### Schemat przepływu
 
 ```text
 Rodzic → strona → Supabase Auth (Magic Link)
@@ -38,6 +56,8 @@ Rodzic → strona → Supabase Auth (Magic Link)
 Stripe → stripe-webhook (zweryfikowany podpis) → Postgres: payments + entitlements
 strona → account-status → odblokowanie poziomów 5–8
 ```
+
+### Kroki techniczne
 
 1. Rodzic wybiera płatny poziom. Frontend w `script.js` sprawdza `account-status`; bez dostępu pokazuje modal.
 2. Rodzic podaje e-mail. Frontend wysyła żądanie do `POST /auth/v1/otp` Supabase z `create_user: true`. Po powrocie z Magic Linka tokeny są odczytywane z fragmentu URL i zachowywane lokalnie pod kluczem `syllabee-parent-session`.
@@ -48,9 +68,11 @@ strona → account-status → odblokowanie poziomów 5–8
 7. Stripe wysyła `checkout.session.completed` do `stripe-webhook`. Webhook sprawdza nagłówek `stripe-signature` przy użyciu `STRIPE_WEBHOOK_SECRET`, wymaga `payment_status === "paid"`, zapisuje płatność i dopiero potem tworzy uprawnienie.
 8. Frontend ponownie pyta `account-status`. Gdy `hasFullAccess` jest prawdziwe, umożliwia wejście do poziomów 5–8.
 
+### Ważne zachowanie po powrocie z płatności
+
 Webhook może przyjść chwilę po przekierowaniu z Checkout. Jeśli po powrocie dostęp nie jest widoczny od razu, należy ponowić sprawdzenie statusu / odświeżyć stronę; nie należy nadać dostępu po parametrze `payment=success` w URL.
 
-## Model danych
+## 3. Baza danych
 
 ### `public.entitlements`
 
@@ -80,7 +102,7 @@ Rejestr potwierdzonych zdarzeń Stripe, służący do audytu i idempotencji.
 
 Usunięcie konta z istniejącą płatnością jest zablokowane (`on delete restrict`), aby nie stracić historii płatności przypadkiem.
 
-## Autoryzacja i bezpieczeństwo
+## 4. Autoryzacja i bezpieczeństwo
 
 - Tabele mają włączone RLS, a role `anon` i `authenticated` mają odebrane wszystkie uprawnienia. Przeglądarka nie odczytuje ani nie zapisuje `entitlements` i `payments` bezpośrednio.
 - Tylko Edge Functions używają `SUPABASE_SERVICE_ROLE_KEY`. Klucz omija RLS, dlatego wolno go trzymać wyłącznie w sekretach Supabase.
@@ -92,7 +114,43 @@ Usunięcie konta z istniejącą płatnością jest zablokowane (`on delete restr
 
 Nie dodawaj endpointu, który na podstawie e-maila, parametru URL, `payment=success` lub danych przesłanych przez frontend bezpośrednio tworzy `entitlements`.
 
-## Konfiguracja środowiska
+## 5. Analityka i śledzone eventy
+
+### Zasada zgody i dostawca
+
+Analityka korzysta z **Google Analytics 4** (`G-PR1J7WEW4W`) i jest ładowana dopiero po akceptacji przez użytkownika. Wybór jest zapisywany w `localStorage` jako `syllabee-analytics-consent` (`granted` lub `denied`). Przy kolejnej wizycie skrypt GA jest ładowany wyłącznie dla zapisanej wartości `granted`.
+
+Odmowa nie wysyła własnego eventu analitycznego, ponieważ biblioteka GA w ogóle nie jest wtedy ładowana. Kod nie używa identyfikatora użytkownika GA, a komunikat zgody deklaruje brak danych identyfikacyjnych dziecka.
+
+### Własne eventy GA4
+
+Każdy z poniższych eventów jest wysyłany dopiero po udzieleniu zgody:
+
+| Event | Kiedy jest wysyłany | Parametry |
+| --- | --- | --- |
+| `analytics_consent_granted` | użytkownik zaakceptuje analitykę | `language` |
+| `reading_game_opened` | zostanie otwarta gra „Czytanie sylabowe” | `language` |
+| `level_selected` | użytkownik wybierze dowolny poziom | `level_number`, `language` |
+| `level_started` | faktycznie uruchomi się rozgrywka poziomu | `level_number`, `task_count`, `language` |
+| `level_completed` | ukończone zostaną wszystkie zadania w poziomie | `level_number`, `task_count`, `language` |
+
+`language` przyjmuje wybrany język interfejsu (`pl`, `en` lub `de`). `level_number` to numer poziomu 1–8. `task_count` oznacza liczbę zadań w uruchomionej albo ukończonej sesji poziomu; dla części poziomów jest to wybrana przez użytkownika liczba, a nie stała długość całego poziomu.
+
+Wywołanie `gtag("config", ...)` standardowo pozwala GA4 zarejestrować automatyczny `page_view`; w kodzie nie ma osobnego, ręcznego wywołania `page_view`.
+
+### Dane celowo nieśledzone
+
+Aktualna implementacja nie wysyła własnych eventów dla:
+
+- wpisywanych liter, słów, odpowiedzi ani błędów dziecka;
+- treści tworzonych w grze i danych o wymowie;
+- e-maila rodzica, tokenów sesji lub identyfikatora użytkownika Supabase;
+- logowania przez Magic Link, rozpoczęcia/anulowania/sukcesu płatności ani danych Stripe;
+- odblokowania Plus, danych karty i rekordów z tabel `payments` lub `entitlements`.
+
+Źródło implementacji: `GA_MEASUREMENT_ID`, `enableGoogleAnalytics`, `setAnalyticsConsent` i `trackAnalyticsEvent` w `script.js`.
+
+## 6. Konfiguracja środowiska
 
 W Supabase ustaw następujące sekrety (wartości pozostają poza repozytorium):
 
@@ -109,7 +167,7 @@ Supabase udostępnia funkcjom także `SUPABASE_URL` i `SUPABASE_SERVICE_ROLE_KEY
 
 Różnica jest ważna: `ALLOWED_ORIGIN` ma zawierać tylko schemat, host i ewentualny port; `SITE_URL` ma zawierać ścieżkę aplikacji, ponieważ buduje adresy powrotu Stripe.
 
-## Wdrożenie i utrzymanie
+## 7. Wdrożenie i utrzymanie
 
 1. Włącz dostawcę e-mail w Supabase Auth i dodaj adres aplikacji do `Site URL` oraz `Redirect URLs`.
 2. Zastosuj migracje z katalogu `supabase/migrations/`.
@@ -135,7 +193,7 @@ supabase functions deploy stripe-webhook
 
 Przy zmianie środowiska zmieniaj razem: klucz tajny Stripe, webhook secret, Price ID, URL/klucz Supabase w froncie oraz endpoint webhooka. Nie mieszaj `sk_test_...` z ceną lub webhookiem live.
 
-## Testy akceptacyjne
+## 8. Testy akceptacyjne
 
 W pierwszej kolejności testuj w Stripe Test Mode z `sk_test_...`, testową ceną i kartą `4242 4242 4242 4242`.
 
@@ -150,7 +208,7 @@ W pierwszej kolejności testuj w Stripe Test Mode z `sk_test_...`, testową cen�
 
 Do diagnostyki używaj logów Edge Functions, historii zdarzeń Stripe i tabel w Supabase. Nie wklejaj tokenów, danych kart ani pełnych adresów e-mail do issue, commitów czy logów klienta.
 
-## Zasady zmian dla kolejnych agentów
+## 9. Zasady zmian dla kolejnych agentów
 
 1. Najpierw ustal, czy zmiana dotyczy UI, funkcji, schematu lub Stripe — często dotyka więcej niż jednej warstwy.
 2. Zmiany bazy wykonuj nową migracją w `supabase/migrations/`; nie przepisuj wykonanej migracji produkcyjnej.
