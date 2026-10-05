@@ -38,9 +38,31 @@ h1 { margin-bottom: 2.5rem; font-size: clamp(2.25rem, 6vw, 4rem); line-height: 1
 .tiny-bee-one { top: 15rem; left: 7vw; animation: tiny-bee-fly-one 26s ease-in-out infinite alternate; }
 .tiny-bee-two { top: 25rem; right: 8vw; animation: tiny-bee-fly-two 31s ease-in-out infinite alternate; }
 .tiny-bee-three { top: 39rem; left: 12vw; animation: tiny-bee-fly-three 28s ease-in-out infinite alternate; }
+.tiny-bee-four { top: 8rem; right: 15vw; animation: tiny-bee-fly-four 24s ease-in-out -7s infinite alternate; }
+.tiny-bee-five { top: 33rem; right: 18vw; animation: tiny-bee-fly-five 29s ease-in-out -15s infinite alternate; }
+.tiny-bee-six { top: 51rem; left: 5vw; animation: tiny-bee-fly-six 27s ease-in-out -4s infinite alternate; }
+.tiny-bee-seven { top: 63rem; right: 9vw; animation: tiny-bee-fly-seven 32s ease-in-out -20s infinite alternate; }
+.tiny-bee-eight { top: 78rem; left: 16vw; animation: tiny-bee-fly-eight 25s ease-in-out -11s infinite alternate; }
+.tiny-bee-nine { top: 94rem; right: 14vw; animation: tiny-bee-fly-nine 30s ease-in-out -18s infinite alternate; }
+.tiny-bee-ten { top: 19rem; left: 28vw; animation: tiny-bee-fly-four 23s ease-in-out -13s infinite alternate; }
+.tiny-bee-eleven { top: 30rem; right: 31vw; animation: tiny-bee-fly-six 28s ease-in-out -8s infinite alternate; }
+.tiny-bee-twelve { top: 45rem; left: 24vw; animation: tiny-bee-fly-nine 33s ease-in-out -22s infinite alternate; }
+.tiny-bee-thirteen { top: 57rem; right: 27vw; animation: tiny-bee-fly-three 26s ease-in-out -16s infinite alternate; }
+.tiny-bee-fourteen { top: 71rem; left: 7vw; animation: tiny-bee-fly-five 31s ease-in-out -5s infinite alternate; }
+.tiny-bee-fifteen { top: 86rem; right: 23vw; animation: tiny-bee-fly-one 25s ease-in-out -19s infinite alternate; }
+.tiny-bee-sixteen { top: 105rem; left: 13vw; animation: tiny-bee-fly-seven 29s ease-in-out -9s infinite alternate; }
+.tiny-bee-seventeen { top: 119rem; right: 6vw; animation: tiny-bee-fly-eight 27s ease-in-out -14s infinite alternate; }
+.tiny-bee-eighteen { top: 132rem; left: 30vw; animation: tiny-bee-fly-two 34s ease-in-out -24s infinite alternate; }
+.tiny-bee-nineteen { top: 146rem; right: 18vw; animation: tiny-bee-fly-six 24s ease-in-out -17s infinite alternate; }
 @keyframes tiny-bee-fly-one { 0% { transform: rotate(-18deg) scale(1.2); } 42% { transform: translate(16vw, 4rem) rotate(10deg) scale(1.18); } 100% { transform: translate(31vw, -2rem) rotate(-10deg) scale(1.2); } }
 @keyframes tiny-bee-fly-two { 0% { transform: rotate(22deg) scale(.96); } 48% { transform: translate(-18vw, 5rem) rotate(-12deg) scale(.92); } 100% { transform: translate(-34vw, -4rem) rotate(16deg) scale(.96); } }
 @keyframes tiny-bee-fly-three { 0% { transform: rotate(12deg) scale(.78); } 45% { transform: translate(23vw, -6rem) rotate(-14deg) scale(.82); } 100% { transform: translate(42vw, 3rem) rotate(8deg) scale(.78); } }
+@keyframes tiny-bee-fly-four { 0% { transform: rotate(18deg) scale(.72); } 46% { transform: translate(-13vw, 5rem) rotate(-14deg) scale(.76); } 100% { transform: translate(-28vw, -3rem) rotate(10deg) scale(.72); } }
+@keyframes tiny-bee-fly-five { 0% { transform: rotate(-12deg) scale(1.06); } 40% { transform: translate(-17vw, -4rem) rotate(14deg) scale(1.02); } 100% { transform: translate(-35vw, 4rem) rotate(-8deg) scale(1.06); } }
+@keyframes tiny-bee-fly-six { 0% { transform: rotate(10deg) scale(.84); } 52% { transform: translate(18vw, -5rem) rotate(-16deg) scale(.88); } 100% { transform: translate(35vw, 3rem) rotate(12deg) scale(.84); } }
+@keyframes tiny-bee-fly-seven { 0% { transform: rotate(-20deg) scale(.92); } 44% { transform: translate(-16vw, 3rem) rotate(9deg) scale(.88); } 100% { transform: translate(-31vw, -5rem) rotate(-13deg) scale(.92); } }
+@keyframes tiny-bee-fly-eight { 0% { transform: rotate(16deg) scale(1.12); } 49% { transform: translate(14vw, 5rem) rotate(-11deg) scale(1.07); } 100% { transform: translate(29vw, -3rem) rotate(14deg) scale(1.12); } }
+@keyframes tiny-bee-fly-nine { 0% { transform: rotate(-8deg) scale(.7); } 43% { transform: translate(-19vw, -4rem) rotate(15deg) scale(.75); } 100% { transform: translate(-37vw, 5rem) rotate(-11deg) scale(.7); } }
 .game-library-grid { position: relative; display: grid; grid-template-columns: minmax(0, 36rem); justify-content: center; gap: 1.25rem; margin-top: clamp(2.5rem, 6vh, 4rem); text-align: left; }
 .library-card-bee, .library-card-bee-hands { position: absolute; top: 50%; left: calc(50% - 19.5rem); width: 18rem; max-width: 28vw; height: 12rem; background: url("assets/images/syllabee-card-bee-v2.png") center / contain no-repeat; pointer-events: none; transform: translate(-50%, -50%); }
 .library-card-bee { z-index: 0; }
@@ -158,6 +180,7 @@ h1 { margin-bottom: 2.5rem; font-size: clamp(2.25rem, 6vw, 4rem); line-height: 1
 .game-hint-button { display: grid; width: 3.25rem; height: 3.25rem; place-items: center; padding: 0; border: 1px solid rgba(104, 80, 166, .3); border-radius: 50%; background: rgba(255, 255, 255, .64); color: #4f3a78; font: inherit; font-size: 1.55rem; box-shadow: 0 .25rem .65rem rgba(70, 58, 105, .1); backdrop-filter: blur(.45rem); }
 .game-hint-button:hover, .game-hint-button:focus-visible { background: rgba(245, 240, 255, .92); transform: translateY(-.1rem); }
 .game-hint-card { position: absolute; bottom: 4.1rem; left: 0; width: min(19rem, calc(100vw - 2rem)); margin: 0; padding: 1.55rem 1.2rem 1rem; border: 1px solid rgba(104, 80, 166, .25); border-radius: 1.25rem; background: rgba(255, 255, 255, .74); color: #40355c; font-family: "Bradley Hand", "Chalkboard SE", "Segoe Print", cursive; font-size: 1.2rem; font-weight: 700; line-height: 1.35; box-shadow: 0 .45rem 1.2rem rgba(70, 58, 105, .12); backdrop-filter: blur(.65rem); }
+.game-hint-card.is-word-hint { min-width: 9rem; padding: 1.1rem 1.2rem .9rem; font-family: inherit; font-size: clamp(1.6rem, 5vw, 2.25rem); line-height: 1; text-align: center; }
 .game-hint-card::after { position: absolute; bottom: -.55rem; left: 1.1rem; width: 1rem; height: 1rem; border-right: 1px solid rgba(104, 80, 166, .2); border-bottom: 1px solid rgba(104, 80, 166, .2); background: rgba(255, 255, 255, .74); content: ""; transform: rotate(45deg); }
 .game-hint-card p { margin: 0; }
 .game-hint-close { position: absolute; top: .25rem; right: .45rem; width: 2rem; height: 2rem; border: 0; border-radius: 50%; background: transparent; color: #4f3a78; font: inherit; font-size: 2rem; font-weight: 400; line-height: 1; }
@@ -188,15 +211,16 @@ h1 { margin-bottom: 2.5rem; font-size: clamp(2.25rem, 6vw, 4rem); line-height: 1
 .letter-slot.single-syllable { color: #111; }
 .letter-word-game { display: grid; width: min(100% - 2rem, 48rem); justify-items: center; gap: clamp(.8rem, 2vw, 1.35rem); padding-top: clamp(1rem, 4vh, 3rem); text-align: center; }
 .letter-word-instruction { margin: 0; color: #526071; font-size: clamp(1.2rem, 3vw, 1.7rem); font-weight: 700; }
-/* Litera ma ten sam prosty, duży charakter co w Levelu 1 — bez kafelka. */
-.letter-word-letter { display: flex; min-width: .9em; min-height: 1.2em; align-items: center; justify-content: center; color: #111; font-size: clamp(9rem, 28vw, 18rem); font-weight: 700; line-height: 1; }
-.letter-word-form { display: flex; width: min(100%, 38rem); flex-wrap: wrap; justify-content: center; gap: 1rem; margin-top: clamp(1rem, 5vh, 3.5rem); }
-/* Pole nie jest przyciskiem ani kafelkiem: ma tylko linię zapisu, jak sloty w Levelu 2. */
-.letter-word-input { min-width: min(100%, 18rem); flex: 1 1 18rem; min-height: 1.25em; padding: 0 .12em .12em; border: 0; border-bottom: .1em solid #111; border-radius: 0; background: transparent; color: #111; font: inherit; font-size: clamp(2.5rem, 7vw, 5rem); font-weight: 700; line-height: 1; text-align: center; text-transform: uppercase; }
-.letter-word-input::placeholder { color: #b0b0b0; font-size: .58em; }
-.letter-word-input:focus-visible { outline: 0; border-bottom-color: #1769c2; }
+.letter-word-form { display: grid; width: min(100%, 38rem); justify-items: center; gap: 1.25rem; margin-top: .25rem; }
+.missing-letter-word { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: center; gap: .1em; color: #111; font-size: clamp(3rem, 10vw, 6rem); font-weight: 700; line-height: 1; text-transform: uppercase; }
+.missing-letter-known, .missing-letter-input { display: inline-flex; width: .8em; height: 1.2em; align-items: center; justify-content: center; border-bottom: .09em solid currentColor; }
+.missing-letter-input { padding: 0; border: 0; border-bottom: .09em solid #d34273; border-radius: 0; background: transparent; color: #1769c2; font: inherit; font-size: inherit; font-weight: inherit; line-height: 1; text-align: center; text-transform: uppercase; }
+.missing-letter-input:focus-visible { outline: 0; border-bottom-color: #1769c2; box-shadow: 0 .08em 0 #1769c2; }
+.missing-letter-input:disabled { color: #1769c2; opacity: 1; }
 .letter-word-submit { min-height: 3.5rem; align-self: end; padding: .55rem 1rem; border: 2px solid #111; border-radius: .5rem; background: #fff; color: #111; font: inherit; font-size: clamp(1.05rem, 3vw, 1.35rem); font-weight: 800; }
 .letter-word-submit:hover, .letter-word-submit:focus-visible { background: #111; color: #fff; }
+.letter-word-skip-button { padding: .45rem .8rem; border: 0; border-bottom: 2px solid #7b6571; border-radius: 0; background: transparent; color: #705864; font: inherit; font-size: 1rem; font-weight: 700; }
+.letter-word-skip-button:hover, .letter-word-skip-button:focus-visible { border-bottom-color: #111; color: #111; }
 .letter-word-message { min-height: 1.6em; margin: 0; color: #745464; font-size: 1.1rem; font-weight: 700; }
 .letter-word-message.is-error { color: #a12424; }
 .letter-word-answers { display: grid; width: min(100%, 38rem); gap: .7rem; }

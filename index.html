@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="Syllabee — spokojna zabawa literkami i sylabami dla dzieci." />
     <title>Syllabee — literki i sylaby</title>
-    <link rel="stylesheet" href="style.css?v=20261003-1215" />
-    <script src="script.js?v=20261003-1215" defer></script>
+    <link rel="stylesheet" href="style.css?v=20261005-1" />
+    <script src="script.js?v=20261005-1" defer></script>
   </head>
   <body>
     <main class="app">
@@ -34,6 +34,22 @@
           <span class="tiny-bee tiny-bee-one"></span>
           <span class="tiny-bee tiny-bee-two"></span>
           <span class="tiny-bee tiny-bee-three"></span>
+          <span class="tiny-bee tiny-bee-four"></span>
+          <span class="tiny-bee tiny-bee-five"></span>
+          <span class="tiny-bee tiny-bee-six"></span>
+          <span class="tiny-bee tiny-bee-seven"></span>
+          <span class="tiny-bee tiny-bee-eight"></span>
+          <span class="tiny-bee tiny-bee-nine"></span>
+          <span class="tiny-bee tiny-bee-ten"></span>
+          <span class="tiny-bee tiny-bee-eleven"></span>
+          <span class="tiny-bee tiny-bee-twelve"></span>
+          <span class="tiny-bee tiny-bee-thirteen"></span>
+          <span class="tiny-bee tiny-bee-fourteen"></span>
+          <span class="tiny-bee tiny-bee-fifteen"></span>
+          <span class="tiny-bee tiny-bee-sixteen"></span>
+          <span class="tiny-bee tiny-bee-seventeen"></span>
+          <span class="tiny-bee tiny-bee-eighteen"></span>
+          <span class="tiny-bee tiny-bee-nineteen"></span>
         </div>
 
         <div class="library-content">
@@ -244,28 +260,14 @@
       <section id="level-eight-setup-screen" class="screen is-hidden" aria-labelledby="level-eight-setup-title">
         <button class="back-button game-menu-button setup-back-button" type="button" data-go-menu><span aria-hidden="true">🏠</span><span class="menu-button-text">Menu</span></button>
         <div class="level-two-setup">
-          <span class="level-card-icon level-eight-setup-icon" aria-hidden="true">🔎</span>
-          <h1 id="level-eight-setup-title">Ile liter?</h1>
-          <p id="level-eight-setup-description">Wybierz, ile liter chcesz przećwiczyć po kolei.</p>
+          <span class="level-card-icon level-eight-setup-icon" aria-hidden="true">✏️</span>
+          <h1 id="level-eight-setup-title">Ile słów?</h1>
+          <p id="level-eight-setup-description">Uzupełnij brakujące litery w słowach z obrazków.</p>
           <div id="level-eight-count-options" class="word-count-options" aria-label="Liczba liter w Poziomie 8">
             <button class="word-count-button level-eight-count-button" type="button" data-level-eight-letter-count="3">3</button>
             <button class="word-count-button level-eight-count-button" type="button" data-level-eight-letter-count="5">5</button>
             <button class="word-count-button level-eight-count-button" type="button" data-level-eight-letter-count="10">10</button>
             <button class="word-count-button level-eight-count-button" type="button" data-level-eight-letter-count="15">15</button>
-          </div>
-        </div>
-      </section>
-
-      <section id="level-eight-word-setup-screen" class="screen is-hidden" aria-labelledby="level-eight-word-setup-title">
-        <button class="back-button game-menu-button setup-back-button" type="button" data-go-menu><span aria-hidden="true">🏠</span><span class="menu-button-text">Menu</span></button>
-        <div class="level-two-setup">
-          <span class="level-card-icon level-eight-setup-icon" aria-hidden="true">🔎</span>
-          <h1 id="level-eight-word-setup-title">Ile słów na jedną literę?</h1>
-          <p id="level-eight-word-setup-description">Wpisz słowa, które zaczynają się od pokazanej litery.</p>
-          <div id="level-eight-word-count-options" class="word-count-options" aria-label="Liczba słów na jedną literę w Poziomie 8">
-            <button class="word-count-button level-eight-count-button" type="button" data-level-eight-count="1">1</button>
-            <button class="word-count-button level-eight-count-button" type="button" data-level-eight-count="2">2</button>
-            <button class="word-count-button level-eight-count-button" type="button" data-level-eight-count="3">3</button>
           </div>
         </div>
       </section>
@@ -414,23 +416,21 @@
         </div>
       </section>
 
-      <!-- Level 8: samodzielne wpisywanie słów zaczynających się od litery. -->
-      <section id="level-eight-screen" class="screen is-hidden" aria-label="Level 8: Słowa na literę">
+      <!-- Level 8: uzupełnianie brakujących liter w nazwie obrazka. -->
+      <section id="level-eight-screen" class="screen is-hidden" aria-label="Level 8: Uzupełnij słowo">
         <div class="game-topbar">
           <button class="back-button game-menu-button" type="button" data-go-menu><span aria-hidden="true">🏠</span><span class="menu-button-text">Menu</span></button>
           <div id="level-eight-progress" class="progress-bar" role="progressbar" aria-label="Postęp w Level 8"></div>
         </div>
         <div class="letter-word-game">
-          <p id="level-eight-instruction" class="letter-word-instruction">Wpisz słowo na literę:</p>
-          <div id="level-eight-letter" class="letter-word-letter" aria-label="Litera A">A</div>
+          <p id="level-eight-instruction" class="letter-word-instruction">Spójrz na obrazek i wpisz brakujące litery.</p>
+          <div id="level-eight-image" class="picture" role="img"></div>
           <form id="level-eight-form" class="letter-word-form">
-            <label id="level-eight-input-label" class="sr-only" for="level-eight-input">Wpisz słowo</label>
-            <input id="level-eight-input" class="letter-word-input" type="text" autocomplete="off" autocapitalize="characters" spellcheck="false" maxlength="24" />
+            <div id="level-eight-word" class="missing-letter-word" aria-live="polite"></div>
             <button id="level-eight-submit" class="letter-word-submit" type="submit">Gotowe</button>
           </form>
           <p id="level-eight-message" class="letter-word-message" aria-live="polite"></p>
           <button id="level-eight-skip-button" class="letter-word-skip-button" type="button">Nie wiem — dalej</button>
-          <div id="level-eight-answers" class="letter-word-answers" aria-live="polite" aria-label="Wpisane słowa"></div>
         </div>
         <div class="game-hint" data-game-hint>
           <aside class="game-hint-card is-hidden" data-game-hint-card role="dialog" aria-live="polite" aria-label="Podpowiedź">

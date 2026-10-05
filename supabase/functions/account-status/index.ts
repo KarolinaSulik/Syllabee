@@ -1,0 +1,27 @@
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2.49.1";
+import { corsHeaders, isAllowedOrigin } from "../_shared/cors.ts";
+
+Deno.serve(async (request) => {
+  const headers = corsHeaders(request);
+  if (request.method === "OPTIONS") return new Response(null, { headers });
+  if (request.method !== "POST" || !isAllowedOrigin(request)) return new Response("Not found", { status: 404 });
+
+  const authorization = request.headers.get("Authorization");
+  if (!authorization?.startsWith("Bearer ")) return Response.json({ error: "Unauthorized" }, { status: 401, headers });
+
+  const url = Deno.env.get("SUPABASE_URL")!;
+  const serviceRole = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
+  const admin = createClient(url, serviceRole, { auth: { persistSession: false, autoRefreshToken: false } });
+  const token = authorization.slice("Bearer ".length);
+  const { data: { user }, error: userError } = await admin.auth.getUser(token);
+  if (userError || !user) return Response.json({ error: "Unauthorized" }, { status: 401, headers });
+
+  const { data, error } = await admin
+    .from("entitlements")
+    .select("access_granted_at")
+    .eq("user_id", user.id)
+    .maybeSingle();
+  if (error) return Response.json({ error: "Could not check access" }, { status: 500, headers });
+
+  return Response.json({ signedIn: true, hasFullAccess: Boolean(data), email: user.email ?? null }, { headers });
+});
