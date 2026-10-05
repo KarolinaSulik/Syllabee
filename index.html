@@ -5,8 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="Syllabee — spokojna zabawa literkami i sylabami dla dzieci." />
     <title>Syllabee — literki i sylaby</title>
-    <link rel="stylesheet" href="style.css?v=20261005-1" />
-    <script src="script.js?v=20261005-1" defer></script>
+    <link rel="stylesheet" href="style.css?v=20261005-3" />
+    <script src="payment-config.js?v=20261005-3"></script>
+    <script src="script.js?v=20261005-3" defer></script>
   </head>
   <body>
     <main class="app">
@@ -146,21 +147,25 @@
             <span id="level-four-label" class="level-card-label">Litery pisane</span>
           </button>
           <button class="level-card" type="button" data-start-level="5">
+            <span class="level-plus-badge" aria-label="Syllabee Plus">★ <span>Syllabee Plus</span></span>
             <span class="level-card-icon" aria-hidden="true">💬</span>
             <strong id="level-five-title">Poziom 5</strong>
             <span id="level-five-label" class="level-card-label">Zdania</span>
           </button>
           <button class="level-card" type="button" data-start-level="6">
+            <span class="level-plus-badge" aria-label="Syllabee Plus">★ <span>Syllabee Plus</span></span>
             <span class="level-card-icon" aria-hidden="true">🔠</span>
             <strong id="level-six-title">Poziom 6</strong>
             <span id="level-six-label" class="level-card-label">Gra w słowa Montessori</span>
           </button>
           <button class="level-card" type="button" data-start-level="7">
+            <span class="level-plus-badge" aria-label="Syllabee Plus">★ <span>Syllabee Plus</span></span>
             <span class="level-card-icon" aria-hidden="true">✨</span>
             <strong id="level-seven-title">Poziom 7</strong>
             <span id="level-seven-label" class="level-card-label">Emoji opowieści</span>
           </button>
           <button class="level-card" type="button" data-start-level="8">
+            <span class="level-plus-badge" aria-label="Syllabee Plus">★ <span>Syllabee Plus</span></span>
             <span class="level-card-icon" aria-hidden="true">🔎</span>
             <strong id="level-eight-title">Poziom 8</strong>
             <span id="level-eight-label" class="level-card-label">Słowa na literę</span>
@@ -446,6 +451,24 @@
         <button id="complete-menu-button" class="primary-button" type="button" data-go-menu>Wróć do menu</button>
       </section>
     </main>
+    <aside id="paid-access-dialog" class="paid-access-dialog is-hidden" role="dialog" aria-modal="true" aria-labelledby="paid-access-title" aria-describedby="paid-access-description">
+      <div class="paid-access-card">
+        <button id="paid-access-close" class="paid-access-close" type="button" aria-label="Zamknij">×</button>
+        <span class="paid-access-icon" aria-hidden="true">🐝</span>
+        <p class="paid-access-eyebrow">Dla rodzica</p>
+        <h2 id="paid-access-title">Odblokuj Syllabee Plus</h2>
+        <p id="paid-access-description">Poziomy 5–8 są dostępne w Syllabee Plus. To jednorazowa płatność — dostęp zostaje na zawsze na koncie rodzica.</p>
+        <p class="paid-access-price"><strong>3,99 €</strong> jednorazowo</p>
+        <label id="paid-access-email-label" class="paid-access-label" for="paid-access-email">E-mail rodzica</label>
+        <input id="paid-access-email" class="paid-access-email" type="email" inputmode="email" autocomplete="email" placeholder="mama@przyklad.pl" />
+        <p id="paid-access-account" class="paid-access-account is-hidden" aria-live="polite"></p>
+        <p id="paid-access-message" class="paid-access-message" aria-live="polite"></p>
+        <button id="paid-access-login" class="paid-access-primary" type="button">Wyślij link do logowania</button>
+        <button id="paid-access-buy" class="paid-access-primary is-hidden" type="button">Odblokuj za 3,99 €</button>
+        <button id="paid-access-logout" class="paid-access-secondary is-hidden" type="button">To nie moje konto</button>
+        <p class="paid-access-note">Płatność obsługuje Stripe. Nie zapisujemy danych dziecka ani danych karty.</p>
+      </div>
+    </aside>
     <aside id="analytics-consent" class="analytics-consent" role="dialog" aria-labelledby="analytics-consent-title" aria-describedby="analytics-consent-description">
       <div class="analytics-consent-copy">
         <h2 id="analytics-consent-title">Pomóż nam ulepszać Syllabee</h2>

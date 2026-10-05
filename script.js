@@ -591,6 +591,9 @@ const LEVEL_ONE_MIN_REPETITIONS = 2;
 const LEVEL_ONE_MAX_REPETITIONS = 6;
 const GA_MEASUREMENT_ID = "G-PR1J7WEW4W";
 const ANALYTICS_CONSENT_KEY = "syllabee-analytics-consent";
+const PAYMENT_SESSION_KEY = "syllabee-parent-session";
+const paymentConfig = window.SYLLABEE_PAYMENTS_CONFIG || {};
+const paymentState = { session: null, status: null, pendingLevel: null };
 let currentLanguage = (() => {
   try {
     return languageData[window.localStorage.getItem("syllabee-language")] ? window.localStorage.getItem("syllabee-language") : "pl";
@@ -822,6 +825,186 @@ function saveLanguage() {
   } catch {
     // Aplikacja działa również, gdy przeglądarka blokuje zapis ustawień.
   }
+}
+
+function paymentsEnabled() {
+  return Boolean(paymentConfig.supabaseUrl && paymentConfig.supabaseAnonKey);
+}
+
+function paymentDialogElements() {
+  return {
+    dialog: document.querySelector("#paid-access-dialog"),
+    email: document.querySelector("#paid-access-email"),
+    account: document.querySelector("#paid-access-account"),
+    message: document.querySelector("#paid-access-message"),
+    login: document.querySelector("#paid-access-login"),
+    buy: document.querySelector("#paid-access-buy"),
+    logout: document.querySelector("#paid-access-logout"),
+  };
+}
+
+function readSavedPaymentSession() {
+  try {
+    const session = JSON.parse(window.localStorage.getItem(PAYMENT_SESSION_KEY) || "null");
+    return session?.access_token && session?.refresh_token ? session : null;
+  } catch {
+    return null;
+  }
+}
+
+function savePaymentSession(session) {
+  paymentState.session = session;
+  try {
+    if (session) window.localStorage.setItem(PAYMENT_SESSION_KEY, JSON.stringify(session));
+    else window.localStorage.removeItem(PAYMENT_SESSION_KEY);
+  } catch {
+    // Logowanie nadal działa w bieżącej karcie, nawet gdy zapis jest zablokowany.
+  }
+}
+
+async function paymentAccessToken() {
+  const session = paymentState.session;
+  if (!session) return null;
+  if (session.expires_at && session.expires_at * 1000 > Date.now() + 60_000) return session.access_token;
+  const response = await fetch(`${paymentConfig.supabaseUrl}/auth/v1/token?grant_type=refresh_token`, {
+    method: "POST",
+    headers: { apikey: paymentConfig.supabaseAnonKey, "Content-Type": "application/json" },
+    body: JSON.stringify({ refresh_token: session.refresh_token }),
+  });
+  if (!response.ok) {
+    savePaymentSession(null);
+    return null;
+  }
+  const refreshed = await response.json();
+  savePaymentSession(refreshed);
+  return refreshed.access_token;
+}
+
+async function callPaymentFunction(name, body = {}) {
+  const token = await paymentAccessToken();
+  if (!token) throw new Error("NOT_SIGNED_IN");
+  const response = await fetch(`${paymentConfig.supabaseUrl}/functions/v1/${name}`, {
+    method: "POST",
+    headers: {
+      apikey: paymentConfig.supabaseAnonKey,
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(body),
+  });
+  const data = await response.json().catch(() => ({}));
+  if (!response.ok) throw new Error(data.error || "PAYMENT_SERVICE_ERROR");
+  return data;
+}
+
+async function refreshPaymentStatus() {
+  if (!paymentsEnabled() || !paymentState.session) return null;
+  try {
+    paymentState.status = await callPaymentFunction("account-status");
+  } catch {
+    paymentState.status = null;
+  }
+  return paymentState.status;
+}
+
+function setPaymentMessage(message) {
+  paymentDialogElements().message.textContent = message;
+}
+
+function renderPaymentDialog() {
+  const { email, account, login, buy, logout } = paymentDialogElements();
+  const status = paymentState.status;
+  const isSignedIn = Boolean(status?.signedIn);
+  const isConfigured = paymentsEnabled();
+  document.querySelector("#paid-access-email-label")?.classList.toggle("is-hidden", !isConfigured || isSignedIn);
+  email.classList.toggle("is-hidden", !isConfigured || isSignedIn);
+  login.classList.toggle("is-hidden", !isConfigured || isSignedIn);
+  buy.classList.toggle("is-hidden", !isConfigured || !isSignedIn || Boolean(status?.hasFullAccess));
+  logout.classList.toggle("is-hidden", !isConfigured || !isSignedIn);
+  account.classList.toggle("is-hidden", !isSignedIn);
+  account.textContent = isSignedIn ? `Zalogowano jako ${status.email}${status.isOwner ? " (konto właścicielki)" : ""}.` : "";
+  if (!isConfigured) setPaymentMessage("Syllabee Plus będzie dostępne wkrótce.");
+}
+
+async function showPaidAccess(level) {
+  paymentState.pendingLevel = level;
+  const { dialog } = paymentDialogElements();
+  dialog.classList.remove("is-hidden");
+  await refreshPaymentStatus();
+  renderPaymentDialog();
+  if (paymentState.status?.hasFullAccess) {
+    closePaidAccess();
+    openSelectedLevel(level);
+  }
+}
+
+function closePaidAccess() {
+  paymentDialogElements().dialog.classList.add("is-hidden");
+  paymentState.pendingLevel = null;
+}
+
+async function sendParentMagicLink() {
+  const { email, login } = paymentDialogElements();
+  const address = email.value.trim();
+  if (!address || !email.checkValidity()) {
+    setPaymentMessage("Wpisz poprawny e-mail rodzica.");
+    email.focus();
+    return;
+  }
+  login.disabled = true;
+  setPaymentMessage("Wysyłamy bezpieczny link…");
+  try {
+    const response = await fetch(`${paymentConfig.supabaseUrl}/auth/v1/otp`, {
+      method: "POST",
+      headers: { apikey: paymentConfig.supabaseAnonKey, "Content-Type": "application/json" },
+      body: JSON.stringify({ email: address, create_user: true, options: { emailRedirectTo: `${window.location.origin}${window.location.pathname}?gra=czytanie` } }),
+    });
+    if (!response.ok) throw new Error();
+    setPaymentMessage("Sprawdź skrzynkę e-mail i otwórz link do logowania.");
+    login.textContent = "Wyślij link ponownie";
+  } catch {
+    setPaymentMessage("Nie udało się wysłać linku. Kliknij poniżej, aby spróbować ponownie.");
+    login.textContent = "Wyślij link ponownie";
+  } finally {
+    login.disabled = false;
+  }
+}
+
+async function beginCheckout() {
+  const { buy } = paymentDialogElements();
+  buy.disabled = true;
+  setPaymentMessage("Przechodzimy do bezpiecznej płatności…");
+  try {
+    const { checkoutUrl } = await callPaymentFunction("create-checkout-session");
+    window.location.assign(checkoutUrl);
+  } catch (error) {
+    setPaymentMessage(error.message === "Already unlocked" ? "To konto ma już pełny dostęp." : "Nie udało się rozpocząć płatności. Spróbuj ponownie.");
+    buy.disabled = false;
+  }
+}
+
+async function restoreMagicLinkSession() {
+  if (!paymentsEnabled()) return;
+  const hash = new URLSearchParams(window.location.hash.slice(1));
+  if (hash.get("access_token") && hash.get("refresh_token")) {
+    savePaymentSession({ access_token: hash.get("access_token"), refresh_token: hash.get("refresh_token"), expires_at: Number(hash.get("expires_at")) });
+    window.history.replaceState({}, "", `${window.location.pathname}${window.location.search}`);
+  } else {
+    paymentState.session = readSavedPaymentSession();
+  }
+  await refreshPaymentStatus();
+}
+
+function openSelectedLevel(level) {
+  trackAnalyticsEvent("level_selected", { level_number: level, language: currentLanguage });
+  if (level === 2) openLevelTwoSetup();
+  else if (level === 3) openLevelThreeSetup();
+  else if (level === 5) openLevelFiveSetup();
+  else if (level === 6) openLevelSixSetup();
+  else if (level === 7) openLevelSevenSetup();
+  else if (level === 8) openLevelEightSetup();
+  else if (level === 1 || level === 4) openLetterSetup(level);
+  else startLevel(level, level === 6 ? 5 : undefined);
 }
 
 function showScreen(name) {
@@ -1818,6 +2001,13 @@ function chooseMissingIndexes(word) {
   return shuffled([...word].map((_, index) => index)).slice(0, 3).sort((a, b) => a - b);
 }
 
+function syllableColor(index, count) {
+  const colorClass = syllableClass(index, count);
+  if (colorClass === "syllable-one") return "#d22727";
+  if (colorClass === "syllable-two") return "#1769c2";
+  return "#111";
+}
+
 function renderMissingLetterWord() {
   const text = levelEightCopy[currentLanguage];
   const item = levelEightWords[taskIndex];
@@ -1830,15 +2020,27 @@ function renderMissingLetterWord() {
   ui.levelEightSubmit.disabled = false;
   ui.levelEightSkipButton.disabled = false;
   const letters = [...item.word];
+  let syllableIndex = 0;
+  let lettersInSyllable = 0;
   ui.levelEightWord.replaceChildren(...letters.map((letter, index) => {
+    const colorClass = syllableClass(syllableIndex, item.syllables.length);
+    const color = syllableColor(syllableIndex, item.syllables.length);
     if (!levelEightMissingIndexes.includes(index)) {
       const knownLetter = document.createElement("span");
-      knownLetter.className = "missing-letter-known";
+      knownLetter.className = `missing-letter-known ${colorClass}`;
+      knownLetter.style.color = color;
       knownLetter.textContent = letter;
+      lettersInSyllable += 1;
+      if (lettersInSyllable === [...item.syllables[syllableIndex]].length) {
+        syllableIndex += 1;
+        lettersInSyllable = 0;
+      }
       return knownLetter;
     }
     const input = document.createElement("input");
-    input.className = "missing-letter-input";
+    input.className = `missing-letter-input ${colorClass}`;
+    input.style.color = color;
+    input.style.borderBottomColor = color;
     input.type = "text";
     input.maxLength = 1;
     input.autocomplete = "off";
@@ -1852,6 +2054,11 @@ function renderMissingLetterWord() {
         inputs[inputs.indexOf(input) + 1]?.focus();
       }
     });
+    lettersInSyllable += 1;
+    if (lettersInSyllable === [...item.syllables[syllableIndex]].length) {
+      syllableIndex += 1;
+      lettersInSyllable = 0;
+    }
     return input;
   }));
   ui.levelEightWord.querySelector("input")?.focus();
@@ -1924,17 +2131,18 @@ function nextTask() {
 }
 
 document.querySelectorAll("[data-start-level]").forEach((button) => {
-  button.addEventListener("click", () => {
+  button.addEventListener("click", async () => {
     const level = Number(button.dataset.startLevel);
-    trackAnalyticsEvent("level_selected", { level_number: level, language: currentLanguage });
-    if (level === 2) openLevelTwoSetup();
-    else if (level === 3) openLevelThreeSetup();
-    else if (level === 5) openLevelFiveSetup();
-    else if (level === 6) openLevelSixSetup();
-    else if (level === 7) openLevelSevenSetup();
-    else if (level === 8) openLevelEightSetup();
-    else if (level === 1 || level === 4) openLetterSetup(level);
-    else startLevel(level, level === 6 ? 5 : undefined);
+    if (level >= 5) {
+      if (paymentsEnabled()) await refreshPaymentStatus();
+      if (paymentState.status?.hasFullAccess) {
+        openSelectedLevel(level);
+        return;
+      }
+      await showPaidAccess(level);
+      return;
+    }
+    openSelectedLevel(level);
   });
 });
 document.querySelectorAll("[data-level-two-count]").forEach((button) => {
@@ -1978,6 +2186,18 @@ document.querySelectorAll("[data-open-reading-game]").forEach((button) => button
 document.querySelectorAll("[data-go-library]").forEach((button) => button.addEventListener("click", () => goToLibrary()));
 document.querySelector("#analytics-consent-accept")?.addEventListener("click", () => setAnalyticsConsent(true));
 document.querySelector("#analytics-consent-reject")?.addEventListener("click", () => setAnalyticsConsent(false));
+document.querySelector("#paid-access-close")?.addEventListener("click", closePaidAccess);
+document.querySelector("#paid-access-login")?.addEventListener("click", sendParentMagicLink);
+document.querySelector("#paid-access-buy")?.addEventListener("click", beginCheckout);
+document.querySelector("#paid-access-logout")?.addEventListener("click", () => {
+  savePaymentSession(null);
+  paymentState.status = null;
+  renderPaymentDialog();
+  setPaymentMessage("Możesz zalogować się na inne konto rodzica.");
+});
+document.querySelector("#paid-access-dialog")?.addEventListener("click", (event) => {
+  if (event.target === event.currentTarget) closePaidAccess();
+});
 ui.languageSelects.forEach((select) => select.addEventListener("change", () => {
   currentLanguage = select.value;
   clearLevelTwoSyllableTimers();
@@ -1998,5 +2218,6 @@ if (savedAnalyticsConsent() === "granted") {
   document.querySelector("#analytics-consent")?.classList.add("is-hidden");
 }
 translateInterface();
+restoreMagicLinkSession();
 if (new URLSearchParams(window.location.search).get("gra") === "czytanie") openReadingGame({ updateUrl: false });
 else goToLibrary({ updateUrl: false });

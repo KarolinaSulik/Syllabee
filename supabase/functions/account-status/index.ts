@@ -1,6 +1,15 @@
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.49.1";
 import { corsHeaders, isAllowedOrigin } from "../_shared/cors.ts";
 
+function isOwnerEmail(email: string | undefined) {
+  if (!email) return false;
+  const ownerEmails = (Deno.env.get("OWNER_EMAILS") ?? "")
+    .split(",")
+    .map((value) => value.trim().toLowerCase())
+    .filter(Boolean);
+  return ownerEmails.includes(email.trim().toLowerCase());
+}
+
 Deno.serve(async (request) => {
   const headers = corsHeaders(request);
   if (request.method === "OPTIONS") return new Response(null, { headers });
@@ -15,6 +24,8 @@ Deno.serve(async (request) => {
   const token = authorization.slice("Bearer ".length);
   const { data: { user }, error: userError } = await admin.auth.getUser(token);
   if (userError || !user) return Response.json({ error: "Unauthorized" }, { status: 401, headers });
+  const isOwner = isOwnerEmail(user.email);
+  if (isOwner) return Response.json({ signedIn: true, hasFullAccess: true, isOwner: true, email: user.email ?? null }, { headers });
 
   const { data, error } = await admin
     .from("entitlements")
@@ -23,5 +34,5 @@ Deno.serve(async (request) => {
     .maybeSingle();
   if (error) return Response.json({ error: "Could not check access" }, { status: 500, headers });
 
-  return Response.json({ signedIn: true, hasFullAccess: Boolean(data), email: user.email ?? null }, { headers });
+  return Response.json({ signedIn: true, hasFullAccess: Boolean(data), isOwner: false, email: user.email ?? null }, { headers });
 });

@@ -2,6 +2,14 @@ import Stripe from "npm:stripe@17.7.0";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.49.1";
 import { corsHeaders, isAllowedOrigin } from "../_shared/cors.ts";
 
+function isOwnerEmail(email: string) {
+  const ownerEmails = (Deno.env.get("OWNER_EMAILS") ?? "")
+    .split(",")
+    .map((value) => value.trim().toLowerCase())
+    .filter(Boolean);
+  return ownerEmails.includes(email.trim().toLowerCase());
+}
+
 Deno.serve(async (request) => {
   const headers = corsHeaders(request);
   if (request.method === "OPTIONS") return new Response(null, { headers });
@@ -16,12 +24,13 @@ Deno.serve(async (request) => {
   const token = authorization.slice("Bearer ".length);
   const { data: { user }, error: userError } = await admin.auth.getUser(token);
   if (userError || !user?.email) return Response.json({ error: "Unauthorized" }, { status: 401, headers });
+  if (isOwnerEmail(user.email)) return Response.json({ error: "Already unlocked" }, { status: 409, headers });
 
   const { data: entitlement } = await admin.from("entitlements").select("user_id").eq("user_id", user.id).maybeSingle();
   if (entitlement) return Response.json({ error: "Already unlocked" }, { status: 409, headers });
 
   const stripe = new Stripe(Deno.env.get("STRIPE_SECRET_KEY")!, { httpClient: Stripe.createFetchHttpClient() });
-  const siteUrl = Deno.env.get("ALLOWED_ORIGIN")!;
+  const siteUrl = Deno.env.get("SITE_URL")!.replace(/\/$/, "");
   const session = await stripe.checkout.sessions.create({
     mode: "payment",
     payment_method_types: ["card"],
