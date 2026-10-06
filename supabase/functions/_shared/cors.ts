@@ -1,4 +1,7 @@
-const allowedOrigin = Deno.env.get("ALLOWED_ORIGIN") ?? "";
+// GitHub Pages wysyła tylko origin (bez /Syllabee/), dlatego bezpieczny
+// domyślny adres jest podany tutaj. Zmienna środowiskowa może go nadpisać
+// przy użyciu własnej domeny.
+const allowedOrigin = Deno.env.get("ALLOWED_ORIGIN") ?? "https://karolinasulik.github.io";
 
 export function corsHeaders(request: Request) {
   const origin = request.headers.get("origin");
