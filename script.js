@@ -954,23 +954,22 @@ async function sendParentMagicLink() {
   login.disabled = true;
   setPaymentMessage("Wysyłamy bezpieczny link…");
   try {
-    const response = await fetch(`${paymentConfig.supabaseUrl}/auth/v1/otp`, {
+    // Surowe API Auth przyjmuje adres powrotu jako parametr `redirect_to`
+    // w adresie żądania, nie w obiekcie `options` używanym przez bibliotekę
+    // supabase-js. W przeciwnym razie Supabase pomijał ten adres.
+    const redirectUrl = new URL(window.location.href);
+    redirectUrl.pathname = redirectUrl.pathname.endsWith("/") ? redirectUrl.pathname : `${redirectUrl.pathname}/`;
+    redirectUrl.search = "?gra=czytanie";
+    redirectUrl.hash = "";
+    const authUrl = new URL(`${paymentConfig.supabaseUrl}/auth/v1/otp`);
+    authUrl.searchParams.set("redirect_to", redirectUrl.toString());
+
+    const response = await fetch(authUrl, {
       method: "POST",
       headers: { apikey: paymentConfig.supabaseAnonKey, "Content-Type": "application/json" },
       body: JSON.stringify({
         email: address,
         create_user: true,
-        options: {
-          // GitHub Pages dla repozytorium wymaga końcowego ukośnika w ścieżce.
-          // Bez niego link z e-maila może skończyć się stroną 404.
-          emailRedirectTo: (() => {
-            const redirectUrl = new URL(window.location.href);
-            redirectUrl.pathname = redirectUrl.pathname.endsWith("/") ? redirectUrl.pathname : `${redirectUrl.pathname}/`;
-            redirectUrl.search = "?gra=czytanie";
-            redirectUrl.hash = "";
-            return redirectUrl.toString();
-          })(),
-        },
       }),
     });
     if (!response.ok) throw new Error();
