@@ -843,6 +843,19 @@ function paymentDialogElements() {
   };
 }
 
+function renderParentAccountButton() {
+  const button = document.querySelector("#parent-account-button");
+  if (!button) return;
+  const status = paymentState.status;
+  const signedIn = Boolean(status?.signedIn);
+  button.classList.toggle("is-signed-in", signedIn && !status?.hasFullAccess);
+  button.classList.toggle("is-plus", Boolean(status?.hasFullAccess));
+  if (status?.hasFullAccess) button.textContent = "Konto rodzica: Plus";
+  else if (signedIn) button.textContent = "Konto rodzica: zalogowano";
+  else if (paymentState.session) button.textContent = "Konto rodzica: sprawdzamy…";
+  else button.textContent = "Konto rodzica";
+}
+
 function readSavedPaymentSession() {
   try {
     const session = JSON.parse(window.localStorage.getItem(PAYMENT_SESSION_KEY) || "null");
@@ -902,8 +915,18 @@ async function refreshPaymentStatus() {
   try {
     paymentState.status = await callPaymentFunction("account-status");
   } catch {
-    paymentState.status = null;
+    // Jeśli funkcja dostępu jest chwilowo niedostępna, pokaż rodzicowi
+    // prawdziwy stan logowania zamiast prosić o e-mail po raz drugi.
+    const token = await paymentAccessToken();
+    const response = token && await fetch(`${paymentConfig.supabaseUrl}/auth/v1/user`, {
+      headers: { apikey: paymentConfig.supabaseAnonKey, Authorization: `Bearer ${token}` },
+    });
+    const user = response?.ok ? await response.json() : null;
+    paymentState.status = user?.email
+      ? { signedIn: true, hasFullAccess: false, isOwner: false, email: user.email }
+      : null;
   }
+  renderParentAccountButton();
   return paymentState.status;
 }
 
@@ -923,6 +946,7 @@ function renderPaymentDialog() {
   logout.classList.toggle("is-hidden", !isConfigured || !isSignedIn);
   account.classList.toggle("is-hidden", !isSignedIn);
   account.textContent = isSignedIn ? `Zalogowano jako ${status.email}${status.isOwner ? " (konto właścicielki)" : ""}.` : "";
+  renderParentAccountButton();
   if (!isConfigured) setPaymentMessage("Syllabee Plus będzie dostępne wkrótce.");
 }
 
@@ -932,7 +956,7 @@ async function showPaidAccess(level) {
   dialog.classList.remove("is-hidden");
   await refreshPaymentStatus();
   renderPaymentDialog();
-  if (paymentState.status?.hasFullAccess) {
+  if (level !== null && paymentState.status?.hasFullAccess) {
     closePaidAccess();
     openSelectedLevel(level);
   }
@@ -999,13 +1023,21 @@ async function beginCheckout() {
 async function restoreMagicLinkSession() {
   if (!paymentsEnabled()) return;
   const hash = new URLSearchParams(window.location.hash.slice(1));
-  if (hash.get("access_token") && hash.get("refresh_token")) {
-    savePaymentSession({ access_token: hash.get("access_token"), refresh_token: hash.get("refresh_token"), expires_at: Number(hash.get("expires_at")) });
-    window.history.replaceState({}, "", `${window.location.pathname}${window.location.search}`);
+  const query = new URLSearchParams(window.location.search);
+  const accessToken = hash.get("access_token") ?? query.get("access_token");
+  const refreshToken = hash.get("refresh_token") ?? query.get("refresh_token");
+  if (accessToken && refreshToken) {
+    savePaymentSession({ access_token: accessToken, refresh_token: refreshToken, expires_at: Number(hash.get("expires_at") ?? query.get("expires_at")) });
+    query.delete("access_token");
+    query.delete("refresh_token");
+    query.delete("expires_at");
+    const cleanSearch = query.toString();
+    window.history.replaceState({}, "", `${window.location.pathname}${cleanSearch ? `?${cleanSearch}` : ""}`);
   } else {
     paymentState.session = readSavedPaymentSession();
   }
   await refreshPaymentStatus();
+  renderParentAccountButton();
 }
 
 function openSelectedLevel(level) {
@@ -2200,6 +2232,7 @@ document.querySelectorAll("[data-go-library]").forEach((button) => button.addEve
 document.querySelector("#analytics-consent-accept")?.addEventListener("click", () => setAnalyticsConsent(true));
 document.querySelector("#analytics-consent-reject")?.addEventListener("click", () => setAnalyticsConsent(false));
 document.querySelector("#paid-access-close")?.addEventListener("click", closePaidAccess);
+document.querySelector("#parent-account-button")?.addEventListener("click", () => showPaidAccess(null));
 document.querySelector("#paid-access-login")?.addEventListener("click", sendParentMagicLink);
 document.querySelector("#paid-access-buy")?.addEventListener("click", beginCheckout);
 document.querySelector("#paid-access-logout")?.addEventListener("click", () => {
