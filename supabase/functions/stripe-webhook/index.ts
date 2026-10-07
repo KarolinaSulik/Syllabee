@@ -1,5 +1,6 @@
 import Stripe from "npm:stripe@17.7.0";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.49.1";
+import { supabaseAdminKey } from "../_shared/supabase-admin.ts";
 
 Deno.serve(async (request) => {
   if (request.method !== "POST") return new Response("Method not allowed", { status: 405 });
@@ -19,7 +20,7 @@ Deno.serve(async (request) => {
   const userId = session.metadata?.user_id ?? session.client_reference_id;
   if (!userId || session.payment_status !== "paid") return Response.json({ received: true });
 
-  const admin = createClient(Deno.env.get("SUPABASE_URL")!, Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!, { auth: { persistSession: false } });
+  const admin = createClient(Deno.env.get("SUPABASE_URL")!, supabaseAdminKey(), { auth: { persistSession: false } });
   const { error: paymentError } = await admin.from("payments").upsert({
     stripe_event_id: event.id,
     stripe_checkout_session_id: session.id,

@@ -1,5 +1,6 @@
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.49.1";
 import { corsHeaders, isAllowedOrigin } from "../_shared/cors.ts";
+import { supabaseAdminKey } from "../_shared/supabase-admin.ts";
 
 function isOwnerEmail(email: string | undefined) {
   if (!email) return false;
@@ -19,7 +20,7 @@ Deno.serve(async (request) => {
   if (!authorization?.startsWith("Bearer ")) return Response.json({ error: "Unauthorized" }, { status: 401, headers });
 
   const url = Deno.env.get("SUPABASE_URL")!;
-  const serviceRole = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
+  const serviceRole = supabaseAdminKey();
   const admin = createClient(url, serviceRole, { auth: { persistSession: false, autoRefreshToken: false } });
   const token = authorization.slice("Bearer ".length);
   const { data: { user }, error: userError } = await admin.auth.getUser(token);
