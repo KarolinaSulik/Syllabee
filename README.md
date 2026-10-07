@@ -24,7 +24,7 @@ Zestawy dla każdego języka są na początku pliku `script.js`. Każdy wpis sł
 
 Pełny opis architektury, schematu danych, bezpieczeństwa, przepływów, wdrożenia i zasad zmian znajduje się w [dokumentacji backendu, bazy i płatności](docs/backend-baza-danych-i-platnosci.md). To jest dokument referencyjny dla kolejnych prac nad tym obszarem.
 
-Poziomy 1–4 są bezpłatne. Poziomy 5–8 są częścią **Syllabee Plus** i wymagają jednorazowego zakupu za **3,99 €**. Uprawnienie jest przypisane do konta rodzica i nadawane dopiero przez zweryfikowany webhook Stripe — nie przez kod przeglądarki.
+Poziomy 1–4 są bezpłatne. Poziomy 5–8 są częścią **Syllabee Plus** i wymagają jednorazowego zakupu za **2,99 €**. Uprawnienie jest przypisane do konta rodzica i nadawane dopiero przez zweryfikowany webhook Stripe — nie przez kod przeglądarki.
 
 ### 1. Załóż projekt Supabase
 
@@ -36,7 +36,7 @@ Poziomy 1–4 są bezpłatne. Poziomy 5–8 są częścią **Syllabee Plus** i w
 ### 2. Utwórz produkt w Stripe
 
 1. W Stripe utwórz produkt „Syllabee — pełny dostęp”.
-2. Dodaj jednorazową cenę: **3,99 EUR** (`one-time`, nie subskrypcja).
+2. Dodaj jednorazową cenę: **2,99 EUR** (`one-time`, nie subskrypcja).
 3. Skopiuj identyfikator ceny zaczynający się od `price_...`.
 
 ### 3. Ustaw sekrety i opublikuj funkcje

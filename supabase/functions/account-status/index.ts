@@ -33,7 +33,11 @@ Deno.serve(async (request) => {
     .select("access_granted_at")
     .eq("user_id", user.id)
     .maybeSingle();
-  if (error) return Response.json({ error: "Could not check access" }, { status: 500, headers });
+  if (error) {
+    console.error("Could not read Syllabee Plus entitlement", error);
+    return Response.json({ error: "Could not check access" }, { status: 500, headers });
+  }
+  console.log("Account status checked", { userId: user.id, hasFullAccess: Boolean(data) });
 
   return Response.json({ signedIn: true, hasFullAccess: Boolean(data), isOwner: false, email: user.email ?? null }, { headers });
 });

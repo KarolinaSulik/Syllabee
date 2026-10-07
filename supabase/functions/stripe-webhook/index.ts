@@ -18,7 +18,10 @@ Deno.serve(async (request) => {
   if (event.type !== "checkout.session.completed") return Response.json({ received: true });
   const session = event.data.object as Stripe.Checkout.Session;
   const userId = session.metadata?.user_id ?? session.client_reference_id;
-  if (!userId || session.payment_status !== "paid") return Response.json({ received: true });
+  if (!userId || session.payment_status !== "paid") {
+    console.log("Checkout ignored", { hasUserId: Boolean(userId), paymentStatus: session.payment_status });
+    return Response.json({ received: true });
+  }
 
   const admin = createClient(Deno.env.get("SUPABASE_URL")!, supabaseAdminKey(), { auth: { persistSession: false } });
   const { error: paymentError } = await admin.from("payments").upsert({
@@ -29,9 +32,16 @@ Deno.serve(async (request) => {
     amount_total: session.amount_total,
     currency: session.currency,
   }, { onConflict: "stripe_event_id", ignoreDuplicates: true });
-  if (paymentError) return new Response("Could not save payment", { status: 500 });
+  if (paymentError) {
+    console.error("Could not save Stripe payment", paymentError);
+    return new Response("Could not save payment", { status: 500 });
+  }
 
   const { error: accessError } = await admin.from("entitlements").upsert({ user_id: userId, source: "stripe" }, { onConflict: "user_id", ignoreDuplicates: true });
-  if (accessError) return new Response("Could not grant access", { status: 500 });
+  if (accessError) {
+    console.error("Could not grant Syllabee Plus access", accessError);
+    return new Response("Could not grant access", { status: 500 });
+  }
+  console.log("Syllabee Plus access granted", { userId, checkoutSessionId: session.id });
   return Response.json({ received: true });
 });

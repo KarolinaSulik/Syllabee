@@ -28,7 +28,7 @@ Syllabee jest statyczną aplikacją HTML/CSS/JS. Nie ma własnego serwera aplika
 - **Stripe Checkout** — jednorazowa płatność kartą;
 - **Stripe webhook** — jedyne źródło, które po potwierdzonej płatności nadaje płatny dostęp.
 
-Poziomy 1–4 są bezpłatne, a poziomy 5–8 wymagają Syllabee Plus. Cena jest definiowana po stronie Stripe jako jednorazowa cena (`one-time`); obecny komunikat na stronie to 3,99 EUR. Dostęp jest przypisany do konta rodzica, a nie do przeglądarki lub urządzenia.
+Poziomy 1–4 są bezpłatne, a poziomy 5–8 wymagają Syllabee Plus. Cena jest definiowana po stronie Stripe jako jednorazowa cena (`one-time`); obecny komunikat na stronie to 2,99 EUR. Dostęp jest przypisany do konta rodzica, a nie do przeglądarki lub urządzenia.
 
 ### Mapa implementacji
 
