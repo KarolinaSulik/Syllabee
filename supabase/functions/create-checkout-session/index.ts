@@ -34,7 +34,9 @@ Deno.serve(async (request) => {
   const siteUrl = Deno.env.get("SITE_URL")!.replace(/\/$/, "");
   const session = await stripe.checkout.sessions.create({
     mode: "payment",
-    payment_method_types: ["card"],
+    // Managed Payments requires a tax code on every product. We handle tax
+    // configuration separately before a live launch, so keep it off in Sandbox.
+    managed_payments: { enabled: false },
     customer_email: user.email,
     client_reference_id: user.id,
     metadata: { user_id: user.id, product: "syllabee-full-access" },
