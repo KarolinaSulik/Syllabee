@@ -8,14 +8,14 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <meta name="description" content="Syllabee — spokojna zabawa literkami i sylabami dla dzieci." />
     <title>Syllabee — literki i sylaby</title>
-    <link rel="stylesheet" href="style.css?v=20261009-2" />
+    <link rel="stylesheet" href="style.css?v=20261009-3" />
     <script src="payment-config.js?v=20261005-4"></script>
     <script>
       if (new URLSearchParams(window.location.search).has("app") || new URLSearchParams(window.location.search).has("gra")) {
         document.documentElement.classList.add("show-app");
       }
     </script>
-    <script src="script.js?v=20261009-1" defer></script>
+    <script src="script.js?v=20261009-2" defer></script>
   </head>
   <body>
     <main class="landing" aria-labelledby="landing-title">
@@ -75,6 +75,24 @@
         <div><p class="landing-eyebrow">BEREIT FÜR DIE ERSTE SILBE?</p><h2>Jetzt Syllabee ausprobieren</h2><p>Spielerisch lesen lernen – ruhig, klar und mit Freude.</p></div>
         <a class="landing-button landing-button-primary" href="?app=1">Zur App <span aria-hidden="true">→</span></a>
       </section>
+
+      <section class="keyboard-benefit landing-shell" aria-labelledby="keyboard-title">
+        <span class="keyboard-icon" aria-hidden="true">⌨</span>
+        <div><h2 id="keyboard-title">Tastatur statt Tablet</h2><p>Echte Tasten helfen Kindern, Buchstaben bewusst zu sehen und wiederzuerkennen.</p></div>
+      </section>
+
+      <section class="share-section landing-shell" aria-labelledby="share-title">
+        <h2 id="share-title">Später am Computer weitermachen?</h2>
+        <button id="native-share-site-link" class="landing-button landing-button-primary" type="button">Link teilen <span aria-hidden="true">↑</span></button>
+        <div class="share-actions" aria-label="Weitere Möglichkeiten zum Teilen">
+          <a href="https://wa.me/?text=Syllabee%20%E2%80%93%20Lesen%20lernen%20macht%20Spa%C3%9F%21%20https%3A%2F%2Fsyllabee.online" target="_blank" rel="noreferrer">WhatsApp</a>
+          <a href="mailto:?subject=Syllabee%20%E2%80%93%20Lesen%20lernen%20macht%20Spa%C3%9F&amp;body=Entdecke%20Syllabee%3A%20https%3A%2F%2Fsyllabee.online">E-Mail</a>
+          <button id="copy-site-link" type="button">Link kopieren</button>
+        </div>
+        <p id="copy-site-link-status" class="share-status" aria-live="polite"></p>
+      </section>
+
+      <footer class="landing-footer">Syllabee <span aria-hidden="true">·</span> syllabee.online</footer>
     </main>
 
     <main class="app">

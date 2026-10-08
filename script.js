@@ -2278,6 +2278,30 @@ ui.levelEightSkipButton.addEventListener("click", skipLetterWords);
 document.querySelectorAll("[data-go-menu]").forEach((button) => button.addEventListener("click", goToMenu));
 document.querySelectorAll("[data-open-reading-game]").forEach((button) => button.addEventListener("click", () => openReadingGame()));
 document.querySelectorAll("[data-go-library]").forEach((button) => button.addEventListener("click", () => goToLibrary()));
+const copySiteLinkButton = document.querySelector("#copy-site-link");
+const copySiteLinkStatus = document.querySelector("#copy-site-link-status");
+const nativeShareSiteLinkButton = document.querySelector("#native-share-site-link");
+const siteUrl = "https://syllabee.online";
+
+async function copySiteLink() {
+  try {
+    await navigator.clipboard.writeText(siteUrl);
+    copySiteLinkStatus.textContent = "Link kopiert.";
+  } catch {
+    copySiteLinkStatus.textContent = "https://syllabee.online";
+  }
+}
+
+copySiteLinkButton?.addEventListener("click", copySiteLink);
+nativeShareSiteLinkButton?.addEventListener("click", async () => {
+  if (!navigator.share) return copySiteLink();
+  try {
+    await navigator.share({ title: "Syllabee", text: "Lesen lernen darf leicht sein.", url: siteUrl });
+    copySiteLinkStatus.textContent = "Link geteilt.";
+  } catch (error) {
+    if (error?.name !== "AbortError") await copySiteLink();
+  }
+});
 document.querySelector("#analytics-consent-accept")?.addEventListener("click", () => setAnalyticsConsent(true));
 document.querySelector("#analytics-consent-reject")?.addEventListener("click", () => setAnalyticsConsent(false));
 document.querySelector("#paid-access-close")?.addEventListener("click", closePaidAccess);
