@@ -10,6 +10,12 @@ const polishLetters = [
   { letter: "P", sound: "pe" }, { letter: "B", sound: "be" },
   { letter: "G", sound: "gie" }, { letter: "U", sound: "u" },
   { letter: "Z", sound: "zet" }, { letter: "F", sound: "ef" },
+  { letter: "C", sound: "ce" }, { letter: "H", sound: "ha" },
+  { letter: "J", sound: "jot" }, { letter: "Ł", sound: "eł" },
+  { letter: "Ś", sound: "eś" }, { letter: "Ć", sound: "cie" },
+  { letter: "Ż", sound: "żet" }, { letter: "Ń", sound: "eń" },
+  { letter: "Ó", sound: "u zamknięte" }, { letter: "Ą", sound: "ą" },
+  { letter: "Ę", sound: "ę" },
 ];
 
 // Dane słów dla Level 2 i Level 3. Łatwo dodawać kolejne obiekty.
@@ -63,6 +69,25 @@ const polishWords = [
   { word: "NOS", syllables: ["NOS"], image: "👃", imageAlt: "nos", choices: [] },
   { word: "DOM", syllables: ["DOM"], image: "🏠", imageAlt: "dom", choices: [] },
   { word: "WILK", syllables: ["WILK"], image: "🐺", imageAlt: "wilk", choices: [] },
+  { word: "KROWA", syllables: ["KRO", "WA"], image: "🐄", imageAlt: "krowa", choices: ["KRO", "WA", "MA"] },
+  { word: "ŚWINIA", syllables: ["ŚWI", "NIA"], image: "🐷", imageAlt: "świnia", choices: ["ŚWI", "NIA", "KA"] },
+  { word: "OWCA", syllables: ["OW", "CA"], image: "🐑", imageAlt: "owca", choices: ["OW", "CA", "MA"] },
+  { word: "ŻABA", syllables: ["ŻA", "BA"], image: "🐸", imageAlt: "żaba", choices: ["ŻA", "BA", "RA"] },
+  { word: "PSZCZOŁA", syllables: ["PSZCZO", "ŁA"], image: "🐝", imageAlt: "pszczoła", choices: ["PSZCZO", "ŁA", "MA"] },
+  { word: "MOTYL", syllables: ["MO", "TYL"], image: "🦋", imageAlt: "motyl", choices: ["MO", "TYL", "RA"] },
+  { word: "KWIAT", syllables: ["KWIAT"], image: "🌸", imageAlt: "kwiat", choices: [] },
+  { word: "RÓŻA", syllables: ["RÓ", "ŻA"], image: "🌹", imageAlt: "róża", choices: ["RÓ", "ŻA", "BA"] },
+  { word: "DRZEWO", syllables: ["DRZE", "WO"], image: "🌳", imageAlt: "drzewo", choices: ["DRZE", "WO", "MA"] },
+  { word: "CHMURA", syllables: ["CHMU", "RA"], image: "☁️", imageAlt: "chmura", choices: ["CHMU", "RA", "LA"] },
+  { word: "SŁOŃCE", syllables: ["SŁOŃ", "CE"], image: "☀️", imageAlt: "słońce", choices: ["SŁOŃ", "CE", "MA"] },
+  { word: "ŁÓDKA", syllables: ["ŁÓD", "KA"], image: "🛶", imageAlt: "łódka", choices: ["ŁÓD", "KA", "RA"] },
+  { word: "POCIĄG", syllables: ["PO", "CIĄG"], image: "🚆", imageAlt: "pociąg", choices: ["PO", "CIĄG", "MA"] },
+  { word: "AUTOBUS", syllables: ["AU", "TO", "BUS"], image: "🚌", imageAlt: "autobus", choices: ["AU", "TO", "BUS", "MA"] },
+  { word: "PREZENT", syllables: ["PRE", "ZENT"], image: "🎁", imageAlt: "prezent", choices: ["PRE", "ZENT", "MA"] },
+  { word: "KSIĄŻKA", syllables: ["KSIĄŻ", "KA"], image: "📚", imageAlt: "książka", choices: ["KSIĄŻ", "KA", "RA"] },
+  { word: "KAMIEŃ", syllables: ["KA", "MIEŃ"], image: "🪨", imageAlt: "kamień", choices: ["KA", "MIEŃ", "MA"] },
+  { word: "GÓRA", syllables: ["GÓ", "RA"], image: "⛰️", imageAlt: "góra", choices: ["GÓ", "RA", "MA"] },
+  { word: "DROGA", syllables: ["DRO", "GA"], image: "🛣️", imageAlt: "droga", choices: ["DRO", "GA", "MA"] },
 ];
 
 // Krótkie, logiczne zdania do Level 5. Każde ma maksymalnie trzy wyrazy,
@@ -127,6 +152,20 @@ const polishSentences = [
   { words: ["PTAK", "NIESIE", "PATYK"], image: ["🐦", "🪵"], imageAlt: "ptak niesie patyk" },
   { words: ["ŻABA", "JE", "MUCHĘ"], image: ["🐸", "🪰"], imageAlt: "żaba je muchę" },
   { words: ["KOT", "PIJE", "MLEKO"], image: ["🐱", "🥛"], imageAlt: "kot pije mleko" },
+  { words: ["OWCA", "JE", "TRAWĘ"], image: ["🐑", "🌿"], imageAlt: "owca je trawę" },
+  { words: ["PSZCZOŁA", "LUBI", "KWIAT"], image: ["🐝", "🌸"], imageAlt: "pszczoła lubi kwiat" },
+  { words: ["MOTYL", "LUBI", "RÓŻĘ"], image: ["🦋", "🌹"], imageAlt: "motyl lubi różę" },
+  { words: ["ŻABA", "WIDZI", "MUCHĘ"], image: ["🐸", "🪰"], imageAlt: "żaba widzi muchę" },
+  { words: ["SŁOŃ", "MA", "TRĄBĘ"], image: ["🐘"], imageAlt: "słoń ma trąbę" },
+  { words: ["KOT", "WIDZI", "RYBĘ"], image: ["🐱", "🐟"], imageAlt: "kot widzi rybę" },
+  { words: ["PIES", "GONI", "PIŁKĘ"], image: ["🐶", "⚽"], imageAlt: "pies goni piłkę" },
+  { words: ["AUTO", "MIJA", "DOM"], image: ["🚗", "🏠"], imageAlt: "auto mija dom" },
+  { words: ["POCIĄG", "WIEZIE", "LUDZI"], image: ["🚆", "🧑‍🤝‍🧑"], imageAlt: "pociąg wiezie ludzi" },
+  { words: ["RAKIETA", "LECI"], image: ["🚀"], imageAlt: "rakieta leci" },
+  { words: ["BALON", "LECI"], image: ["🎈"], imageAlt: "balon leci" },
+  { words: ["SAMOLOT", "LECI"], image: ["✈️"], imageAlt: "samolot leci" },
+  { words: ["KWIAT", "MA", "PŁATKI"], image: ["🌸"], imageAlt: "kwiat ma płatki" },
+  { words: ["CHMURA", "KRYJE", "SŁOŃCE"], image: ["☁️", "☀️"], imageAlt: "chmura kryje słońce" },
 ];
 
 const createWords = (entries) => entries.map(([word, syllables, image, imageAlt, distractor]) => ({
@@ -151,6 +190,8 @@ const sentenceSyllables = {
 // przez dziecko zdania zachowują ten sam rytm kolorów co reszta gry.
 Object.assign(sentenceSyllables.pl, {
   GONI: ["GO", "NI"], SZUKA: ["SZU", "KA"], "KOŚCI": ["KO", "ŚCI"], BAWI: ["BA", "WI"], "SIĘ": ["SIĘ"], "PIŁKĄ": ["PIŁ", "KĄ"], PODLEWA: ["POD", "LE", "WA"], LUBI: ["LU", "BI"],
+  "PSZCZOŁA": ["PSZCZO", "ŁA"], "RÓŻĘ": ["RÓ", "ŻĘ"], WIDZI: ["WI", "DZI"], "TRĄBĘ": ["TRĄ", "BĘ"], "RYBĘ": ["RY", "BĘ"], "PIŁKĘ": ["PIŁ", "KĘ"], MIJA: ["MI", "JA"], LUDZI: ["LU", "DZI"], RAKIETA: ["RA", "KIE", "TA"], BALON: ["BA", "LON"], SAMOLOT: ["SA", "MO", "LOT"], PŁATKI: ["PŁAT", "KI"], CHMURA: ["CHMU", "RA"], KRYJE: ["KRY", "JE"],
+  DO: ["DO"], DOM: ["DOM"], DOMU: ["DO", "MU"], MOTYLA: ["MO", "TY", "LA"], WYSOKO: ["WY", "SO", "KO"], KOSMOSU: ["KOS", "MO", "SU"], "ZIEMIĘ": ["ZIE", "MIĘ"], ROBI: ["RO", "BI"], ULA: ["U", "LA"],
 });
 Object.assign(sentenceSyllables.en, {
   THE: ["THE"], DRINKS: ["DRINKS"], MILK: ["MILK"], CHASES: ["CHAS", "ES"], A: ["A"], MOUSE: ["MOUSE"], FINDS: ["FINDS"], BONE: ["BONE"], PLAYS: ["PLAYS"], WITH: ["WITH"], BALL: ["BALL"], WATER: ["WA", "TER"], CHILD: ["CHILD"], WATERS: ["WA", "TERS"], READS: ["READS"], BOOK: ["BOOK"], EATS: ["EATS"], SOUP: ["SOUP"], GROWS: ["GROWS"], LIKES: ["LIKES"], SUN: ["SUN"], LEAVES: ["LEAVES"],
@@ -257,6 +298,10 @@ const emojiStories = {
     { subject: { emoji: "🐶", word: "PIES" }, actions: [{ emoji: "🦴", word: "SZUKA KOŚCI" }, { emoji: "⚽", word: "BAWI SIĘ PIŁKĄ" }, { emoji: "💧", word: "PIJE WODĘ" }] },
     { subject: { emoji: "🧒", word: "DZIECKO" }, actions: [{ emoji: "🌷", word: "PODLEWA KWIAT" }, { emoji: "📖", word: "CZYTA KSIĄŻKĘ" }, { emoji: "🍲", word: "JE ZUPĘ" }] },
     { subject: { emoji: "🌷", word: "KWIAT" }, actions: [{ emoji: "🌱", word: "ROŚNIE" }, { emoji: "☀️", word: "LUBI SŁOŃCE" }, { emoji: "🍃", word: "MA LIŚCIE" }] },
+    { subject: { emoji: "🐄", word: "KROWA" }, actions: [{ emoji: "🌿", word: "JE TRAWĘ" }, { emoji: "🌸", word: "WIDZI KWIAT" }, { emoji: "🏠", word: "IDZIE DO DOMU" }] },
+    { subject: { emoji: "🐸", word: "ŻABA" }, actions: [{ emoji: "🪰", word: "JE MUCHĘ" }, { emoji: "🦋", word: "WIDZI MOTYLA" }, { emoji: "⬆️", word: "WYSOKO SKACZE" }] },
+    { subject: { emoji: "🚀", word: "RAKIETA" }, actions: [{ emoji: "🌌", word: "LECI DO KOSMOSU" }, { emoji: "🌍", word: "WIDZI ZIEMIĘ" }, { emoji: "🌙", word: "MIJA KSIĘŻYC" }] },
+    { subject: { emoji: "🐝", word: "PSZCZOŁA" }, actions: [{ emoji: "🌸", word: "LUBI KWIAT" }, { emoji: "🍯", word: "ROBI MIÓD" }, { emoji: "🏠", word: "LECI DO ULA" }] },
   ],
   en: [
     { subject: { emoji: "🐱", word: "THE CAT" }, actions: [{ emoji: "🥛", word: "DRINKS MILK" }, { emoji: "😴", word: "SLEEPS" }, { emoji: "🐭", word: "CHASES A MOUSE" }] },
