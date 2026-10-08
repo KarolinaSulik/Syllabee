@@ -2274,6 +2274,29 @@ ui.levelEightSkipButton.addEventListener("click", skipLetterWords);
 document.querySelectorAll("[data-go-menu]").forEach((button) => button.addEventListener("click", goToMenu));
 document.querySelectorAll("[data-open-reading-game]").forEach((button) => button.addEventListener("click", () => openReadingGame()));
 document.querySelectorAll("[data-go-library]").forEach((button) => button.addEventListener("click", () => goToLibrary()));
+const copySiteLinkButton = document.querySelector("#copy-site-link");
+const copySiteLinkStatus = document.querySelector("#copy-site-link-status");
+
+async function copySiteLink() {
+  const siteUrl = "https://syllabee.online";
+  try {
+    await navigator.clipboard.writeText(siteUrl);
+    copySiteLinkStatus.textContent = "Link kopiert – bis später!";
+  } catch {
+    const helper = document.createElement("textarea");
+    helper.value = siteUrl;
+    helper.setAttribute("readonly", "");
+    helper.style.position = "fixed";
+    helper.style.opacity = "0";
+    document.body.append(helper);
+    helper.select();
+    const copied = document.execCommand("copy");
+    helper.remove();
+    copySiteLinkStatus.textContent = copied ? "Link kopiert – bis später!" : "Kopieren nicht möglich. https://syllabee.online";
+  }
+}
+
+copySiteLinkButton?.addEventListener("click", copySiteLink);
 document.querySelector("#analytics-consent-accept")?.addEventListener("click", () => setAnalyticsConsent(true));
 document.querySelector("#analytics-consent-reject")?.addEventListener("click", () => setAnalyticsConsent(false));
 document.querySelector("#paid-access-close")?.addEventListener("click", closePaidAccess);

@@ -5,11 +5,54 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="Syllabee — spokojna zabawa literkami i sylabami dla dzieci." />
     <title>Syllabee — literki i sylaby</title>
-    <link rel="stylesheet" href="style.css?v=20261005-4" />
+    <link rel="stylesheet" href="style.css?v=20261008-1" />
     <script src="payment-config.js?v=20261005-4"></script>
-    <script src="script.js?v=20261006-1" defer></script>
+    <script src="script.js?v=20261008-1" defer></script>
   </head>
   <body>
+    <main class="mobile-landing" aria-labelledby="mobile-landing-title">
+      <header class="mobile-landing-header">
+        <img class="mobile-landing-logo" src="assets/images/syllabee-logo-new-bee.png" alt="Syllabee" />
+      </header>
+
+      <section class="mobile-landing-intro">
+        <p class="mobile-landing-eyebrow">Lernen mit Ruhe und Freude</p>
+        <h1 id="mobile-landing-title">Lesen lernen macht Spaß! 🐝</h1>
+        <p class="mobile-landing-description">Entdecke Buchstaben, Silben und Wörter – spielerisch und ohne Ablenkung.</p>
+      </section>
+
+      <section class="mobile-game-preview" aria-label="Vorschau des Lernspiels">
+        <div class="mobile-preview-window">
+          <div class="mobile-preview-topbar">
+            <span class="mobile-preview-brand">Syllabee</span>
+            <span class="mobile-preview-progress" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+          </div>
+          <div class="mobile-preview-content">
+            <span class="mobile-preview-emoji" aria-hidden="true">🐝</span>
+            <p>Welche Silben ergeben dieses Wort?</p>
+            <div class="mobile-preview-word" aria-label="Beispielwort Biene">
+              <span>BI</span><span>ENE</span>
+            </div>
+            <div class="mobile-preview-choices" aria-hidden="true">
+              <span>BI</span><span>ENE</span><span>MA</span>
+            </div>
+          </div>
+        </div>
+        <p class="mobile-preview-caption">So sieht Lernen mit Syllabee aus</p>
+      </section>
+
+      <aside class="mobile-keyboard-note" aria-label="Hinweis zur Nutzung">
+        <span aria-hidden="true">⌨️</span>
+        <p>Syllabee funktioniert am besten am Computer mit Tastatur.</p>
+      </aside>
+
+      <div class="mobile-landing-actions">
+        <button id="copy-site-link" class="mobile-link-button mobile-link-button-primary" type="button">Link für später kopieren</button>
+        <a class="mobile-link-button mobile-link-button-secondary" href="mailto:?subject=Syllabee%20%E2%80%93%20Lesen%20lernen%20macht%20Spa%C3%9F&amp;body=Entdecke%20Syllabee%3A%20https%3A%2F%2Fsyllabee.online">Link per E-Mail senden</a>
+        <p id="copy-site-link-status" class="mobile-copy-status" aria-live="polite"></p>
+      </div>
+    </main>
+
     <main class="app">
       <section id="game-library-screen" class="screen library-screen" aria-labelledby="library-title">
         <header class="library-header">

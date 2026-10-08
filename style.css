@@ -9,6 +9,7 @@ button:focus-visible { outline: 4px solid #111; outline-offset: 4px; }
 .analytics-consent-actions { display: flex; flex-wrap: wrap; gap: .6rem; }
 .analytics-consent-actions button { min-height: 2.6rem; padding: .5rem .85rem; border: 1px solid #6f48bf; border-radius: .75rem; background: #7650ca; color: #fff; font: inherit; font-size: .9rem; font-weight: 700; }
 .analytics-consent-actions #analytics-consent-reject { border-color: rgba(102, 73, 165, .25); background: #f5f2fb; color: #503a78; }
+.mobile-landing { display: none; }
 .app { width: 100%; min-height: 100vh; }
 .screen { position: relative; display: flex; min-height: 100vh; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
 .screen.is-hidden, .is-hidden { display: none; }
@@ -342,3 +343,38 @@ h1 { margin-bottom: 2.5rem; font-size: clamp(2.25rem, 6vw, 4rem); line-height: 1
 @media (max-width: 620px) { .montessori-typing { top: calc(46% + 4.2rem); gap: .6rem; } }
 @media (max-width: 620px) { .movable-empty-slot { font-size: clamp(3.5rem, 12vw, 4rem); } }
 @media (max-width: 620px) { .library-header { display: grid; grid-template-columns: 1fr; gap: .75rem; } .library-header-actions { justify-content: space-between; width: 100%; gap: .45rem; } .library-links { max-width: none; flex-wrap: nowrap; gap: .35rem; } }
+
+/* Die Vorschaltseite ist bewusst nur für kleine Touchscreens sichtbar. */
+@media (max-width: 767px) {
+  body { min-height: 100dvh; background: radial-gradient(circle at 8% 7%, rgba(148, 215, 255, .85), transparent 31%), radial-gradient(circle at 100% 88%, rgba(255, 198, 135, .72), transparent 39%), #f9f8ff; }
+  .app, .paid-access-dialog, .analytics-consent { display: none !important; }
+  .mobile-landing { display: flex; min-height: 100dvh; flex-direction: column; align-items: center; padding: 1.25rem 1.15rem 1.75rem; color: #273449; text-align: center; }
+  .mobile-landing-header { width: 100%; }
+  .mobile-landing-logo { display: block; width: min(10rem, 46vw); height: auto; margin: 0 auto; }
+  .mobile-landing-intro { max-width: 28rem; margin-top: clamp(1.7rem, 7vh, 3.7rem); }
+  .mobile-landing-eyebrow { margin: 0 0 .6rem; color: #7045bb; font-size: .78rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+  .mobile-landing h1 { margin: 0; color: #5f3b9f; font-family: ui-rounded, "Avenir Next", "Segoe UI", sans-serif; font-size: clamp(2rem, 9vw, 3rem); font-weight: 750; letter-spacing: -.055em; line-height: 1.08; }
+  .mobile-landing-description { margin: 1rem auto 0; color: #526071; font-size: clamp(1rem, 4.3vw, 1.18rem); line-height: 1.5; }
+  .mobile-game-preview { width: min(100%, 25rem); margin-top: clamp(1.7rem, 5vh, 2.8rem); }
+  .mobile-preview-window { overflow: hidden; border: 3px solid #8c69dc; border-radius: 1.35rem; background: #fff; box-shadow: 0 .85rem 2rem rgba(58, 50, 91, .16); text-align: left; }
+  .mobile-preview-topbar { display: flex; min-height: 2.6rem; align-items: center; justify-content: space-between; padding: .55rem .75rem; background: #f0eaff; color: #6541a4; font-size: .78rem; font-weight: 800; }
+  .mobile-preview-progress { display: flex; gap: .2rem; }
+  .mobile-preview-progress i { width: 1.05rem; height: .38rem; border-radius: 999px; background: #d2c1f4; }
+  .mobile-preview-progress i:nth-child(-n+2) { background: #7a4bc6; }
+  .mobile-preview-content { display: grid; min-height: 13rem; place-items: center; padding: 1rem 1rem 1.2rem; background: linear-gradient(145deg, #f9fcff, #fff9f2); text-align: center; }
+  .mobile-preview-emoji { font-size: 3.5rem; line-height: 1; }
+  .mobile-preview-content p { margin: .45rem 0 0; color: #405168; font-size: .92rem; font-weight: 700; }
+  .mobile-preview-word, .mobile-preview-choices { display: flex; justify-content: center; gap: .4rem; }
+  .mobile-preview-word span { padding: .42rem .7rem; border-radius: .55rem; background: #eadfff; color: #6541a4; font-size: 1.25rem; font-weight: 800; }
+  .mobile-preview-word span:last-child { background: #fff0d7; color: #a56417; }
+  .mobile-preview-choices span { min-width: 3.1rem; padding: .37rem .45rem; border: 1px solid #d6c8ef; border-radius: .55rem; background: #fff; color: #4f3a77; font-size: .9rem; font-weight: 700; }
+  .mobile-preview-caption { margin: .65rem 0 0; color: #657286; font-size: .82rem; }
+  .mobile-keyboard-note { display: flex; width: min(100%, 25rem); align-items: flex-start; gap: .75rem; margin-top: 1.45rem; padding: .85rem 1rem; border: 1px solid rgba(122, 75, 198, .18); border-radius: 1rem; background: rgba(255, 255, 255, .68); color: #4d5b70; text-align: left; }
+  .mobile-keyboard-note > span { font-size: 1.35rem; }
+  .mobile-keyboard-note p { margin: 0; font-size: .9rem; line-height: 1.4; }
+  .mobile-landing-actions { display: grid; width: min(100%, 25rem); gap: .65rem; margin-top: auto; padding-top: 1.6rem; }
+  .mobile-link-button { display: flex; min-height: 3.35rem; align-items: center; justify-content: center; padding: .7rem 1rem; border-radius: .9rem; font: inherit; font-size: 1rem; font-weight: 800; line-height: 1.2; text-decoration: none; }
+  .mobile-link-button-primary { border: 1px solid #6941b3; background: linear-gradient(135deg, #9b72eb, #6c3cc4); box-shadow: 0 .6rem 1.25rem rgba(105, 60, 190, .2); color: #fff; }
+  .mobile-link-button-secondary { border: 1px solid #cfc3e5; background: rgba(255, 255, 255, .76); color: #563d83; }
+  .mobile-copy-status { min-height: 1.2rem; margin: .05rem 0 0; color: #3f7653; font-size: .85rem; font-weight: 700; }
+}
