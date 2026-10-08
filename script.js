@@ -259,7 +259,7 @@ const germanWords = createWords([
   ["PAPA", ["PA", "PA"], "👨", "Papa", "MA"],
   ["OMA", ["O", "MA"], "👵", "Oma", "PA"],
   ["AUTO", ["AU", "TO"], "🚗", "Auto", "MA"],
-  ["ROBOT", ["RO", "BOT"], "🤖", "Roboter", "MA"],
+  ["ROBOTER", ["RO", "BO", "TER"], "🤖", "Roboter", "MA"],
   ["TIGER", ["TI", "GER"], "🐯", "Tiger", "RO"],
   ["HASE", ["HA", "SE"], "🐰", "Hase", "MA"],
   ["BANANE", ["BA", "NA", "NE"], "🍌", "Banane", "TO"],
