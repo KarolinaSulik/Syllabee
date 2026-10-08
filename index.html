@@ -8,14 +8,14 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <meta name="description" content="Syllabee — spokojna zabawa literkami i sylabami dla dzieci." />
     <title>Syllabee — literki i sylaby</title>
-    <link rel="stylesheet" href="style.css?v=20261009-3" />
+    <link rel="stylesheet" href="style.css?v=20261009-6" />
     <script src="payment-config.js?v=20261005-4"></script>
     <script>
       if (new URLSearchParams(window.location.search).has("app") || new URLSearchParams(window.location.search).has("gra")) {
         document.documentElement.classList.add("show-app");
       }
     </script>
-    <script src="script.js?v=20261009-2" defer></script>
+    <script src="script.js?v=20261009-3" defer></script>
   </head>
   <body>
     <main class="landing" aria-labelledby="landing-title">
@@ -36,14 +36,23 @@
         </div>
         <div class="product-showcase" aria-label="Vorschau der Syllabee-App">
           <img class="showcase-bee" src="assets/images/syllabee-card-bee-v2.png" alt="" aria-hidden="true" />
-          <div class="product-card">
-            <div class="product-card-bar"><span>Syllabee</span><span class="product-dots" aria-hidden="true"><i></i><i></i><i></i></span></div>
-            <div class="product-card-content">
-              <span class="product-bee" aria-hidden="true">🐝</span>
-              <p>Welche Silben ergeben dieses Wort?</p>
-              <div class="product-word" aria-label="Biene: Bie-ne"><span>BIE</span><span>NE</span></div>
-              <div class="product-choices" aria-hidden="true"><span>BIE</span><span>NE</span><span>MA</span></div>
+          <div class="product-card" data-demo-carousel aria-roledescription="Karussell" aria-label="Beispiele aus Syllabee">
+            <div class="product-card-bar"><span>Syllabee</span><span class="product-dots" aria-hidden="true"><i class="is-active"></i><i></i></span></div>
+            <div class="product-card-track">
+              <div class="product-card-content product-slide" aria-label="Beispiel 1 von 2: Biene">
+                <span class="product-bee" aria-hidden="true">🐝</span>
+                <p>Welche Silben ergeben dieses Wort?</p>
+                <div class="product-word" aria-label="Biene: Bie-ne"><span><b class="letter-consonant">B</b><b class="letter-vowel">I</b><b class="letter-vowel">E</b></span><span><b class="letter-consonant">N</b><b class="letter-vowel">E</b></span></div>
+                <div class="product-choices" aria-hidden="true"><span>BIE</span><span>NE</span><span>MA</span></div>
+              </div>
+              <div class="product-card-content product-slide" aria-label="Beispiel 2 von 2: Hase">
+                <span class="product-bee" aria-hidden="true">🐰</span>
+                <p>Welche Silben ergeben dieses Wort?</p>
+                <div class="product-word" aria-label="Hase: Ha-se"><span><b class="letter-consonant">H</b><b class="letter-vowel">A</b></span><span><b class="letter-consonant">S</b><b class="letter-vowel">E</b></span></div>
+                <div class="product-choices" aria-hidden="true"><span>HA</span><span>SE</span><span>MA</span></div>
+              </div>
             </div>
+            <p class="demo-carousel-hint" aria-hidden="true">Wischen für das nächste Wort <span>→</span></p>
           </div>
         </div>
       </section>
@@ -54,6 +63,7 @@
           <article class="benefit-card"><span class="benefit-icon benefit-icon-letter" aria-hidden="true">A</span><h3>Große Buchstaben</h3></article>
           <article class="benefit-card"><span class="benefit-icon" aria-hidden="true">↗</span><h3>Klare Übungen</h3></article>
           <article class="benefit-card"><span class="benefit-icon" aria-hidden="true">✦</span><h3>Ohne Ablenkung</h3></article>
+          <article class="benefit-card"><span class="benefit-icon" aria-hidden="true">◷</span><h3>Kurze Sessions</h3></article>
         </div>
       </section>
 
@@ -61,8 +71,9 @@
         <div class="section-heading"><p class="landing-eyebrow">SCHRITT FÜR SCHRITT</p><h2 id="how-title">So funktioniert’s</h2></div>
         <ol class="steps">
           <li><span>1</span><p>Buchstaben sehen</p></li>
-          <li><span>2</span><p>Silben verbinden</p></li>
-          <li><span>3</span><p>Wörter lesen</p></li>
+          <li><span>2</span><p>Auf der Tastatur tippen</p></li>
+          <li><span>3</span><p>Silben mit Farben lernen</p></li>
+          <li><span>4</span><p>Sätze zusammensetzen</p></li>
         </ol>
       </section>
 
@@ -78,7 +89,7 @@
 
       <section class="keyboard-benefit landing-shell" aria-labelledby="keyboard-title">
         <span class="keyboard-icon" aria-hidden="true">⌨</span>
-        <div><h2 id="keyboard-title">Tastatur statt Tablet</h2><p>Echte Tasten helfen Kindern, Buchstaben bewusst zu sehen und wiederzuerkennen.</p></div>
+        <div><h2 id="keyboard-title">Tastatur statt Tablet</h2><p>Eine echte Tastatur gehört bei Syllabee dazu: Beim Tippen sieht, fühlt und drückt dein Kind jeden Buchstaben. So verbinden sich Bewegung und Buchstabenform – spielerisch und bewusst.</p></div>
       </section>
 
       <section class="share-section landing-shell" aria-labelledby="share-title">

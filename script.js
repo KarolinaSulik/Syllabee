@@ -2302,6 +2302,27 @@ nativeShareSiteLinkButton?.addEventListener("click", async () => {
     if (error?.name !== "AbortError") await copySiteLink();
   }
 });
+document.querySelectorAll("[data-demo-carousel]").forEach((carousel) => {
+  const track = carousel.querySelector(".product-card-track");
+  const dots = carousel.querySelectorAll(".product-dots i");
+  let slide = 0;
+  let startX = 0;
+
+  const showSlide = (nextSlide) => {
+    slide = Math.max(0, Math.min(nextSlide, 1));
+    track.style.transform = `translateX(-${slide * 50}%)`;
+    dots.forEach((dot, index) => dot.classList.toggle("is-active", index === slide));
+  };
+
+  carousel.addEventListener("pointerdown", (event) => {
+    startX = event.clientX;
+    carousel.setPointerCapture?.(event.pointerId);
+  });
+  carousel.addEventListener("pointerup", (event) => {
+    const distance = event.clientX - startX;
+    if (Math.abs(distance) > 35) showSlide(slide + (distance < 0 ? 1 : -1));
+  });
+});
 document.querySelector("#analytics-consent-accept")?.addEventListener("click", () => setAnalyticsConsent(true));
 document.querySelector("#analytics-consent-reject")?.addEventListener("click", () => setAnalyticsConsent(false));
 document.querySelector("#paid-access-close")?.addEventListener("click", closePaidAccess);
