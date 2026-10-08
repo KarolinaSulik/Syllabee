@@ -8,62 +8,73 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <meta name="description" content="Syllabee — spokojna zabawa literkami i sylabami dla dzieci." />
     <title>Syllabee — literki i sylaby</title>
-    <link rel="stylesheet" href="style.css?v=20261008-3" />
+    <link rel="stylesheet" href="style.css?v=20261009-2" />
     <script src="payment-config.js?v=20261005-4"></script>
-    <script src="script.js?v=20261008-3" defer></script>
+    <script>
+      if (new URLSearchParams(window.location.search).has("app") || new URLSearchParams(window.location.search).has("gra")) {
+        document.documentElement.classList.add("show-app");
+      }
+    </script>
+    <script src="script.js?v=20261009-1" defer></script>
   </head>
   <body>
-    <main class="mobile-landing" aria-labelledby="mobile-landing-title">
-      <header class="mobile-landing-header">
-        <img class="mobile-landing-logo" src="assets/images/syllabee-logo-new-bee.png" alt="Syllabee" />
+    <main class="landing" aria-labelledby="landing-title">
+      <header class="landing-header landing-shell">
+        <a href="./" aria-label="Syllabee – Startseite"><img class="landing-logo" src="assets/images/syllabee-logo-new-bee.png" alt="Syllabee" /></a>
+        <a class="landing-header-link" href="#how-it-works">So funktioniert’s</a>
       </header>
 
-      <section class="mobile-landing-intro">
-        <p class="mobile-landing-eyebrow">WENIG REIZE. VIEL LERNFREUDE.</p>
-        <h1 id="mobile-landing-title">LESEN LERNEN<br />MACHT SPASS! 🐝</h1>
-        <p class="mobile-landing-description">Silbe für Silbe setzt dein Kind Laute zu Wörtern zusammen – und entdeckt Schritt für Schritt, wie Lesen funktioniert.</p>
-        <p class="mobile-landing-story">Mein Sohn hat dabei riesigen Spaß: Er sieht die Buchstaben, probiert aus und freut sich über jedes gelesene Wort.</p>
-      </section>
-
-      <section class="mobile-game-preview" aria-label="Vorschau des Lernspiels">
-        <div class="mobile-preview-window">
-          <div class="mobile-preview-topbar">
-            <span class="mobile-preview-brand">Syllabee</span>
-            <span class="mobile-preview-progress" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+      <section class="hero landing-shell">
+        <div class="hero-copy">
+          <p class="landing-eyebrow">Wenig Reize. Viel Lernfreude.</p>
+          <h1 id="landing-title">Lesen lernen darf leicht sein.</h1>
+          <p class="hero-subtitle">Spielerisch lesen lernen. Ruhig, klar und ohne Ablenkung.</p>
+          <div class="hero-actions">
+            <a class="landing-button landing-button-primary" href="?app=1">Jetzt ausprobieren <span aria-hidden="true">→</span></a>
+            <a class="landing-button landing-button-secondary" href="#how-it-works">So funktioniert’s</a>
           </div>
-          <div class="mobile-preview-content">
-            <span class="mobile-preview-emoji" aria-hidden="true">🐝</span>
-            <p>Welche Silben ergeben dieses Wort?</p>
-            <div class="mobile-preview-word" aria-label="Beispielwort Biene">
-              <span>BIE</span><span>NE</span>
-            </div>
-            <div class="mobile-preview-choices" aria-hidden="true">
-              <span>BIE</span><span>NE</span><span>MA</span>
+        </div>
+        <div class="product-showcase" aria-label="Vorschau der Syllabee-App">
+          <img class="showcase-bee" src="assets/images/syllabee-card-bee-v2.png" alt="" aria-hidden="true" />
+          <div class="product-card">
+            <div class="product-card-bar"><span>Syllabee</span><span class="product-dots" aria-hidden="true"><i></i><i></i><i></i></span></div>
+            <div class="product-card-content">
+              <span class="product-bee" aria-hidden="true">🐝</span>
+              <p>Welche Silben ergeben dieses Wort?</p>
+              <div class="product-word" aria-label="Biene: Bie-ne"><span>BIE</span><span>NE</span></div>
+              <div class="product-choices" aria-hidden="true"><span>BIE</span><span>NE</span><span>MA</span></div>
             </div>
           </div>
         </div>
-        <p class="mobile-preview-caption">So einfach kann Lesenlernen aussehen</p>
       </section>
 
-      <aside class="mobile-keyboard-note" aria-label="Hinweis zur Nutzung">
-        <span aria-hidden="true">⌨️</span>
-        <div>
-          <strong>Tastatur statt Tablet</strong>
-          <p>Beim Drücken echter Tasten sieht und spürt dein Kind jeden Buchstaben. Das unterstützt das Wiedererkennen von Formen – besonders wertvoll für Vierjährige.</p>
+      <section class="benefits landing-shell" aria-labelledby="benefits-title">
+        <div class="section-heading"><p class="landing-eyebrow">FÜR KLEINE LERNENDE</p><h2 id="benefits-title">Warum Syllabee?</h2></div>
+        <div class="benefit-grid">
+          <article class="benefit-card"><span class="benefit-icon benefit-icon-letter" aria-hidden="true">A</span><h3>Große Buchstaben</h3></article>
+          <article class="benefit-card"><span class="benefit-icon" aria-hidden="true">↗</span><h3>Klare Übungen</h3></article>
+          <article class="benefit-card"><span class="benefit-icon" aria-hidden="true">✦</span><h3>Ohne Ablenkung</h3></article>
         </div>
-      </aside>
+      </section>
 
-      <div class="mobile-landing-actions">
-        <p class="mobile-share-prompt">Für später sichern – damit ihr gleich am Computer loslegen könnt.</p>
-        <button id="native-share-site-link" class="mobile-link-button mobile-link-button-primary" type="button">Jetzt mit mir teilen</button>
-        <p class="mobile-share-hint">WhatsApp, Messenger, E-Mail oder deine Notizen auswählen</p>
-        <div class="mobile-share-options">
-          <a class="mobile-link-button mobile-link-button-secondary" href="https://wa.me/?text=Syllabee%20%E2%80%93%20Lesen%20lernen%20macht%20Spa%C3%9F%21%20https%3A%2F%2Fsyllabee.online" target="_blank" rel="noreferrer">WhatsApp</a>
-          <a class="mobile-link-button mobile-link-button-secondary" href="mailto:?subject=Syllabee%20%E2%80%93%20Lesen%20lernen%20macht%20Spa%C3%9F&amp;body=Entdecke%20Syllabee%3A%20https%3A%2F%2Fsyllabee.online">E-Mail</a>
-          <button id="copy-site-link" class="mobile-link-button mobile-link-button-secondary" type="button">Link kopieren</button>
-        </div>
-        <p id="copy-site-link-status" class="mobile-copy-status" aria-live="polite"></p>
-      </div>
+      <section id="how-it-works" class="how-it-works landing-shell" aria-labelledby="how-title">
+        <div class="section-heading"><p class="landing-eyebrow">SCHRITT FÜR SCHRITT</p><h2 id="how-title">So funktioniert’s</h2></div>
+        <ol class="steps">
+          <li><span>1</span><p>Buchstaben sehen</p></li>
+          <li><span>2</span><p>Silben verbinden</p></li>
+          <li><span>3</span><p>Wörter lesen</p></li>
+        </ol>
+      </section>
+
+      <section class="founder landing-shell" aria-label="Über Syllabee">
+        <span class="founder-mark" aria-hidden="true">“</span>
+        <p>Ich habe Syllabee entwickelt, weil mein Sohn Buchstaben liebt – und ich eine ruhige, einfache Lern-App für Vorschulkinder wollte.</p>
+      </section>
+
+      <section class="final-cta landing-shell">
+        <div><p class="landing-eyebrow">BEREIT FÜR DIE ERSTE SILBE?</p><h2>Jetzt Syllabee ausprobieren</h2><p>Spielerisch lesen lernen – ruhig, klar und mit Freude.</p></div>
+        <a class="landing-button landing-button-primary" href="?app=1">Zur App <span aria-hidden="true">→</span></a>
+      </section>
     </main>
 
     <main class="app">

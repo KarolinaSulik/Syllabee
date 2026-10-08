@@ -180,7 +180,7 @@ const createWords = (entries) => entries.map(([word, syllables, image, imageAlt,
 // niezależnie od języka i naprzemiennie je pokolorować.
 const sentenceSyllables = {
   pl: {
-    KOT: ["KOT"], "ŚPI": ["ŚPI"], WILK: ["WILK"], BIEGNIE: ["BIE", "GNIE"], MAMA: ["MA", "MA"], MA: ["MA"], LODY: ["LO", "DY"], TATA: ["TA", "TA"], MYJE: ["MY", "JE"], AUTO: ["AU", "TO"], ROBOT: ["RO", "BOT"], KASK: ["KASK"], PIRAT: ["PI", "RAT"], "PŁYNIE": ["PŁY", "NIE"], RYBA: ["RY", "BA"], "PŁYWA": ["PŁY", "WA"], ZEBRA: ["ZE", "BRA"], PTAK: ["PTAK"], LECI: ["LE", "CI"], SMOK: ["SMOK"], ZIEJE: ["ZIE", "JE"], OGNIEM: ["O", "GNIEM"], "ŁAPIE": ["ŁA", "PIE"], MYSZ: ["MYSZ"], PIES: ["PIES"], NIESIE: ["NIE", "SIE"], PATYK: ["PA", "TYK"], DRZEWO: ["DRZE", "WO"], LISTKI: ["LIST", "KI"], STATEK: ["STA", "TEK"], KURA: ["KU", "RA"], ZNOSI: ["ZNO", "SI"], JAJA: ["JA", "JA"], FOKA: ["FO", "KA"], DZIECKO: ["DZIEC", "KO"], CZYTA: ["CZY", "TA"], "KSIĄŻKĘ": ["KSIĄŻ", "KĘ"], "ŻABA": ["ŻA", "BA"], KACZKA: ["KACZ", "KA"], "KOŃ": ["KOŃ"], JE: ["JE"], SIANO: ["SIA", "NO"], "KRÓLIK": ["KRÓ", "LIK"], "MAŁPA": ["MAŁ", "PA"], "JABŁKO": ["JABŁ", "KO"], SER: ["SER"], KROWA: ["KRO", "WA"], "TRAWĘ": ["TRA", "WĘ"], OWCA: ["OW", "CA"], "SŁOŃ": ["SŁOŃ"], PIJE: ["PI", "JE"], "WODĘ": ["WO", "DĘ"], MOTYL: ["MO", "TYL"], LATA: ["LA", "TA"], "ŚLIMAK": ["ŚLI", "MAK"], IDZIE: ["I", "DZIE"], "ŻÓŁW": ["ŻÓŁW"], DELFIN: ["DEL", "FIN"], SKACZE: ["SKA", "CZE"], REKIN: ["RE", "KIN"], JEDZIE: ["JEDZ", "IE"], TRAKTOR: ["TRAK", "TOR"], WIEZIE: ["WIE", "ZIE"], "POCIĄG": ["PO", "CIĄG"], ROWER: ["RO", "WER"], "ŁÓDŹ": ["ŁÓDŹ"], KWIAT: ["KWIAT"], "ROŚNIE": ["ROŚ", "NIE"], "ZUPĘ": ["ZU", "PĘ"], PIECZE: ["PIE", "CZE"], CIASTO: ["CIA", "STO"], "BAJKĘ": ["BAJ", "KĘ"], DZIECI: ["DZIE", "CI"], "MAJĄ": ["MA", "JĄ"], KLOCKI: ["KLOC", "KI"], KOTY: ["KO", "TY"], "PIJĄ": ["PI", "JĄ"], MLEKO: ["MLE", "KO"], PTAKI: ["PTA", "KI"], "LECĄ": ["LE", "CĄ"], "PSZCZOŁY": ["PSZCZO", "ŁY"], "ROBIĄ": ["RO", "BIĄ"], "MIÓD": ["MIÓD"], KURY: ["KU", "RY"], "ZNOSZĄ": ["ZNO", "SZĄ"], DRZEWA: ["DRZE", "WA"], "LIŚCIE": ["LI", "ŚCIE"], MYSZY: ["MY", "SZY"], "JEDZĄ": ["JEDZĄ"], "SŁOŃCE": ["SŁOŃ", "CE"], GRZEJE: ["GRZE", "JE"], DESZCZ: ["DESZCZ"], PADA: ["PA", "DA"], WIATR: ["WIATR"], WIEJE: ["WIE", "JE"], "KSIĘŻYC": ["KSIĘ", "ŻYC"], "ŚWIECI": ["ŚWIE", "CI"], "MIŚ": ["MIŚ"], LIS: ["LIS"], LEW: ["LEW"], "ŚWINKA": ["ŚWIN", "KA"], "MUCHĘ": ["MU", "CHĘ"],
+    KOT: ["KOT"], "ŚPI": ["ŚPI"], WILK: ["WILK"], BIEGNIE: ["BIE", "GNIE"], MAMA: ["MA", "MA"], MA: ["MA"], LODY: ["LO", "DY"], TATA: ["TA", "TA"], MYJE: ["MY", "JE"], AUTO: ["AU", "TO"], ROBOT: ["RO", "BOT"], KASK: ["KASK"], PIRAT: ["PI", "RAT"], "PŁYNIE": ["PŁY", "NIE"], RYBA: ["RY", "BA"], "PŁYWA": ["PŁY", "WA"], ZEBRA: ["ZE", "BRA"], PTAK: ["PTAK"], LECI: ["LE", "CI"], SMOK: ["SMOK"], ZIEJE: ["ZIE", "JE"], OGNIEM: ["O", "GNIEM"], "ŁAPIE": ["ŁA", "PIE"], MYSZ: ["MYSZ"], PIES: ["PIES"], NIESIE: ["NIE", "SIE"], PATYK: ["PA", "TYK"], DRZEWO: ["DRZE", "WO"], LISTKI: ["LIST", "KI"], STATEK: ["STA", "TEK"], KURA: ["KU", "RA"], ZNOSI: ["ZNO", "SI"], JAJA: ["JA", "JA"], FOKA: ["FO", "KA"], DZIECKO: ["DZIEC", "KO"], CZYTA: ["CZY", "TA"], "KSIĄŻKĘ": ["KSIĄŻ", "KĘ"], "ŻABA": ["ŻA", "BA"], KACZKA: ["KACZ", "KA"], "KOŃ": ["KOŃ"], JE: ["JE"], SIANO: ["SIA", "NO"], "KRÓLIK": ["KRÓ", "LIK"], "MAŁPA": ["MAŁ", "PA"], "JABŁKO": ["JABŁ", "KO"], SER: ["SER"], KROWA: ["KRO", "WA"], "TRAWĘ": ["TRA", "WĘ"], OWCA: ["OW", "CA"], "SŁOŃ": ["SŁOŃ"], PIJE: ["PI", "JE"], "WODĘ": ["WO", "DĘ"], MOTYL: ["MO", "TYL"], LATA: ["LA", "TA"], "ŚLIMAK": ["ŚLI", "MAK"], IDZIE: ["I", "DZIE"], "ŻÓŁW": ["ŻÓŁW"], DELFIN: ["DEL", "FIN"], SKACZE: ["SKA", "CZE"], REKIN: ["RE", "KIN"], JEDZIE: ["JE", "DZIE"], TRAKTOR: ["TRAK", "TOR"], WIEZIE: ["WIE", "ZIE"], "POCIĄG": ["PO", "CIĄG"], ROWER: ["RO", "WER"], "ŁÓDŹ": ["ŁÓDŹ"], KWIAT: ["KWIAT"], "ROŚNIE": ["ROŚ", "NIE"], "ZUPĘ": ["ZU", "PĘ"], PIECZE: ["PIE", "CZE"], CIASTO: ["CIA", "STO"], "BAJKĘ": ["BAJ", "KĘ"], DZIECI: ["DZIE", "CI"], "MAJĄ": ["MA", "JĄ"], KLOCKI: ["KLOC", "KI"], KOTY: ["KO", "TY"], "PIJĄ": ["PI", "JĄ"], MLEKO: ["MLE", "KO"], PTAKI: ["PTA", "KI"], "LECĄ": ["LE", "CĄ"], "PSZCZOŁY": ["PSZCZO", "ŁY"], "ROBIĄ": ["RO", "BIĄ"], "MIÓD": ["MIÓD"], KURY: ["KU", "RY"], "ZNOSZĄ": ["ZNO", "SZĄ"], DRZEWA: ["DRZE", "WA"], "LIŚCIE": ["LI", "ŚCIE"], MYSZY: ["MY", "SZY"], "JEDZĄ": ["JE", "DZĄ"], "SŁOŃCE": ["SŁOŃ", "CE"], GRZEJE: ["GRZE", "JE"], DESZCZ: ["DESZCZ"], PADA: ["PA", "DA"], WIATR: ["WIATR"], WIEJE: ["WIE", "JE"], "KSIĘŻYC": ["KSIĘ", "ŻYC"], "ŚWIECI": ["ŚWIE", "CI"], "MIŚ": ["MIŚ"], LIS: ["LIS"], LEW: ["LEW"], "ŚWINKA": ["ŚWIN", "KA"], "MUCHĘ": ["MU", "CHĘ"],
   },
   en: { CAT: ["CAT"], SLEEPS: ["SLEEPS"], DOG: ["DOG"], MUMMY: ["MUM", "MY"], HAS: ["HAS"], CAKE: ["CAKE"], DADDY: ["DAD", "DY"], CAR: ["CAR"], ROBOT: ["RO", "BOT"], HELMET: ["HEL", "MET"], PIRATE: ["PI", "RATE"], TREASURE: ["TREA", "SURE"] },
   de: { DIE: ["DIE"], KATZE: ["KAT", "ZE"], "SCHLÄFT": ["SCHLÄFT"], DER: ["DER"], HUND: ["HUND"], MAMA: ["MA", "MA"], HAT: ["HAT"], EIS: ["EIS"], PAPA: ["PA", "PA"], "FÄHRT": ["FÄHRT"], AUTO: ["AU", "TO"], ROBOTER: ["RO", "BO", "TER"], WINKT: ["WINKT"], PIRAT: ["PI", "RAT"], LACHT: ["LACHT"] },
@@ -197,7 +197,7 @@ Object.assign(sentenceSyllables.en, {
   THE: ["THE"], DRINKS: ["DRINKS"], MILK: ["MILK"], CHASES: ["CHAS", "ES"], A: ["A"], MOUSE: ["MOUSE"], FINDS: ["FINDS"], BONE: ["BONE"], PLAYS: ["PLAYS"], WITH: ["WITH"], BALL: ["BALL"], WATER: ["WA", "TER"], CHILD: ["CHILD"], WATERS: ["WA", "TERS"], READS: ["READS"], BOOK: ["BOOK"], EATS: ["EATS"], SOUP: ["SOUP"], GROWS: ["GROWS"], LIKES: ["LIKES"], SUN: ["SUN"], LEAVES: ["LEAVES"],
 });
 Object.assign(sentenceSyllables.de, {
-  TRINKT: ["TRINKT"], MILCH: ["MILCH"], JAGT: ["JAGT"], EINE: ["EI", "NE"], MAUS: ["MAUS"], SUCHT: ["SUCHT"], EINEN: ["EI", "NEN"], KNOCHEN: ["KNO", "CHEN"], SPIELT: ["SPIELT"], MIT: ["MIT"], BALL: ["BALL"], WASSER: ["WAS", "SER"], DAS: ["DAS"], KIND: ["KIND"], GIESST: ["GIESST"], BLUME: ["BLU", "ME"], LIEST: ["LIEST"], EIN: ["EIN"], BUCH: ["BUCH"], ISST: ["ISST"], SUPPE: ["SUP", "PE"], "WÄCHST": ["WÄCHST"], MAG: ["MAG"], SONNE: ["SON", "NE"], "BLÄTTER": ["BLÄT", "TER"],
+  TRINKT: ["TRINKT"], MILCH: ["MILCH"], JAGT: ["JAGT"], EINE: ["EI", "NE"], MAUS: ["MAUS"], SUCHT: ["SUCHT"], EINEN: ["EI", "NEN"], KNOCHEN: ["KNO", "CHEN"], SPIELT: ["SPIELT"], MIT: ["MIT"], EINEM: ["EI", "NEM"], BALL: ["BALL"], WASSER: ["WAS", "SER"], DAS: ["DAS"], KIND: ["KIND"], GIESST: ["GIESST"], BLUME: ["BLU", "ME"], LIEST: ["LIEST"], EIN: ["EIN"], BUCH: ["BUCH"], ISST: ["ISST"], SUPPE: ["SUP", "PE"], "WÄCHST": ["WÄCHST"], MAG: ["MAG"], SONNE: ["SON", "NE"], "BLÄTTER": ["BLÄT", "TER"],
 });
 
 const englishLetters = [
@@ -2278,49 +2278,6 @@ ui.levelEightSkipButton.addEventListener("click", skipLetterWords);
 document.querySelectorAll("[data-go-menu]").forEach((button) => button.addEventListener("click", goToMenu));
 document.querySelectorAll("[data-open-reading-game]").forEach((button) => button.addEventListener("click", () => openReadingGame()));
 document.querySelectorAll("[data-go-library]").forEach((button) => button.addEventListener("click", () => goToLibrary()));
-const copySiteLinkButton = document.querySelector("#copy-site-link");
-const copySiteLinkStatus = document.querySelector("#copy-site-link-status");
-const nativeShareSiteLinkButton = document.querySelector("#native-share-site-link");
-const siteUrl = "https://syllabee.online";
-
-async function copySiteLink() {
-  try {
-    await navigator.clipboard.writeText(siteUrl);
-    copySiteLinkStatus.textContent = "Link kopiert – bis später!";
-  } catch {
-    const helper = document.createElement("textarea");
-    helper.value = siteUrl;
-    helper.setAttribute("readonly", "");
-    helper.style.position = "fixed";
-    helper.style.opacity = "0";
-    document.body.append(helper);
-    helper.select();
-    const copied = document.execCommand("copy");
-    helper.remove();
-    copySiteLinkStatus.textContent = copied ? "Link kopiert – bis später!" : "Kopieren nicht möglich. https://syllabee.online";
-  }
-}
-
-copySiteLinkButton?.addEventListener("click", copySiteLink);
-nativeShareSiteLinkButton?.addEventListener("click", async () => {
-  if (!navigator.share) {
-    await copySiteLink();
-    return;
-  }
-
-  try {
-    await navigator.share({
-      title: "Syllabee – Lesen lernen macht Spaß!",
-      text: "Silbe für Silbe Lesen entdecken – mit echter Tastatur.",
-      url: siteUrl,
-    });
-    copySiteLinkStatus.textContent = "Link geteilt – viel Spaß beim Lernen!";
-  } catch (error) {
-    if (error?.name !== "AbortError") {
-      await copySiteLink();
-    }
-  }
-});
 document.querySelector("#analytics-consent-accept")?.addEventListener("click", () => setAnalyticsConsent(true));
 document.querySelector("#analytics-consent-reject")?.addEventListener("click", () => setAnalyticsConsent(false));
 document.querySelector("#paid-access-close")?.addEventListener("click", closePaidAccess);
