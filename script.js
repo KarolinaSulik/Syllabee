@@ -252,6 +252,9 @@ const germanLetters = [
   ["P", "pe"], ["Q", "ku"], ["R", "er"], ["S", "es"], ["T", "te"],
 ].map(([letter, sound]) => ({ letter, sound }));
 
+// Niemieckie Silben bleiben absichtlich als geprüftes Wörterbuch hinterlegt:
+// Sprechsilben gehen vor einer rein mechanischen Zeichenaufteilung. Dabei
+// bleiben Diphthonge sowie das Dehnungs-"ie" zusammen (z. B. Bie-ne).
 const germanWords = createWords([
   ["HUND", ["HUND"], "🐶", "Hund", "MA"],
   ["MAUS", ["MAUS"], "🐭", "Maus", "PA"],
@@ -262,6 +265,7 @@ const germanWords = createWords([
   ["ROBOTER", ["RO", "BO", "TER"], "🤖", "Roboter", "MA"],
   ["TIGER", ["TI", "GER"], "🐯", "Tiger", "RO"],
   ["HASE", ["HA", "SE"], "🐰", "Hase", "MA"],
+  ["BIENE", ["BIE", "NE"], "🐝", "Biene", "MA"],
   ["BANANE", ["BA", "NA", "NE"], "🍌", "Banane", "TO"],
   ["TOMATE", ["TO", "MA", "TE"], "🍅", "Tomate", "RA"],
   ["ELEFANT", ["E", "LE", "FANT"], "🐘", "Elefant", "BA"],
@@ -2276,9 +2280,10 @@ document.querySelectorAll("[data-open-reading-game]").forEach((button) => button
 document.querySelectorAll("[data-go-library]").forEach((button) => button.addEventListener("click", () => goToLibrary()));
 const copySiteLinkButton = document.querySelector("#copy-site-link");
 const copySiteLinkStatus = document.querySelector("#copy-site-link-status");
+const nativeShareSiteLinkButton = document.querySelector("#native-share-site-link");
+const siteUrl = "https://syllabee.online";
 
 async function copySiteLink() {
-  const siteUrl = "https://syllabee.online";
   try {
     await navigator.clipboard.writeText(siteUrl);
     copySiteLinkStatus.textContent = "Link kopiert – bis später!";
@@ -2297,6 +2302,25 @@ async function copySiteLink() {
 }
 
 copySiteLinkButton?.addEventListener("click", copySiteLink);
+nativeShareSiteLinkButton?.addEventListener("click", async () => {
+  if (!navigator.share) {
+    await copySiteLink();
+    return;
+  }
+
+  try {
+    await navigator.share({
+      title: "Syllabee – Lesen lernen macht Spaß!",
+      text: "Silbe für Silbe Lesen entdecken – mit echter Tastatur.",
+      url: siteUrl,
+    });
+    copySiteLinkStatus.textContent = "Link geteilt – viel Spaß beim Lernen!";
+  } catch (error) {
+    if (error?.name !== "AbortError") {
+      await copySiteLink();
+    }
+  }
+});
 document.querySelector("#analytics-consent-accept")?.addEventListener("click", () => setAnalyticsConsent(true));
 document.querySelector("#analytics-consent-reject")?.addEventListener("click", () => setAnalyticsConsent(false));
 document.querySelector("#paid-access-close")?.addEventListener("click", closePaidAccess);

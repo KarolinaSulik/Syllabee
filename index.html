@@ -2,12 +2,15 @@
 <html lang="pl">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#b8e4fb" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#b8e4fb" media="(prefers-color-scheme: dark)" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <meta name="description" content="Syllabee — spokojna zabawa literkami i sylabami dla dzieci." />
     <title>Syllabee — literki i sylaby</title>
-    <link rel="stylesheet" href="style.css?v=20261008-1" />
+    <link rel="stylesheet" href="style.css?v=20261008-3" />
     <script src="payment-config.js?v=20261005-4"></script>
-    <script src="script.js?v=20261008-1" defer></script>
+    <script src="script.js?v=20261008-3" defer></script>
   </head>
   <body>
     <main class="mobile-landing" aria-labelledby="mobile-landing-title">
@@ -16,9 +19,10 @@
       </header>
 
       <section class="mobile-landing-intro">
-        <p class="mobile-landing-eyebrow">Lernen mit Ruhe und Freude</p>
-        <h1 id="mobile-landing-title">Lesen lernen macht Spaß! 🐝</h1>
-        <p class="mobile-landing-description">Entdecke Buchstaben, Silben und Wörter – spielerisch und ohne Ablenkung.</p>
+        <p class="mobile-landing-eyebrow">WENIG REIZE. VIEL LERNFREUDE.</p>
+        <h1 id="mobile-landing-title">LESEN LERNEN<br />MACHT SPASS! 🐝</h1>
+        <p class="mobile-landing-description">Silbe für Silbe setzt dein Kind Laute zu Wörtern zusammen – und entdeckt Schritt für Schritt, wie Lesen funktioniert.</p>
+        <p class="mobile-landing-story">Mein Sohn hat dabei riesigen Spaß: Er sieht die Buchstaben, probiert aus und freut sich über jedes gelesene Wort.</p>
       </section>
 
       <section class="mobile-game-preview" aria-label="Vorschau des Lernspiels">
@@ -31,24 +35,33 @@
             <span class="mobile-preview-emoji" aria-hidden="true">🐝</span>
             <p>Welche Silben ergeben dieses Wort?</p>
             <div class="mobile-preview-word" aria-label="Beispielwort Biene">
-              <span>BI</span><span>ENE</span>
+              <span>BIE</span><span>NE</span>
             </div>
             <div class="mobile-preview-choices" aria-hidden="true">
-              <span>BI</span><span>ENE</span><span>MA</span>
+              <span>BIE</span><span>NE</span><span>MA</span>
             </div>
           </div>
         </div>
-        <p class="mobile-preview-caption">So sieht Lernen mit Syllabee aus</p>
+        <p class="mobile-preview-caption">So einfach kann Lesenlernen aussehen</p>
       </section>
 
       <aside class="mobile-keyboard-note" aria-label="Hinweis zur Nutzung">
         <span aria-hidden="true">⌨️</span>
-        <p>Syllabee funktioniert am besten am Computer mit Tastatur.</p>
+        <div>
+          <strong>Tastatur statt Tablet</strong>
+          <p>Beim Drücken echter Tasten sieht und spürt dein Kind jeden Buchstaben. Das unterstützt das Wiedererkennen von Formen – besonders wertvoll für Vierjährige.</p>
+        </div>
       </aside>
 
       <div class="mobile-landing-actions">
-        <button id="copy-site-link" class="mobile-link-button mobile-link-button-primary" type="button">Link für später kopieren</button>
-        <a class="mobile-link-button mobile-link-button-secondary" href="mailto:?subject=Syllabee%20%E2%80%93%20Lesen%20lernen%20macht%20Spa%C3%9F&amp;body=Entdecke%20Syllabee%3A%20https%3A%2F%2Fsyllabee.online">Link per E-Mail senden</a>
+        <p class="mobile-share-prompt">Für später sichern – damit ihr gleich am Computer loslegen könnt.</p>
+        <button id="native-share-site-link" class="mobile-link-button mobile-link-button-primary" type="button">Jetzt mit mir teilen</button>
+        <p class="mobile-share-hint">WhatsApp, Messenger, E-Mail oder deine Notizen auswählen</p>
+        <div class="mobile-share-options">
+          <a class="mobile-link-button mobile-link-button-secondary" href="https://wa.me/?text=Syllabee%20%E2%80%93%20Lesen%20lernen%20macht%20Spa%C3%9F%21%20https%3A%2F%2Fsyllabee.online" target="_blank" rel="noreferrer">WhatsApp</a>
+          <a class="mobile-link-button mobile-link-button-secondary" href="mailto:?subject=Syllabee%20%E2%80%93%20Lesen%20lernen%20macht%20Spa%C3%9F&amp;body=Entdecke%20Syllabee%3A%20https%3A%2F%2Fsyllabee.online">E-Mail</a>
+          <button id="copy-site-link" class="mobile-link-button mobile-link-button-secondary" type="button">Link kopieren</button>
+        </div>
         <p id="copy-site-link-status" class="mobile-copy-status" aria-live="polite"></p>
       </div>
     </main>
