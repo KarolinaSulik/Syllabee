@@ -589,6 +589,7 @@ const ui = {
   levelEightSubmit: document.querySelector("#level-eight-submit"),
   levelEightSkipButton: document.querySelector("#level-eight-skip-button"),
   levelEightMessage: document.querySelector("#level-eight-message"),
+  virtualKeyboard: document.querySelector("#virtual-keyboard"),
   gameHintButtons: [...document.querySelectorAll("[data-game-hint-button]")],
   parentLink: document.querySelector("#parent-link"),
   parentNoteText: document.querySelector("#parent-note-text"),
@@ -1133,6 +1134,7 @@ function openReadingGame({ updateUrl = true } = {}) {
   window.speechSynthesis?.cancel();
   activeLevel = null;
   acceptsKeyboard = false;
+  setVirtualKeyboardVisible(false);
   if (updateUrl) updateGameUrl("czytanie");
   document.title = "Syllabee — Czytanie sylabowe";
   showScreen("menu");
@@ -1148,6 +1150,7 @@ function goToLibrary({ updateUrl = true } = {}) {
   activeLevel = null;
   letterSetupLevel = null;
   acceptsKeyboard = false;
+  setVirtualKeyboardVisible(false);
   if (updateUrl) updateGameUrl();
   document.title = "Syllabee — literki i sylaby";
   showScreen("gameLibrary");
@@ -1513,6 +1516,7 @@ function startLevel(level, wordCount, syllableCount = "all") {
   clearLevelOneExplosion();
   window.speechSynthesis?.cancel();
   activeLevel = level;
+  setVirtualKeyboardVisible([1, 2, 4].includes(level));
   taskIndex = 0;
   trackAnalyticsEvent("level_started", {
     level_number: level,
@@ -1758,6 +1762,23 @@ function handleKeyboard(event) {
   }
 }
 
+function setVirtualKeyboardVisible(isVisible) {
+  document.documentElement.classList.toggle("virtual-keyboard-visible", isVisible);
+  if (!isVisible) return;
+
+  const letters = currentData().letters.map(({ letter }) => letter);
+  const keys = [...letters, "Backspace"];
+  ui.virtualKeyboard.replaceChildren(...keys.map((key) => {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = key === "Backspace" ? "virtual-key virtual-key-backspace" : "virtual-key";
+    button.dataset.key = key;
+    button.textContent = key === "Backspace" ? "⌫" : key;
+    button.setAttribute("aria-label", key === "Backspace" ? currentData().ui.removeTypedLetter : key);
+    return button;
+  }));
+}
+
 function removeMontessoriTypedLetter() {
   if (activeLevel !== 6 || montessoriStage !== "type" || montessoriTypedLetters.length === 0) return;
   montessoriTypedLetters.pop();
@@ -1962,6 +1983,7 @@ function renderMovableAlphabet() {
   movableWordComplete = false;
   montessoriStage = "build";
   montessoriInputIndex = 0;
+  setVirtualKeyboardVisible(false);
   const lettersInWord = [...item.word];
   const distractorLetters = shuffled(
     currentData().letters
@@ -2049,6 +2071,7 @@ function startMontessoriTyping(item) {
   montessoriInputIndex = 0;
   montessoriTypedLetters = [];
   acceptsKeyboard = true;
+  setVirtualKeyboardVisible(true);
   ui.levelSixInstruction.textContent = "";
   ui.movableHint.textContent = "";
   ui.movableLetterBank.classList.add("is-hidden");
@@ -2085,6 +2108,7 @@ function renderMontessoriTyping(item) {
 
 function finishMontessoriWord(item) {
   acceptsKeyboard = false;
+  setVirtualKeyboardVisible(false);
   montessoriStage = "typeComplete";
   ui.montessoriBackspaceButton.classList.add("is-hidden");
   renderMontessoriTyping(item);
@@ -2201,6 +2225,7 @@ function nextTask() {
   const max = activeLevel === 1 ? levelOneLetters.length : activeLevel === 2 ? levelTwoWords.length : activeLevel === 3 ? levelThreeWords.length : activeLevel === 4 ? levelFourLetters.length : activeLevel === 5 ? levelFiveSentences.length : activeLevel === 6 ? levelSixWords.length : activeLevel === 7 ? levelSevenCount : levelEightWords.length;
   if (taskIndex === max) {
     acceptsKeyboard = false;
+    setVirtualKeyboardVisible(false);
     trackAnalyticsEvent("level_completed", {
       level_number: activeLevel,
       task_count: max,
@@ -2346,6 +2371,11 @@ ui.languageSelects.forEach((select) => select.addEventListener("change", () => {
   translateInterface();
 }));
 document.addEventListener("keydown", handleKeyboard);
+ui.virtualKeyboard.addEventListener("click", (event) => {
+  const key = event.target.closest("[data-key]")?.dataset.key;
+  if (!key) return;
+  handleKeyboard({ key, ctrlKey: false, metaKey: false, altKey: false, preventDefault() {} });
+});
 window.addEventListener("popstate", () => {
   const game = new URLSearchParams(window.location.search).get("gra");
   if (game === "czytanie") openReadingGame({ updateUrl: false });

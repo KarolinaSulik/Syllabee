@@ -8,14 +8,14 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <meta name="description" content="Syllabee — spokojna zabawa literkami i sylabami dla dzieci." />
     <title>Syllabee — literki i sylaby</title>
-    <link rel="stylesheet" href="style.css?v=20261009-7" />
+    <link rel="stylesheet" href="style.css?v=20261009-9" />
     <script src="payment-config.js?v=20261005-4"></script>
     <script>
       if (new URLSearchParams(window.location.search).has("app") || new URLSearchParams(window.location.search).has("gra")) {
         document.documentElement.classList.add("show-app");
       }
     </script>
-    <script src="script.js?v=20261009-3" defer></script>
+    <script src="script.js?v=20261009-4" defer></script>
   </head>
   <body>
     <main class="landing" aria-labelledby="landing-title">
@@ -57,6 +57,11 @@
         </div>
       </section>
 
+      <section class="keyboard-benefit landing-shell" aria-labelledby="keyboard-title">
+        <span class="keyboard-icon" aria-hidden="true">⌨</span>
+        <div><h2 id="keyboard-title">Tastatur statt Tablet</h2><p>Für die vollen Übungen empfehlen wir eine Tastatur. Beim Tippen verbindet dein Kind Bewegung mit den Buchstabenformen auf dem Bildschirm.</p></div>
+      </section>
+
       <section class="benefits landing-shell" aria-labelledby="benefits-title">
         <div class="section-heading"><p class="landing-eyebrow">FÜR KLEINE LERNENDE</p><h2 id="benefits-title">Warum Syllabee?</h2></div>
         <div class="benefit-grid">
@@ -85,11 +90,6 @@
       <section class="final-cta landing-shell">
         <div><p class="landing-eyebrow">BEREIT FÜR DIE ERSTE SILBE?</p><h2>Jetzt Syllabee ausprobieren</h2><p>Spielerisch lesen lernen – ruhig, klar und mit Freude.</p></div>
         <a class="landing-button landing-button-primary" href="?app=1">Zur App <span aria-hidden="true">→</span></a>
-      </section>
-
-      <section class="keyboard-benefit landing-shell" aria-labelledby="keyboard-title">
-        <span class="keyboard-icon" aria-hidden="true">⌨</span>
-        <div><h2 id="keyboard-title">Tastatur statt Tablet</h2><p>Eine echte Tastatur gehört bei Syllabee dazu: Beim Tippen sieht, fühlt und drückt dein Kind jeden Buchstaben. So verbinden sich Bewegung und Buchstabenform – spielerisch und bewusst.</p></div>
       </section>
 
       <section class="share-section landing-shell" aria-labelledby="share-title">
@@ -548,6 +548,9 @@
         <button id="complete-menu-button" class="primary-button" type="button" data-go-menu>Wróć do menu</button>
       </section>
     </main>
+
+    <div id="virtual-keyboard" class="virtual-keyboard" aria-label="Klawiatura ekranowa"></div>
+
     <aside id="paid-access-dialog" class="paid-access-dialog is-hidden" role="dialog" aria-modal="true" aria-labelledby="paid-access-title" aria-describedby="paid-access-description">
       <div class="paid-access-card">
         <button id="paid-access-close" class="paid-access-close" type="button" aria-label="Zamknij">×</button>
