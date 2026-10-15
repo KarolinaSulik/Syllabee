@@ -1065,7 +1065,12 @@ async function beginCheckout() {
     const { checkoutUrl } = await callPaymentFunction("create-checkout-session");
     window.location.assign(checkoutUrl);
   } catch (error) {
-    setPaymentMessage(error.message === "Already unlocked" ? "To konto ma już pełny dostęp." : "Nie udało się rozpocząć płatności. Spróbuj ponownie.");
+    const messages = {
+      "Already unlocked": "To konto ma już pełny dostęp.",
+      "Not found": "Płatności nie są jeszcze połączone z adresem tej strony. Skontaktuj się z właścicielką Syllabee.",
+      "Unauthorized": "Sesja rodzica wygasła. Zaloguj się ponownie przez link e-mail.",
+    };
+    setPaymentMessage(messages[error.message] ?? "Nie udało się rozpocząć płatności. Spróbuj ponownie.");
     buy.disabled = false;
   }
 }

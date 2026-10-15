@@ -48,8 +48,8 @@ supabase secrets set \
   STRIPE_SECRET_KEY=sk_live_... \
   STRIPE_WEBHOOK_SECRET=whsec_... \
   STRIPE_FULL_ACCESS_PRICE_ID=price_... \
-  ALLOWED_ORIGIN=https://twoj-login.github.io \
-  SITE_URL=https://twoj-login.github.io/Syllabee \
+  ALLOWED_ORIGIN=https://syllabee.online \
+  SITE_URL=https://syllabee.online \
   OWNER_EMAILS=twoj-email@przyklad.pl
 
 supabase functions deploy account-status

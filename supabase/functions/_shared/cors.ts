@@ -1,12 +1,11 @@
-// GitHub Pages wysyła tylko origin (bez /Syllabee/), dlatego bezpieczny
-// domyślny adres jest podany tutaj. Zmienna środowiskowa może go nadpisać
-// przy użyciu własnej domeny.
-const allowedOrigin = Deno.env.get("ALLOWED_ORIGIN") ?? "https://karolinasulik.github.io";
+// Origin to adres aplikacji w przeglądarce, a nie adres rodzica kupującego
+// dostęp. Każda osoba korzystająca z syllabee.online może więc zapłacić.
+const allowedOrigin = Deno.env.get("ALLOWED_ORIGIN") ?? "https://syllabee.online";
 
 export function corsHeaders(request: Request) {
   const origin = request.headers.get("origin");
   return {
-    "Access-Control-Allow-Origin": origin && origin === allowedOrigin ? origin : allowedOrigin,
+    "Access-Control-Allow-Origin": origin === allowedOrigin ? origin : allowedOrigin,
     "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
     "Access-Control-Allow-Methods": "POST, OPTIONS",
     "Vary": "Origin",
