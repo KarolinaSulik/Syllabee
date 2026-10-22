@@ -1110,6 +1110,9 @@ function openSelectedLevel(level) {
 function showScreen(name) {
   Object.values(screens).forEach((screen) => screen.classList.add("is-hidden"));
   screens[name].classList.remove("is-hidden");
+  // Menu poziomów jest długie na telefonie. Nie przenosimy jego pozycji
+  // przewinięcia do nowo otwartego widoku ćwiczenia.
+  window.scrollTo(0, 0);
 }
 
 function clearLevelTwoSyllableTimers() {
