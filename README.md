@@ -1,89 +1,104 @@
-# Syllabee
 
-Prosta webowa gra do nauki czytania metodą sylabową dla małych dzieci.
+# Syllabee 🐝
 
-## Uruchomienie
+### A Web-Based Reading App for Children
 
-Nie trzeba nic instalować. Otwórz plik `index.html` w nowoczesnej przeglądarce, np. Chrome, Safari lub Firefox. Strona główna pokazuje bibliotekę gier; obecna gra „Czytanie sylabowe” otwiera się po kliknięciu „Graj teraz”.
+Syllabee is a multilingual educational web application designed to help young children learn letters, syllables, words, and simple sentences through interactive exercises.
 
-1. W prawym górnym rogu wybierz język: polski, angielski albo niemiecki.
-2. Wybierz jeden z siedmiu poziomów.
-3. W Level 1 i 4 wpisuj pojedyncze litery z fizycznej klawiatury.
-4. W Level 2 wpisuj całe słowa, litera po literze.
-5. W Level 3 klikaj sylaby w odpowiedniej kolejności, a w Level 5 układaj zdania.
-6. W Level 6 najpierw układaj nazwę obrazka z ruchomych liter, potem wpisz ją na klawiaturze i przeczytaj gotowe słowo.
-7. W Level 7 wybierz karty emoji, stwórz własne zdanie i przeczytaj je rodzicowi. Gra nie nagrywa ani nie ocenia wymowy.
+The project focuses on making early reading practice simple, accessible, and enjoyable. Children can practice at their own pace, with support from their parents.
 
-Po poprawnie wpisanej literze gra odczytuje jej nazwę głosem ustawionym dla wybranego języka (`pl-PL`, `en-GB` albo `de-DE`) — bez pozytywnego tonu. W Level 2 po domknięciu sylaby odczytuje kolejno ostatnią literę i całą sylabę, a na końcu także całe słowo. Błędny klawisz nie pojawia się na ekranie i wywołuje krótkie, zabawne „tu-dum”. Pozostałe dźwięki zwrotne są tworzone w przeglądarce — bez plików audio. Ustawienie języka jest zapamiętywane w przeglądarce.
+🌐 **Live Demo:** https://syllabee.online
 
-## Dodawanie słów
+## Technologies
 
-Zestawy dla każdego języka są na początku pliku `script.js`. Każdy wpis słowa zawiera słowo, podział na sylaby, emoji i warianty do wyboru. Emoji można później zastąpić obrazkami z `assets/images`.
+- HTML5
+- CSS3
+- JavaScript
+- Web Speech API
+- Responsive Web Design
+- Git & GitHub
+- GitHub Pages
 
-## Syllabee Plus: Stripe + Supabase
+The project also includes an integration for user authentication and paid access using Supabase and Stripe.
 
-Pełny opis architektury, schematu danych, bezpieczeństwa, przepływów, wdrożenia i zasad zmian znajduje się w [dokumentacji backendu, bazy i płatności](docs/backend-baza-danych-i-platnosci.md). To jest dokument referencyjny dla kolejnych prac nad tym obszarem.
+## Features
 
-Poziomy 1–4 są bezpłatne. Poziomy 5–8 są częścią **Syllabee Plus** i wymagają jednorazowego zakupu za **2,99 €**. Uprawnienie jest przypisane do konta rodzica i nadawane dopiero przez zweryfikowany webhook Stripe — nie przez kod przeglądarki.
+### Interactive Reading Exercises
 
-### 1. Załóż projekt Supabase
+Syllabee offers several types of learning activities:
 
-1. Utwórz projekt na [Supabase](https://supabase.com/).
-2. W `Authentication → Providers → Email` włącz logowanie e-mailem (Magic Link).
-3. W `Authentication → URL Configuration` wpisz adres opublikowanej gry do **Site URL** oraz **Redirect URLs**, np. `https://twoj-login.github.io/Syllabee`.
-4. W SQL Editor uruchom plik [migracji](supabase/migrations/20261005000000_paid_access.sql).
+- **Letter Recognition:** Practice identifying and typing individual letters.
+- **Word Building:** Type words letter by letter.
+- **Syllable Exercises:** Recognize and arrange syllables in the correct order.
+- **Sentence Building:** Create simple sentences from words.
+- **Picture-Based Exercises:** Match illustrations with words and practice spelling.
+- **Creative Sentences:** Build sentences using visual elements.
 
-### 2. Utwórz produkt w Stripe
+### Multilingual Support
 
-1. W Stripe utwórz produkt „Syllabee — pełny dostęp”.
-2. Dodaj jednorazową cenę: **2,99 EUR** (`one-time`, nie subskrypcja).
-3. Skopiuj identyfikator ceny zaczynający się od `price_...`.
+The application supports three languages:
 
-### 3. Ustaw sekrety i opublikuj funkcje
+- German
+- English
+- Polish
 
-Zainstaluj Supabase CLI, zaloguj się i połącz repozytorium z projektem. Następnie ustaw wartości po swojej stronie (nie dodawaj ich do GitHuba):
+### Audio Feedback
 
-```sh
-supabase secrets set \
-  STRIPE_SECRET_KEY=sk_live_... \
-  STRIPE_WEBHOOK_SECRET=whsec_... \
-  STRIPE_FULL_ACCESS_PRICE_ID=price_... \
-  ALLOWED_ORIGIN=https://syllabee.online \
-  SITE_URL=https://syllabee.online \
-  OWNER_EMAILS=twoj-email@przyklad.pl
+- Letter and syllable pronunciation using the Web Speech API
+- Language-specific speech synthesis
+- Simple audio feedback for user interactions
 
-supabase functions deploy account-status
-supabase functions deploy create-checkout-session
-supabase functions deploy stripe-webhook
-```
+### Child-Friendly Design
 
-`SUPABASE_URL` i `SUPABASE_SERVICE_ROLE_KEY` są dostępne wewnątrz Supabase Edge Functions. **Nigdy** nie kopiuj klucza `service_role` do pliku `payment-config.js` ani do GitHuba.
+- Simple and intuitive interface
+- Interactive exercises using keyboard and touch input
+- No advertisements
+- Designed for short learning sessions
 
-`OWNER_EMAILS` jest opcjonalne: pozwala właścicielowi gry korzystać z pełnego dostępu bez kupowania własnego produktu. Przy kilku adresach rozdziel je przecinkami.
+## How to Run
 
-### 4. Podłącz webhook Stripe
+The application runs directly in a modern web browser.
 
-W Stripe: `Developers → Webhooks → Add endpoint` ustaw adres:
+**Option 1 – Online**
 
-```text
-https://TWOJ_PROJECT_REF.supabase.co/functions/v1/stripe-webhook
-```
+Open https://syllabee.online
 
-Zaznacz wyłącznie zdarzenie `checkout.session.completed`. Skopiuj sekret webhooka (`whsec_...`) do `STRIPE_WEBHOOK_SECRET` z kroku 3.
+**Option 2 – Locally**
 
-### 5. Uzupełnij publiczną konfigurację strony
+1. Clone or download this repository.
+2. Open `index.html` in Chrome, Safari, or Firefox.
+3. Select a language and start practicing.
 
-W pliku `payment-config.js` wpisz adres projektu i **anon key** z `Supabase → Project Settings → API`:
+Some online services, such as authentication and payments, require additional configuration.
 
-```js
-window.SYLLABEE_PAYMENTS_CONFIG = {
-  supabaseUrl: "https://TWOJ_PROJECT_REF.supabase.co",
-  supabaseAnonKey: "eyJ...",
-};
-```
+## Project Structure
 
-Ten klucz jest celowo publiczny. Nie daje dostępu do tabel ani nie pozwala nadawać dostępu — bazę odczytują i zapisują wyłącznie funkcje serwerowe.
+- `index.html` – Main application entry point
+- `script.js` – Learning logic and interactive exercises
+- `assets/` – Images and other resources
+- `docs/` – Additional technical documentation
+- `supabase/` – Backend functions and database migrations
 
-### 6. Test przed publikacją
+## Backend & Payments
 
-Użyj najpierw kluczy `sk_test_...`, testowej ceny Stripe i testowej karty `4242 4242 4242 4242`. Sprawdź kolejno: magiczny link e-mail, płatność, wpis w tabeli `entitlements` oraz ponowne logowanie w innej przeglądarce. Dopiero potem zmień klucze i cenę na wersję live.
+The repository also contains an implementation for optional premium access.
+
+Technologies include:
+
+- Supabase Authentication
+- Supabase Edge Functions
+- PostgreSQL
+- Stripe Checkout
+- Stripe Webhooks
+
+Paid access is managed through server-side verification rather than client-side payment confirmation.
+
+For setup instructions and implementation details, see the documentation in the `docs/` directory.
+
+## About the Project
+
+Syllabee is a personal software development project created to combine my interest in programming with educational applications for children.
+
+It has allowed me to gain practical experience in frontend development, interactive user interfaces, multilingual applications, and web technologies.
+
+The application is being developed and improved continuously.
