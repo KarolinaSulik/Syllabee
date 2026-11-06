@@ -1,6 +1,18 @@
 
 # Syllabee 🐝
 
+## Screenshots
+
+### Screenshot 1
+![Syllabee Screenshot 1](Bildschirmfoto%202026-11-06%20um%2022.08.36.png)
+
+### Screenshot 2
+![Syllabee Screenshot 2](Bildschirmfoto%202026-11-06%20um%2022.08.46.png)
+
+### Screenshot 3
+![Syllabee Screenshot 3](Bildschirmfoto%202026-11-06%20um%2022.09.01.png)
+
+
 ### A Web-Based Reading App for Children
 
 Syllabee is a multilingual educational web application designed to help young children learn letters, syllables, words, and simple sentences through interactive exercises.
