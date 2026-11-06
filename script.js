@@ -301,10 +301,10 @@ const emojiStories = {
     { subject: { emoji: "🐱", word: "KOT" }, actions: [{ emoji: "🥛", word: "PIJE MLEKO" }, { emoji: "😴", word: "ŚPI" }, { emoji: "🐭", word: "GONI MYSZ" }] },
     { subject: { emoji: "🐶", word: "PIES" }, actions: [{ emoji: "🦴", word: "SZUKA KOŚCI" }, { emoji: "⚽", word: "BAWI SIĘ PIŁKĄ" }, { emoji: "💧", word: "PIJE WODĘ" }] },
     { subject: { emoji: "🧒", word: "DZIECKO" }, actions: [{ emoji: "🌷", word: "PODLEWA KWIAT" }, { emoji: "📖", word: "CZYTA KSIĄŻKĘ" }, { emoji: "🍲", word: "JE ZUPĘ" }] },
-    { subject: { emoji: "🌷", word: "KWIAT" }, actions: [{ emoji: "🌱", word: "ROŚNIE" }, { emoji: "☀️", word: "LUBI SŁOŃCE" }, { emoji: "🍃", word: "MA LIŚCIE" }] },
-    { subject: { emoji: "🐄", word: "KROWA" }, actions: [{ emoji: "🌿", word: "JE TRAWĘ" }, { emoji: "🌸", word: "WIDZI KWIAT" }, { emoji: "🏠", word: "IDZIE DO DOMU" }] },
+    { subject: { emoji: "🌷", word: "KWIAT" }, actions: [{ emoji: "🌱", word: "ROŚNIE" }, { emoji: "🍃", word: "MA LIŚCIE" }] },
+    { subject: { emoji: "🐄", word: "KROWA" }, actions: [{ emoji: "🌿", word: "JE TRAWĘ" }, { emoji: "🏠", word: "IDZIE DO DOMU" }] },
     { subject: { emoji: "🐸", word: "ŻABA" }, actions: [{ emoji: "🪰", word: "JE MUCHĘ" }, { emoji: "🦋", word: "WIDZI MOTYLA" }, { emoji: "⬆️", word: "WYSOKO SKACZE" }] },
-    { subject: { emoji: "🚀", word: "RAKIETA" }, actions: [{ emoji: "🌌", word: "LECI DO KOSMOSU" }, { emoji: "🌍", word: "WIDZI ZIEMIĘ" }, { emoji: "🌙", word: "MIJA KSIĘŻYC" }] },
+    { subject: { emoji: "🚀", word: "RAKIETA" }, actions: [{ emoji: "🌌", word: "LECI W KOSMOS" }, { emoji: "🌙", word: "MIJA KSIĘŻYC" }] },
     { subject: { emoji: "🐝", word: "PSZCZOŁA" }, actions: [{ emoji: "🌸", word: "LUBI KWIAT" }, { emoji: "🍯", word: "ROBI MIÓD" }, { emoji: "🏠", word: "LECI DO ULA" }] },
   ],
   en: [
